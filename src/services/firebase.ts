@@ -16,12 +16,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const getNinjas = async (): Promise<INinja[]> => {
-  const data = collection(db, 'ninjas');
-  const snapshot = await getDocs(data);
-  const ninjas = snapshot.docs.map((doc) => doc.data()) as INinja[];
+const firebaseNinjas = {
+  get: async (): Promise<INinja[]> => {
+    const data = collection(db, 'ninjas');
+    const snapshot = await getDocs(data);
+    const ninjas = snapshot.docs.map((doc) => doc.data()) as INinja[];
 
-  return ninjas;
+    return ninjas;
+  },
 };
 
-export { getNinjas };
+export { firebaseNinjas };
