@@ -1,6 +1,7 @@
-import {initializeApp} from 'firebase/app';
-import {collection, getDocs, getFirestore} from 'firebase/firestore/lite';
-import {INinja} from '../@types/ninja';
+import { initializeApp } from 'firebase/app';
+import { collection, getDocs, getFirestore } from 'firebase/firestore/lite';
+
+import { INinja } from '../@types/ninja';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -18,9 +19,9 @@ const db = getFirestore(app);
 const getNinjas = async (): Promise<INinja[]> => {
   const data = collection(db, 'ninjas');
   const snapshot = await getDocs(data);
-  const ninjas = snapshot.docs.map(doc => doc.data()) as INinja[];
+  const ninjas = snapshot.docs.map((doc) => doc.data()) as INinja[];
 
   return ninjas;
 };
 
-export {getNinjas};
+export { getNinjas };

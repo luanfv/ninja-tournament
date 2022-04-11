@@ -7,4 +7,4 @@ interface INinja {
   technique: number;
 }
 
-export {INinja};
+export { INinja };
