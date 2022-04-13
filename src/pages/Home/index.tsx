@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, FlatList, TouchableOpacity } from 'react-native';
+import { Text, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 
 import { INinja } from '../../@types';
 import { Header } from '../../components';
@@ -11,6 +11,7 @@ const Home: React.FC = () => {
 
   const [ninjas, setNinjas] = useState<INinja[]>([]);
   const [ninjasToBattle, setNinjasToBattle] = useState<INinja[]>([]);
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const handleAddNinjaToBattle = useCallback((ninja: INinja) => {
     setNinjas((oldState) => oldState.filter((state) => state.id !== ninja.id));
@@ -23,6 +24,17 @@ const Home: React.FC = () => {
     );
     setNinjas((oldState) => [...oldState, ninja]);
   }, []);
+
+  const handleRefresh = useCallback(async () => {
+    try {
+      setIsRefreshing(true);
+
+      setNinjas(ninjasContext.ninjas);
+      setNinjasToBattle([]);
+    } finally {
+      setIsRefreshing(false);
+    }
+  }, [ninjasContext.ninjas]);
 
   useEffect(() => {
     setNinjas(ninjasContext.ninjas);
@@ -76,6 +88,12 @@ const Home: React.FC = () => {
             </TouchableOpacity>
           )}
           ItemSeparatorComponent={() => <Separator />}
+          refreshControl={
+            <RefreshControl
+              refreshing={isRefreshing}
+              onRefresh={handleRefresh}
+            />
+          }
         />
       )}
     </>
