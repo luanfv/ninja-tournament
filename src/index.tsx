@@ -3,11 +3,11 @@ import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 
 import { Routes } from './routes';
-import AppProvider from './hooks';
+import { Providers } from './hooks';
 import { theme } from './settings/theme';
 
 export default () => (
-  <AppProvider>
+  <Providers>
     <ThemeProvider theme={theme}>
       <StatusBar
         backgroundColor={theme.colors.black}
@@ -16,5 +16,5 @@ export default () => (
 
       <Routes />
     </ThemeProvider>
-  </AppProvider>
+  </Providers>
 );

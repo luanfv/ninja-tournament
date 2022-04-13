@@ -1,8 +1,2 @@
-import React from 'react';
-import { NinjasProvider } from './ninjas';
-
-const AppProvider: React.FC = ({ children }) => {
-  return <NinjasProvider>{children}</NinjasProvider>;
-};
-
-export default AppProvider;
+export { Providers } from './providers';
+export { useRound } from './round';
