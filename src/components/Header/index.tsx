@@ -1,12 +1,30 @@
 import React from 'react';
 
-import { Container, Text } from './styles';
+import { Container, Description, Text } from './styles';
 
-const Header: React.FC = () => {
+interface IHeader {
+  title: string;
+  description?: string;
+  isDescriptionError?: boolean;
+}
+
+const Header: React.FC<IHeader> = ({
+  title,
+  description,
+  isDescriptionError,
+}) => {
   return (
-    <Container>
-      <Text>Naruto Shuriken</Text>
-    </Container>
+    <>
+      <Container>
+        <Text>{title}</Text>
+      </Container>
+
+      {description && (
+        <Description hasError={isDescriptionError}>
+          <Text>{description}</Text>
+        </Description>
+      )}
+    </>
   );
 };
 

@@ -52,7 +52,10 @@ const Home: React.FC = () => {
 
   return (
     <>
-      <Header />
+      <Header
+        title="Naruto Shuriken"
+        description={`Ninjas do torneio: ${ninjasToBattle.length} de 8`}
+      />
 
       <FlatList
         data={ninjas}
@@ -62,9 +65,9 @@ const Home: React.FC = () => {
               <>
                 <Text>Ninjas do torneio:</Text>
 
-                {ninjasToBattle.map((ninja) => (
+                {ninjasToBattle.map((ninja, index) => (
                   <TouchableOpacity
-                    key={ninja.id}
+                    key={index}
                     onPress={() => handleARemoveNinjaToBattle(ninja)}
                   >
                     <Text>
