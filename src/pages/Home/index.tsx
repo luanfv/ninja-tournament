@@ -1,13 +1,17 @@
+import { useNavigation } from '@react-navigation/native';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
 
-import { INinja } from '../../@types';
+import { INinja, IRoutes } from '../../@types';
 import { Header } from '../../components';
 import { useNinjas } from '../../hooks/ninjas';
 import { Separator } from './styles';
 
 const Home: React.FC = () => {
   const ninjasContext = useNinjas();
+  const { navigate } =
+    useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
 
   const [ninjas, setNinjas] = useState<INinja[]>([]);
   const [ninjasToBattle, setNinjasToBattle] = useState<INinja[]>([]);
@@ -39,6 +43,12 @@ const Home: React.FC = () => {
   useEffect(() => {
     setNinjas(ninjasContext.ninjas);
   }, [ninjasContext]);
+
+  useEffect(() => {
+    if (ninjasToBattle.length === 8) {
+      navigate('battle', ninjasToBattle);
+    }
+  }, [navigate, ninjasToBattle]);
 
   return (
     <>
