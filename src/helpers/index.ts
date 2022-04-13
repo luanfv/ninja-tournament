@@ -1,0 +1,1 @@
+export { storageNinjas } from './storage';

@@ -1,14 +1,21 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react';
 
 import { INinja } from '../@types';
-import { storageNinjas } from '../helpers/storage';
-import { firebaseNinjas } from '../services/firebase';
+import { storageNinjas } from '../helpers';
+import { serviceNinjas } from '../services';
 
 type IStatus = 'success' | 'fail' | 'loading';
 
 interface INinjas {
   ninjas: INinja[];
   status: IStatus;
+  getById: (id: number) => INinja | undefined;
 }
 
 const NinjasContext = createContext<INinjas>({} as INinjas);
@@ -17,10 +24,15 @@ export const NinjasProvider: React.FC = ({ children }) => {
   const [ninjas, setNinjas] = useState<INinja[]>([]);
   const [status, setStatus] = useState<IStatus>('loading');
 
+  const getById = useCallback(
+    (id: number) => ninjas.find((ninja) => ninja.id === id),
+    [ninjas],
+  );
+
   useEffect(() => {
     const getNinjas = async () => {
       try {
-        const response = await firebaseNinjas.get();
+        const response = await serviceNinjas.getFirebase();
 
         if (!response) {
           throw Error();
@@ -46,7 +58,7 @@ export const NinjasProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <NinjasContext.Provider value={{ ninjas, status }}>
+    <NinjasContext.Provider value={{ ninjas, status, getById }}>
       {children}
     </NinjasContext.Provider>
   );

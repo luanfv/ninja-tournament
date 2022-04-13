@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 
 import { Routes } from './routes';
 import { Providers } from './hooks';
-import { theme } from './settings/theme';
+import { theme } from './settings';
 
 export default () => (
   <Providers>

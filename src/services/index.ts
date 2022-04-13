@@ -1,0 +1,1 @@
+export { serviceNinjas } from './ninjas';
