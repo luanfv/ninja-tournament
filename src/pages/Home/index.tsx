@@ -1,42 +1,16 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Text, FlatList, TouchableOpacity } from 'react-native';
-import { useQuery } from 'react-query';
 
-import { firebaseNinjas } from '../../services/firebase';
-import { storageNinjas } from '../../helpers/storage';
 import { INinja } from '../../@types';
 import { Header } from '../../components';
+import { useNinjas } from '../../hooks/ninjas';
 import { Separator } from './styles';
 
 const Home: React.FC = () => {
-  const [ninjasToBattle, setNinjasToBattle] = useState<INinja[]>([]);
+  const ninjasContext = useNinjas();
+
   const [ninjas, setNinjas] = useState<INinja[]>([]);
-
-  useQuery('ninjas', async () => {
-    try {
-      const response = await firebaseNinjas.get();
-
-      if (!response) {
-        throw Error();
-      }
-
-      await storageNinjas.set(response);
-
-      setNinjas(response);
-
-      return response;
-    } catch {
-      const storage = await storageNinjas.get();
-
-      if (storage) {
-        setNinjas(storage);
-
-        return storage;
-      }
-
-      return [];
-    }
-  });
+  const [ninjasToBattle, setNinjasToBattle] = useState<INinja[]>([]);
 
   const handleAddNinjaToBattle = useCallback((ninja: INinja) => {
     setNinjas((oldState) => oldState.filter((state) => state.id !== ninja.id));
@@ -50,47 +24,60 @@ const Home: React.FC = () => {
     setNinjas((oldState) => [...oldState, ninja]);
   }, []);
 
+  useEffect(() => {
+    setNinjas(ninjasContext.ninjas);
+  }, [ninjasContext]);
+
   return (
     <>
       <Header
         title="Naruto Shuriken"
+        isDescriptionError={ninjasToBattle.length !== 8}
         description={`Ninjas do torneio: ${ninjasToBattle.length} de 8`}
       />
 
-      <FlatList
-        data={ninjas}
-        ListHeaderComponent={() => (
-          <>
-            {ninjasToBattle.length > 0 && (
-              <>
-                <Text>Ninjas do torneio:</Text>
+      {ninjasContext.status === 'loading' && <Text>Carregando...</Text>}
 
-                {ninjasToBattle.map((ninja, index) => (
-                  <TouchableOpacity
-                    key={index}
-                    onPress={() => handleARemoveNinjaToBattle(ninja)}
-                  >
-                    <Text>
-                      {ninja.id} - {ninja.name}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </>
-            )}
+      {ninjasContext.status === 'fail' && (
+        <Text>Falha ao buscar os ninjas</Text>
+      )}
 
-            <Text>Ninjas:</Text>
-          </>
-        )}
-        keyExtractor={(item) => String(item.id)}
-        renderItem={({ item }) => (
-          <TouchableOpacity onPress={() => handleAddNinjaToBattle(item)}>
-            <Text>
-              {item.id} - {item.name}
-            </Text>
-          </TouchableOpacity>
-        )}
-        ItemSeparatorComponent={() => <Separator />}
-      />
+      {ninjasContext.status === 'success' && (
+        <FlatList
+          data={ninjas}
+          ListHeaderComponent={() => (
+            <>
+              {ninjasToBattle.length > 0 && (
+                <>
+                  <Text>Ninjas do torneio:</Text>
+
+                  {ninjasToBattle.map((ninja, index) => (
+                    <TouchableOpacity
+                      key={index}
+                      onPress={() => handleARemoveNinjaToBattle(ninja)}
+                    >
+                      <Text>
+                        {ninja.id} - {ninja.name}
+                      </Text>
+                    </TouchableOpacity>
+                  ))}
+                </>
+              )}
+
+              <Text>Ninjas:</Text>
+            </>
+          )}
+          keyExtractor={(item) => String(item.id)}
+          renderItem={({ item }) => (
+            <TouchableOpacity onPress={() => handleAddNinjaToBattle(item)}>
+              <Text>
+                {item.id} - {item.name}
+              </Text>
+            </TouchableOpacity>
+          )}
+          ItemSeparatorComponent={() => <Separator />}
+        />
+      )}
     </>
   );
 };

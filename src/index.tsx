@@ -1,14 +1,13 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { QueryClientProvider } from 'react-query';
 import { ThemeProvider } from 'styled-components';
 
 import { Routes } from './routes';
-import { queryClient } from './settings/queryClient';
+import AppProvider from './hooks';
 import { theme } from './settings/theme';
 
 export default () => (
-  <QueryClientProvider client={queryClient}>
+  <AppProvider>
     <ThemeProvider theme={theme}>
       <StatusBar
         backgroundColor={theme.colors.black}
@@ -17,5 +16,5 @@ export default () => (
 
       <Routes />
     </ThemeProvider>
-  </QueryClientProvider>
+  </AppProvider>
 );
