@@ -16,6 +16,7 @@ interface INinjas {
   ninjas: INinja[];
   status: IStatus;
   getById: (id: number) => INinja | undefined;
+  getNinjas: () => Promise<void>;
 }
 
 const NinjasContext = createContext<INinjas>({} as INinjas);
@@ -29,36 +30,38 @@ export const NinjasProvider: React.FC = ({ children }) => {
     [ninjas],
   );
 
-  useEffect(() => {
-    const getNinjas = async () => {
-      try {
-        const response = await serviceNinjas.getFirebase();
+  const getNinjas = useCallback(async () => {
+    try {
+      const response = await serviceNinjas.getFirebase();
 
-        if (!response) {
-          throw Error();
-        }
-
-        await storageNinjas.set(response);
-
-        setNinjas(response);
-        setStatus('success');
-      } catch {
-        const storage = await storageNinjas.get();
-
-        if (storage) {
-          setNinjas(storage);
-          setStatus('success');
-        }
-
-        setStatus('fail');
+      if (!response) {
+        throw Error();
       }
-    };
 
-    getNinjas();
+      await storageNinjas.set(response);
+
+      setNinjas(response);
+      setStatus('success');
+    } catch {
+      const storage = await storageNinjas.get();
+
+      if (storage) {
+        setNinjas(storage);
+        setStatus('success');
+
+        return;
+      }
+
+      setStatus('fail');
+    }
   }, []);
 
+  useEffect(() => {
+    getNinjas();
+  }, [getNinjas]);
+
   return (
-    <NinjasContext.Provider value={{ ninjas, status, getById }}>
+    <NinjasContext.Provider value={{ ninjas, status, getById, getNinjas }}>
       {children}
     </NinjasContext.Provider>
   );

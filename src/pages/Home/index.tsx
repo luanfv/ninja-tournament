@@ -32,12 +32,12 @@ const Home: React.FC = () => {
     try {
       setIsRefreshing(true);
 
-      setNinjas(ninjasContext.ninjas);
+      ninjasContext.getNinjas();
       setNinjasToBattle([]);
     } finally {
       setIsRefreshing(false);
     }
-  }, [ninjasContext.ninjas]);
+  }, [ninjasContext]);
 
   useEffect(() => {
     setNinjas(ninjasContext.ninjas);
