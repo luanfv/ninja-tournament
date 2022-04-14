@@ -28,12 +28,11 @@ const Home: React.FC = () => {
     setNinjas((oldState) => [...oldState, ninja]);
   }, []);
 
-  const handleRefresh = useCallback(async () => {
+  const handleRefresh = useCallback(() => {
     try {
       setIsRefreshing(true);
 
-      ninjasContext.getNinjas();
-      setNinjasToBattle([]);
+      ninjasContext.getNinjas().then(() => setNinjasToBattle([]));
     } finally {
       setIsRefreshing(false);
     }
