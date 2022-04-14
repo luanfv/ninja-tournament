@@ -1,7 +1,13 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, FlatList, TouchableOpacity, RefreshControl } from 'react-native';
+import {
+  Text,
+  FlatList,
+  TouchableOpacity,
+  RefreshControl,
+  Image,
+} from 'react-native';
 
 import { INinja, IRoutes } from '../../@types';
 import { Header } from '../../components';
@@ -78,6 +84,12 @@ const Home: React.FC = () => {
                       key={index}
                       onPress={() => handleARemoveNinjaToBattle(ninja)}
                     >
+                      {ninja.image && (
+                        <Image
+                          source={{ uri: ninja.image }}
+                          style={{ width: 100, height: 100 }}
+                        />
+                      )}
                       <Text>
                         {ninja.id} - {ninja.name}
                       </Text>
@@ -92,6 +104,12 @@ const Home: React.FC = () => {
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => handleAddNinjaToBattle(item)}>
+              {item.image && (
+                <Image
+                  source={{ uri: item.image }}
+                  style={{ width: 100, height: 100 }}
+                />
+              )}
               <Text>
                 {item.id} - {item.name}
               </Text>
