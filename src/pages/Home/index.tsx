@@ -1,18 +1,11 @@
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
-import {
-  Text,
-  FlatList,
-  TouchableOpacity,
-  RefreshControl,
-  Image,
-} from 'react-native';
+import { Text, FlatList, RefreshControl, View } from 'react-native';
 
 import { INinja, IRoutes } from '../../@types';
-import { Header } from '../../components';
+import { Card, Header } from '../../components';
 import { useNinjas } from '../../hooks/ninjas';
-import { Separator } from './styles';
 
 const Home: React.FC = () => {
   const ninjasContext = useNinjas();
@@ -72,6 +65,7 @@ const Home: React.FC = () => {
 
       {ninjasContext.status === 'success' && (
         <FlatList
+          style={{ padding: 20 }}
           data={ninjas}
           ListHeaderComponent={() => (
             <>
@@ -80,20 +74,12 @@ const Home: React.FC = () => {
                   <Text>Ninjas do torneio:</Text>
 
                   {ninjasToBattle.map((ninja, index) => (
-                    <TouchableOpacity
-                      key={index}
-                      onPress={() => handleARemoveNinjaToBattle(ninja)}
-                    >
-                      {ninja.image && (
-                        <Image
-                          source={{ uri: ninja.image }}
-                          style={{ width: 100, height: 100 }}
-                        />
-                      )}
-                      <Text>
-                        {ninja.id} - {ninja.name}
-                      </Text>
-                    </TouchableOpacity>
+                    <View key={index} style={{ marginVertical: 10 }}>
+                      <Card
+                        ninja={ninja}
+                        onPress={() => handleARemoveNinjaToBattle(ninja)}
+                      />
+                    </View>
                   ))}
                 </>
               )}
@@ -103,19 +89,11 @@ const Home: React.FC = () => {
           )}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => handleAddNinjaToBattle(item)}>
-              {item.image && (
-                <Image
-                  source={{ uri: item.image }}
-                  style={{ width: 100, height: 100 }}
-                />
-              )}
-              <Text>
-                {item.id} - {item.name}
-              </Text>
-            </TouchableOpacity>
+            <View style={{ marginVertical: 10 }}>
+              <Card ninja={item} onPress={() => handleAddNinjaToBattle(item)} />
+            </View>
           )}
-          ItemSeparatorComponent={() => <Separator />}
+          ListFooterComponent={() => <View style={{ marginBottom: 40 }} />}
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}
