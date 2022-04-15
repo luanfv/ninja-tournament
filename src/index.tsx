@@ -1,20 +1,26 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
 import { StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { Routes } from './routes';
 import { Providers } from './hooks';
 import { theme } from './settings';
 
 export default () => (
-  <Providers>
-    <ThemeProvider theme={theme}>
-      <StatusBar
-        backgroundColor={theme.colors.black}
-        barStyle="light-content"
-      />
+  // eslint-disable-next-line react-native/no-inline-styles
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <Providers>
+      <ThemeProvider theme={theme}>
+        <StatusBar
+          backgroundColor={theme.colors.black}
+          barStyle="light-content"
+        />
 
-      <Routes />
-    </ThemeProvider>
-  </Providers>
+        <Routes />
+      </ThemeProvider>
+    </Providers>
+  </GestureHandlerRootView>
 );

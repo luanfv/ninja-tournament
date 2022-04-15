@@ -6,12 +6,26 @@ import { Container, Details, Image, Name, Points, Text } from './styles';
 interface ICard {
   shinobi: IShinobi;
   isSelected?: boolean;
-  onPress: () => void;
+  disabled?: boolean;
+  onPress?: () => void;
+  onLongPress?: () => void;
 }
 
-const Card: React.FC<ICard> = ({ shinobi, isSelected = false, onPress }) => {
+const Card: React.FC<ICard> = ({
+  shinobi,
+  isSelected = false,
+  disabled,
+  onPress,
+  onLongPress,
+}) => {
   return (
-    <Container onPress={onPress} isSelected={isSelected} activeOpacity={0.8}>
+    <Container
+      onPress={onPress}
+      onLongPress={onLongPress}
+      isSelected={isSelected}
+      activeOpacity={0.8}
+      disabled={disabled}
+    >
       {shinobi.image && (
         <Image source={{ uri: shinobi.image }} isSelected={isSelected} />
       )}
