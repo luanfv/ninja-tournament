@@ -5,6 +5,7 @@ import { Text, FlatList, RefreshControl, View } from 'react-native';
 
 import { INinja, IRoutes } from '../../@types';
 import { Button, Card, Header } from '../../components';
+import { sortObjects } from '../../helpers';
 import { useNinjas } from '../../hooks/ninjas';
 import { Footer, Separator } from './styles';
 
@@ -17,6 +18,11 @@ const Home: React.FC = () => {
   const [ninjas, setNinjas] = useState<INinja[]>([]);
   const [ninjasToBattle, setNinjasToBattle] = useState<INinja[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const onResetNinjas = useCallback((allNinjas: INinja[]) => {
+    setNinjasToBattle([]);
+    setNinjas(sortObjects(allNinjas, 'id'));
+  }, []);
 
   const handleAddNinjaToBattle = useCallback((ninja: INinja) => {
     setNinjas((oldState) => oldState.filter((state) => state.id !== ninja.id));
@@ -34,19 +40,17 @@ const Home: React.FC = () => {
     try {
       setIsRefreshing(true);
 
-      setNinjasToBattle([]);
-      setNinjas(ninjasContext.ninjas);
+      onResetNinjas(ninjasContext.ninjas);
     } finally {
       setIsRefreshing(false);
     }
-  }, [ninjasContext]);
+  }, [ninjasContext.ninjas, onResetNinjas]);
 
   useEffect(() => {
     if (isFocused) {
-      setNinjasToBattle([]);
-      setNinjas(ninjasContext.ninjas);
+      onResetNinjas(ninjasContext.ninjas);
     }
-  }, [isFocused, ninjasContext]);
+  }, [isFocused, ninjasContext, onResetNinjas]);
 
   return (
     <>
