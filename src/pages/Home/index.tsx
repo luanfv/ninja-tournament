@@ -1,12 +1,12 @@
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Text, FlatList, RefreshControl, View } from 'react-native';
+import { Text, RefreshControl, View } from 'react-native';
 
 import { IShinobi, IRoutes } from '../../@types';
 import { Button, Card, Header } from '../../components';
 import { useShinobis } from '../../hooks/shinobis';
-import { Footer, Separator } from './styles';
+import { Container, Footer, List, Separator, Spacing } from './styles';
 
 const Home: React.FC = () => {
   const shinobisContext = useShinobis();
@@ -56,9 +56,9 @@ const Home: React.FC = () => {
   return (
     <>
       <Header
-        title="Naruto Shuriken"
+        title="TORNEIO SHINOBI"
         isDescriptionError={shinobisToBattle.length !== 8}
-        description={`shinobis do torneio: ${shinobisToBattle.length} de 8`}
+        description={`Shinobis do torneio: ${shinobisToBattle.length} de 8`}
       />
 
       {shinobisContext.status === 'loading' && <Text>Carregando...</Text>}
@@ -68,20 +68,19 @@ const Home: React.FC = () => {
       )}
 
       {shinobisContext.status === 'success' && (
-        <FlatList
-          style={{ padding: 20 }}
+        <List
           data={shinobis}
           ListHeaderComponent={() =>
             shinobisToBattle.length > 0 ? (
               <>
                 {shinobisToBattle.map((shinobi, index) => (
-                  <View key={index} style={{ marginVertical: 10 }}>
+                  <Container key={index}>
                     <Card
                       shinobi={shinobi}
                       onPress={() => handleARemoveNinjaToBattle(shinobi)}
                       isSelected
                     />
-                  </View>
+                  </Container>
                 ))}
 
                 <Separator />
@@ -92,14 +91,14 @@ const Home: React.FC = () => {
           }
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
-            <View style={{ marginVertical: 10 }}>
+            <Container>
               <Card
                 shinobi={item}
                 onPress={() => handleAddNinjaToBattle(item)}
               />
-            </View>
+            </Container>
           )}
-          ListFooterComponent={() => <View style={{ marginBottom: 40 }} />}
+          ListFooterComponent={() => <Spacing />}
           refreshControl={
             <RefreshControl
               refreshing={isRefreshing}
@@ -112,7 +111,7 @@ const Home: React.FC = () => {
       {shinobisContext.status === 'success' && (
         <Footer>
           <Button
-            text="Iniciar"
+            text="Avançar"
             disabled={shinobisToBattle.length !== 8}
             onPress={() => navigate('battle', shinobisToBattle)}
           />

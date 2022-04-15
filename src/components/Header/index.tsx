@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Description, Text } from './styles';
+import { Container, Description, Text, Title } from './styles';
 
 interface IHeader {
   title: string;
@@ -16,7 +16,7 @@ const Header: React.FC<IHeader> = ({
   return (
     <>
       <Container>
-        <Text>{title}</Text>
+        <Title>{title}</Title>
       </Container>
 
       {description && (
