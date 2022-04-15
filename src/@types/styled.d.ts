@@ -13,6 +13,7 @@ interface IStyleGuide {
     medium: string;
     small: string;
   };
+  spacing: number;
 }
 
 declare module 'styled-components/native' {

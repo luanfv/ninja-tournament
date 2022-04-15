@@ -13,6 +13,7 @@ const theme: DefaultTheme = {
     medium: '14px',
     small: '12px',
   },
+  spacing: 20,
 };
 
 export { theme };

@@ -11,25 +11,25 @@ const Separator = styled.View`
 `;
 
 const Container = styled.View`
-  margin: 20px 0;
+  margin: ${({ theme }) => theme.spacing}px 0;
 `;
 
 const List = styled(
   FlatList as new (props: FlatListProps<IShinobi>) => FlatList<IShinobi>,
 )`
-  padding: 20px;
+  padding: ${({ theme }) => theme.spacing}px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
 const Footer = styled.View`
   width: 100%;
   height: 80px;
-  padding: 20px;
+  padding: ${({ theme }) => theme.spacing}px;
   background-color: ${({ theme }) => theme.colors.black};
 `;
 
 const Spacing = styled.View`
-  margin-bottom: 40px;
+  margin: ${({ theme }) => theme.spacing}px;
 `;
 
 export { Separator, List, Container, Footer, Spacing };
