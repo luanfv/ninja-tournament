@@ -16,7 +16,6 @@ interface INinjas {
   ninjas: INinja[];
   status: IStatus;
   getById: (id: number) => INinja | undefined;
-  getNinjas: () => Promise<void>;
 }
 
 const NinjasContext = createContext<INinjas>({} as INinjas);
@@ -61,7 +60,7 @@ export const NinjasProvider: React.FC = ({ children }) => {
   }, [getNinjas]);
 
   return (
-    <NinjasContext.Provider value={{ ninjas, status, getById, getNinjas }}>
+    <NinjasContext.Provider value={{ ninjas, status, getById }}>
       {children}
     </NinjasContext.Provider>
   );

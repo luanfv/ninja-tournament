@@ -5,16 +5,19 @@ import { Container, Details, Image, Name, Points, Text } from './styles';
 
 interface ICard {
   ninja: INinja;
+  isSelected?: boolean;
   onPress: () => void;
 }
 
-const Card: React.FC<ICard> = ({ ninja, onPress }) => {
+const Card: React.FC<ICard> = ({ ninja, isSelected = false, onPress }) => {
   return (
-    <Container onPress={onPress}>
-      {ninja.image && <Image source={{ uri: ninja.image }} />}
+    <Container onPress={onPress} isSelected={isSelected} activeOpacity={0.8}>
+      {ninja.image && (
+        <Image source={{ uri: ninja.image }} isSelected={isSelected} />
+      )}
 
       <Details>
-        <Name>{ninja.name}</Name>
+        <Name isSelected={isSelected}>{ninja.name}</Name>
 
         <Points>
           <Text>Chakra: {ninja.chakra}</Text>

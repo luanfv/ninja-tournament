@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, FlatList, RefreshControl, View } from 'react-native';
@@ -6,9 +6,11 @@ import { Text, FlatList, RefreshControl, View } from 'react-native';
 import { INinja, IRoutes } from '../../@types';
 import { Card, Header } from '../../components';
 import { useNinjas } from '../../hooks/ninjas';
+import { Separator } from './styles';
 
 const Home: React.FC = () => {
   const ninjasContext = useNinjas();
+  const isFocused = useIsFocused();
   const { navigate } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
 
@@ -32,15 +34,19 @@ const Home: React.FC = () => {
     try {
       setIsRefreshing(true);
 
-      ninjasContext.getNinjas().then(() => setNinjasToBattle([]));
+      setNinjasToBattle([]);
+      setNinjas(ninjasContext.ninjas);
     } finally {
       setIsRefreshing(false);
     }
   }, [ninjasContext]);
 
   useEffect(() => {
-    setNinjas(ninjasContext.ninjas);
-  }, [ninjasContext]);
+    if (isFocused) {
+      setNinjasToBattle([]);
+      setNinjas(ninjasContext.ninjas);
+    }
+  }, [isFocused, ninjasContext]);
 
   useEffect(() => {
     if (ninjasToBattle.length === 8) {
@@ -66,26 +72,25 @@ const Home: React.FC = () => {
         <FlatList
           style={{ padding: 20 }}
           data={ninjas}
-          ListHeaderComponent={() => (
-            <>
-              {ninjasToBattle.length > 0 && (
-                <>
-                  <Text>Ninjas do torneio:</Text>
+          ListHeaderComponent={() =>
+            ninjasToBattle.length > 0 ? (
+              <>
+                {ninjasToBattle.map((ninja, index) => (
+                  <View key={index} style={{ marginVertical: 10 }}>
+                    <Card
+                      ninja={ninja}
+                      onPress={() => handleARemoveNinjaToBattle(ninja)}
+                      isSelected
+                    />
+                  </View>
+                ))}
 
-                  {ninjasToBattle.map((ninja, index) => (
-                    <View key={index} style={{ marginVertical: 10 }}>
-                      <Card
-                        ninja={ninja}
-                        onPress={() => handleARemoveNinjaToBattle(ninja)}
-                      />
-                    </View>
-                  ))}
-                </>
-              )}
-
-              <Text>Ninjas:</Text>
-            </>
-          )}
+                <Separator />
+              </>
+            ) : (
+              <View />
+            )
+          }
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <View style={{ marginVertical: 10 }}>

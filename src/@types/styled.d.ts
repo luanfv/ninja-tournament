@@ -6,6 +6,7 @@ interface IStyleGuide {
     black: string;
     gray: string;
     red: string;
+    green: string;
   };
   fonts: {
     large: string;

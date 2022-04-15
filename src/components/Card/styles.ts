@@ -1,27 +1,34 @@
 import styled from 'styled-components/native';
 
-const Container = styled.TouchableOpacity`
+interface ICard {
+  isSelected: boolean;
+}
+
+const Container = styled.TouchableOpacity<ICard>`
   flex-direction: row;
   width: 100%;
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.black};
+  border-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.green : theme.colors.black};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.white};
 `;
 
-const Image = styled.Image`
+const Image = styled.Image<ICard>`
   width: 120px;
   height: 120px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.green : theme.colors.black};
 `;
 
 const Details = styled.View`
   flex: 1;
 `;
 
-const Name = styled.Text`
+const Name = styled.Text<ICard>`
   padding: 4px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.green : theme.colors.black};
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fonts.large};
   text-transform: uppercase;
