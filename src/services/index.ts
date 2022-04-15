@@ -1,1 +1,1 @@
-export { serviceNinjas } from './ninjas';
+export { serviceShinobis } from './shinobis';

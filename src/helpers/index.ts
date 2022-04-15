@@ -1,2 +1,2 @@
-export { storageNinjas } from './storage';
+export { storageShinobis } from './storage';
 export { sortObjects } from './sortObjects';

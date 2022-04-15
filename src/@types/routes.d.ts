@@ -1,8 +1,8 @@
-import { INinja } from './ninja';
+import { IShinobi } from './shinobi';
 
 type IRoutes = {
   home: undefined;
-  battle: INinja[];
+  battle: IShinobi[];
 };
 
 export { IRoutes };

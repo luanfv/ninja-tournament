@@ -1,8 +1,8 @@
-import { INinja } from './ninja';
+import { IShinobi } from './shinobi';
 
 interface IRoundBattles {
-  players1: INinja[];
-  players2: INinja[];
-  winners: INinja[];
-  losers: INinja[];
+  players1: IShinobi[];
+  players2: IShinobi[];
+  winners: IShinobi[];
+  losers: IShinobi[];
 }

@@ -1,28 +1,28 @@
 import React from 'react';
 
-import { INinja } from '../../@types';
+import { IShinobi } from '../../@types';
 import { Container, Details, Image, Name, Points, Text } from './styles';
 
 interface ICard {
-  ninja: INinja;
+  shinobi: IShinobi;
   isSelected?: boolean;
   onPress: () => void;
 }
 
-const Card: React.FC<ICard> = ({ ninja, isSelected = false, onPress }) => {
+const Card: React.FC<ICard> = ({ shinobi, isSelected = false, onPress }) => {
   return (
     <Container onPress={onPress} isSelected={isSelected} activeOpacity={0.8}>
-      {ninja.image && (
-        <Image source={{ uri: ninja.image }} isSelected={isSelected} />
+      {shinobi.image && (
+        <Image source={{ uri: shinobi.image }} isSelected={isSelected} />
       )}
 
       <Details>
-        <Name isSelected={isSelected}>{ninja.name}</Name>
+        <Name isSelected={isSelected}>{shinobi.name}</Name>
 
         <Points>
-          <Text>Chakra: {ninja.chakra}</Text>
-          <Text>Poder: {ninja.power}</Text>
-          <Text>Técnica: {ninja.technique}</Text>
+          <Text>Chakra: {shinobi.chakra}</Text>
+          <Text>Poder: {shinobi.power}</Text>
+          <Text>Técnica: {shinobi.technique}</Text>
         </Points>
       </Details>
     </Container>

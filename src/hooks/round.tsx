@@ -1,18 +1,18 @@
 import { useCallback } from 'react';
-import { INinja, IRoundBattles } from '../@types';
+import { IShinobi, IRoundBattles } from '../@types';
 
 const useRound = () => {
-  const onStartRound = useCallback((ninjas: INinja[]): IRoundBattles => {
-    if (ninjas.length % 2 !== 0) {
+  const onStartRound = useCallback((shinobis: IShinobi[]): IRoundBattles => {
+    if (shinobis.length % 2 !== 0) {
       throw Error(
         'It is necessary to have an even number of competitors to start a round',
       );
     }
 
-    const players1: INinja[] = [];
-    const players2: INinja[] = [];
+    const players1: IShinobi[] = [];
+    const players2: IShinobi[] = [];
 
-    ninjas.forEach((movie, index) => {
+    shinobis.forEach((movie, index) => {
       if (index % 2 === 0) {
         players1.push(movie);
 
@@ -22,8 +22,8 @@ const useRound = () => {
       players2.push(movie);
     });
 
-    const winners: INinja[] = [];
-    const losers: INinja[] = [];
+    const winners: IShinobi[] = [];
+    const losers: IShinobi[] = [];
 
     players1.map((_, index) => {
       const player1Points =

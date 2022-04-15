@@ -2,20 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Text, View } from 'react-native';
 import { RouteProp, useRoute } from '@react-navigation/native';
 
-import { INinja, IRoutes } from '../../@types';
+import { IShinobi, IRoutes } from '../../@types';
 import { useRound } from '../../hooks';
 
 const Battle: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();
   const { onStartRound } = useRound();
 
-  const [winner, setWinner] = useState<INinja | undefined>();
+  const [winner, setWinner] = useState<IShinobi | undefined>();
 
   useEffect(() => {
     if (params.length > 0) {
-      const winner1 = onStartRound(params as INinja[]).winners;
-      const winner2 = onStartRound(winner1 as INinja[]).winners;
-      const winner3 = onStartRound(winner2 as INinja[]).winners;
+      const winner1 = onStartRound(params as IShinobi[]).winners;
+      const winner2 = onStartRound(winner1 as IShinobi[]).winners;
+      const winner3 = onStartRound(winner2 as IShinobi[]).winners;
 
       setWinner(winner3[0]);
     }

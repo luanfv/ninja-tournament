@@ -1,4 +1,4 @@
-interface INinja {
+interface IShinobi {
   [x: string]: any;
   chakra: number;
   id: number;
@@ -8,4 +8,4 @@ interface INinja {
   technique: number;
 }
 
-export { INinja };
+export { IShinobi };

@@ -1,8 +1,8 @@
 import React from 'react';
-import { NinjasProvider } from './ninjas';
+import { ShinobisProvider } from './shinobis';
 
 const Providers: React.FC = ({ children }) => {
-  return <NinjasProvider>{children}</NinjasProvider>;
+  return <ShinobisProvider>{children}</ShinobisProvider>;
 };
 
 export { Providers };

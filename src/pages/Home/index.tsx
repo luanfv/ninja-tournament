@@ -3,81 +3,82 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Text, FlatList, RefreshControl, View } from 'react-native';
 
-import { INinja, IRoutes } from '../../@types';
+import { IShinobi, IRoutes } from '../../@types';
 import { Button, Card, Header } from '../../components';
-import { sortObjects } from '../../helpers';
-import { useNinjas } from '../../hooks/ninjas';
+import { useShinobis } from '../../hooks/shinobis';
 import { Footer, Separator } from './styles';
 
 const Home: React.FC = () => {
-  const ninjasContext = useNinjas();
+  const shinobisContext = useShinobis();
   const isFocused = useIsFocused();
   const { navigate } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
 
-  const [ninjas, setNinjas] = useState<INinja[]>([]);
-  const [ninjasToBattle, setNinjasToBattle] = useState<INinja[]>([]);
+  const [shinobis, setShinobis] = useState<IShinobi[]>([]);
+  const [shinobisToBattle, setShinobisToBattle] = useState<IShinobi[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  const onResetNinjas = useCallback((allNinjas: INinja[]) => {
-    setNinjasToBattle([]);
-    setNinjas(sortObjects(allNinjas, 'id'));
+  const onResetShinobis = useCallback((allShinobis: IShinobi[]) => {
+    setShinobisToBattle([]);
+    setShinobis(allShinobis);
   }, []);
 
-  const handleAddNinjaToBattle = useCallback((ninja: INinja) => {
-    setNinjas((oldState) => oldState.filter((state) => state.id !== ninja.id));
-    setNinjasToBattle((oldState) => [...oldState, ninja]);
-  }, []);
-
-  const handleARemoveNinjaToBattle = useCallback((ninja: INinja) => {
-    setNinjasToBattle((oldState) =>
-      oldState.filter((state) => state.id !== ninja.id),
+  const handleAddNinjaToBattle = useCallback((shinobi: IShinobi) => {
+    setShinobis((oldState) =>
+      oldState.filter((state) => state.id !== shinobi.id),
     );
-    setNinjas((oldState) => [...oldState, ninja]);
+    setShinobisToBattle((oldState) => [...oldState, shinobi]);
+  }, []);
+
+  const handleARemoveNinjaToBattle = useCallback((shinobi: IShinobi) => {
+    setShinobisToBattle((oldState) =>
+      oldState.filter((state) => state.id !== shinobi.id),
+    );
+    setShinobis((oldState) => [...oldState, shinobi]);
   }, []);
 
   const handleRefresh = useCallback(() => {
     try {
       setIsRefreshing(true);
 
-      onResetNinjas(ninjasContext.ninjas);
+      onResetShinobis(shinobisContext.shinobis);
     } finally {
       setIsRefreshing(false);
     }
-  }, [ninjasContext.ninjas, onResetNinjas]);
+  }, [shinobisContext.shinobis, onResetShinobis]);
 
   useEffect(() => {
     if (isFocused) {
-      onResetNinjas(ninjasContext.ninjas);
+      onResetShinobis(shinobisContext.shinobis);
     }
-  }, [isFocused, ninjasContext, onResetNinjas]);
+  }, [isFocused, shinobisContext, onResetShinobis]);
 
   return (
     <>
       <Header
         title="Naruto Shuriken"
-        isDescriptionError={ninjasToBattle.length !== 8}
-        description={`Ninjas do torneio: ${ninjasToBattle.length} de 8`}
+        isDescriptionError={shinobisToBattle.length !== 8}
+        description={`shinobis do torneio: ${shinobisToBattle.length} de 8`}
       />
 
-      {ninjasContext.status === 'loading' && <Text>Carregando...</Text>}
+      {shinobisContext.status === 'loading' && <Text>Carregando...</Text>}
 
-      {ninjasContext.status === 'fail' && (
-        <Text>Falha ao buscar os ninjas</Text>
+      {shinobisContext.status === 'fail' && (
+        <Text>Falha ao buscar os shinobis</Text>
       )}
 
-      {ninjasContext.status === 'success' && (
+      {shinobisContext.status === 'success' && (
         <FlatList
           style={{ padding: 20 }}
-          data={ninjas}
+          data={shinobis}
           ListHeaderComponent={() =>
-            ninjasToBattle.length > 0 ? (
+            shinobisToBattle.length > 0 ? (
               <>
-                {ninjasToBattle.map((ninja, index) => (
+                {shinobisToBattle.map((shinobi, index) => (
                   <View key={index} style={{ marginVertical: 10 }}>
                     <Card
-                      ninja={ninja}
-                      onPress={() => handleARemoveNinjaToBattle(ninja)}
+                      shinobi={shinobi}
+                      onPress={() => handleARemoveNinjaToBattle(shinobi)}
                       isSelected
                     />
                   </View>
@@ -92,7 +93,10 @@ const Home: React.FC = () => {
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => (
             <View style={{ marginVertical: 10 }}>
-              <Card ninja={item} onPress={() => handleAddNinjaToBattle(item)} />
+              <Card
+                shinobi={item}
+                onPress={() => handleAddNinjaToBattle(item)}
+              />
             </View>
           )}
           ListFooterComponent={() => <View style={{ marginBottom: 40 }} />}
@@ -105,13 +109,15 @@ const Home: React.FC = () => {
         />
       )}
 
-      <Footer>
-        <Button
-          text="Iniciar"
-          disabled={ninjasToBattle.length !== 8}
-          onPress={() => navigate('battle', ninjasToBattle)}
-        />
-      </Footer>
+      {shinobisContext.status === 'success' && (
+        <Footer>
+          <Button
+            text="Iniciar"
+            disabled={shinobisToBattle.length !== 8}
+            onPress={() => navigate('battle', shinobisToBattle)}
+          />
+        </Footer>
+      )}
     </>
   );
 };

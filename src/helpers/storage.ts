@@ -1,18 +1,18 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { INinja } from '../@types';
+import { IShinobi } from '../@types';
 
 const base = '@Naruto-Shuriken';
 
-const storageNinjas = {
-  get: async (): Promise<INinja[] | undefined> => {
+const storageShinobis = {
+  get: async (): Promise<IShinobi[] | undefined> => {
     try {
-      const response = await AsyncStorage.getItem(`${base}/ninjas`);
+      const response = await AsyncStorage.getItem(`${base}/shinobis`);
 
       if (!response) {
         throw Error();
       }
 
-      const data = JSON.parse(response) as INinja[];
+      const data = JSON.parse(response) as IShinobi[];
 
       return data;
     } catch {
@@ -20,9 +20,9 @@ const storageNinjas = {
     }
   },
 
-  set: async (data: INinja[]): Promise<boolean> => {
+  set: async (data: IShinobi[]): Promise<boolean> => {
     try {
-      await AsyncStorage.setItem(`${base}/ninjas`, JSON.stringify(data));
+      await AsyncStorage.setItem(`${base}/shinobis`, JSON.stringify(data));
 
       return true;
     } catch {
@@ -31,4 +31,4 @@ const storageNinjas = {
   },
 };
 
-export { storageNinjas };
+export { storageShinobis };
