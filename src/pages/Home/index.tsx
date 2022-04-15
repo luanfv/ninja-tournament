@@ -4,9 +4,9 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Text, FlatList, RefreshControl, View } from 'react-native';
 
 import { INinja, IRoutes } from '../../@types';
-import { Card, Header } from '../../components';
+import { Button, Card, Header } from '../../components';
 import { useNinjas } from '../../hooks/ninjas';
-import { Separator } from './styles';
+import { Footer, Separator } from './styles';
 
 const Home: React.FC = () => {
   const ninjasContext = useNinjas();
@@ -47,12 +47,6 @@ const Home: React.FC = () => {
       setNinjas(ninjasContext.ninjas);
     }
   }, [isFocused, ninjasContext]);
-
-  useEffect(() => {
-    if (ninjasToBattle.length === 8) {
-      navigate('battle', ninjasToBattle);
-    }
-  }, [navigate, ninjasToBattle]);
 
   return (
     <>
@@ -106,6 +100,14 @@ const Home: React.FC = () => {
           }
         />
       )}
+
+      <Footer>
+        <Button
+          text="Iniciar"
+          disabled={ninjasToBattle.length !== 8}
+          onPress={() => navigate('battle', ninjasToBattle)}
+        />
+      </Footer>
     </>
   );
 };

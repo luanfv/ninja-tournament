@@ -7,4 +7,11 @@ const Separator = styled.View`
   border-color: ${({ theme }) => theme.colors.gray};
 `;
 
-export { Separator };
+const Footer = styled.View`
+  width: 100%;
+  height: 80px;
+  padding: 20px;
+  background-color: ${({ theme }) => theme.colors.black};
+`;
+
+export { Separator, Footer };
