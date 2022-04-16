@@ -1,7 +1,7 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Text, RefreshControl, View, FlatList, FlatListProps } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import React, { useCallback, useEffect, useState } from 'react';
-import { Text, RefreshControl, View, FlatList } from 'react-native';
 
 import { IShinobi, IRoutes } from '../../@types';
 import { Footer, Card, Header, Body, Separator } from '../../components';
@@ -16,6 +16,8 @@ const Home: React.FC = () => {
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
   const [shinobisToBattle, setShinobisToBattle] = useState<IShinobi[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+
+  const flatlistRef = useRef<FlatList>(null);
 
   const onResetShinobis = useCallback((allShinobis: IShinobi[]) => {
     setShinobisToBattle([]);
@@ -49,6 +51,11 @@ const Home: React.FC = () => {
   useEffect(() => {
     if (isFocused) {
       onResetShinobis(shinobisContext.shinobis);
+
+      flatlistRef.current?.scrollToOffset({
+        offset: 0,
+        animated: false,
+      });
     }
   }, [isFocused, shinobisContext, onResetShinobis]);
 
@@ -70,6 +77,7 @@ const Home: React.FC = () => {
         <>
           <Body>
             <FlatList
+              ref={flatlistRef}
               data={shinobis}
               ListHeaderComponent={() =>
                 shinobisToBattle.length > 0 ? (
