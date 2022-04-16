@@ -1,12 +1,7 @@
 import React from 'react';
 
+import { IButton } from '../../@types';
 import { Container, Text } from './styles';
-
-interface IButton {
-  text: string;
-  disabled?: boolean;
-  onPress: () => void;
-}
 
 const Button: React.FC<IButton> = ({ text, disabled = false, onPress }) => {
   return (

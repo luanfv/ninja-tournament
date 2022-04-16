@@ -1,12 +1,7 @@
 import React from 'react';
 
+import { IHeader } from '../../@types';
 import { Container, Description, Text, Title } from './styles';
-
-interface IHeader {
-  title: string;
-  description?: string;
-  isDescriptionError?: boolean;
-}
 
 const Header: React.FC<IHeader> = ({
   title,

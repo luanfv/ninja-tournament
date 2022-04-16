@@ -1,20 +1,13 @@
 import React from 'react';
 
-import { IShinobi } from '../../@types';
+import { ICard } from '../../@types';
 import { Container, Details, Image, Name, Points, Text } from './styles';
-
-interface ICard {
-  shinobi: IShinobi;
-  isSelected?: boolean;
-  disabled?: boolean;
-  onPress?: () => void;
-  onLongPress?: () => void;
-}
 
 const Card: React.FC<ICard> = ({
   shinobi,
   isSelected = false,
   disabled,
+  margin,
   onPress,
   onLongPress,
 }) => {
@@ -25,6 +18,7 @@ const Card: React.FC<ICard> = ({
       isSelected={isSelected}
       activeOpacity={0.8}
       disabled={disabled}
+      margin={margin}
     >
       {shinobi.image && (
         <Image source={{ uri: shinobi.image }} isSelected={isSelected} />
