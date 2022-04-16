@@ -4,7 +4,14 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 import { IShinobi, IRoutes } from '../../@types';
-import { Footer, Card, Header, Body, Separator } from '../../components';
+import {
+  Footer,
+  Card,
+  Header,
+  Body,
+  Separator,
+  Loading,
+} from '../../components';
 import { useShinobis } from '../../hooks/shinobis';
 
 const Home: React.FC = () => {
@@ -67,7 +74,7 @@ const Home: React.FC = () => {
         description={`Shinobis selecionados: ${shinobisToBattle.length} de 8`}
       />
 
-      {shinobisContext.status === 'loading' && <Text>Carregando...</Text>}
+      {shinobisContext.status === 'loading' && <Loading />}
 
       {shinobisContext.status === 'fail' && (
         <Text>Falha ao buscar os shinobis</Text>
