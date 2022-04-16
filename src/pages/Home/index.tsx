@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Text, RefreshControl, View, FlatList, FlatListProps } from 'react-native';
+import { Text, RefreshControl, View, FlatList } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
