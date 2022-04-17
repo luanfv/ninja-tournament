@@ -1,8 +1,13 @@
 import React from 'react';
-import { View } from 'react-native';
 
 import { IHeader } from '../../@types';
-import { Container, Description, Text, Title } from './styles';
+import {
+  Container,
+  Description,
+  DynamicComponent,
+  Text,
+  Title,
+} from './styles';
 
 const Header: React.FC<IHeader> = ({
   title,
@@ -14,9 +19,9 @@ const Header: React.FC<IHeader> = ({
   return (
     <>
       <Container>
-        <View>{leftComponent}</View>
+        <DynamicComponent>{leftComponent}</DynamicComponent>
         <Title>{title}</Title>
-        <View>{rightComponent}</View>
+        <DynamicComponent>{rightComponent}</DynamicComponent>
       </Container>
 
       {description && (

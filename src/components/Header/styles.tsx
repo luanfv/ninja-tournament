@@ -16,6 +16,10 @@ const Container = styled.View`
     Platform.OS === 'ios' && `padding-top: ${theme.spacing * 2.5}px;`}
 `;
 
+const DynamicComponent = styled.View`
+  width: 50px;
+`;
+
 const Title = styled.Text`
   font-size: ${({ theme }) => theme.fonts.large};
   color: ${({ theme }) => theme.colors.white};
@@ -40,4 +44,4 @@ const Text = styled.Text`
   font-weight: bold;
 `;
 
-export { Container, Title, Description, Text };
+export { Container, DynamicComponent, Title, Description, Text };
