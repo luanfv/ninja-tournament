@@ -1,3 +1,4 @@
+import { Platform } from 'react-native';
 import styled from 'styled-components/native';
 
 interface IDescription {
@@ -6,10 +7,13 @@ interface IDescription {
 
 const Container = styled.View`
   width: 100%;
-  padding: 20px;
+  padding: ${({ theme }) => theme.spacing}px;
   background-color: ${({ theme }) => theme.colors.black};
   flex-direction: row;
   justify-content: space-between;
+
+  ${({ theme }) =>
+    Platform.OS === 'ios' && `padding-top: ${theme.spacing * 2.5}px;`}
 `;
 
 const Title = styled.Text`
