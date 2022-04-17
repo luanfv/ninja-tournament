@@ -8,6 +8,8 @@ const Container = styled.View`
   width: 100%;
   padding: 20px;
   background-color: ${({ theme }) => theme.colors.black};
+  flex-direction: row;
+  justify-content: space-between;
 `;
 
 const Title = styled.Text`
