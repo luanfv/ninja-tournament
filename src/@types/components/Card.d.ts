@@ -5,6 +5,7 @@ interface ICard {
   isSelected?: boolean;
   disabled?: boolean;
   margin?: number;
+  position?: number;
   onPress?: () => void;
   onLongPress?: () => void;
 }

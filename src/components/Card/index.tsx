@@ -1,13 +1,23 @@
 import React from 'react';
 
 import { ICard } from '../../@types';
-import { Container, Details, Image, Name, Points, Text } from './styles';
+import {
+  Container,
+  Details,
+  Header,
+  Image,
+  Name,
+  Points,
+  Row,
+  Text,
+} from './styles';
 
 const Card: React.FC<ICard> = ({
   shinobi,
   isSelected = false,
   disabled,
   margin,
+  position,
   onPress,
   onLongPress,
 }) => {
@@ -20,19 +30,27 @@ const Card: React.FC<ICard> = ({
       disabled={disabled}
       margin={margin}
     >
-      {shinobi.image && (
-        <Image source={{ uri: shinobi.image }} isSelected={isSelected} />
+      {position && (
+        <Header>
+          <Text color="white">{position}</Text>
+        </Header>
       )}
 
-      <Details>
-        <Name isSelected={isSelected}>{shinobi.name}</Name>
+      <Row>
+        {shinobi.image && (
+          <Image source={{ uri: shinobi.image }} isSelected={isSelected} />
+        )}
 
-        <Points>
-          <Text>Chakra: {shinobi.chakra}</Text>
-          <Text>Poder: {shinobi.power}</Text>
-          <Text>Técnica: {shinobi.technique}</Text>
-        </Points>
-      </Details>
+        <Details>
+          <Name isSelected={isSelected}>{shinobi.name}</Name>
+
+          <Points>
+            <Text>Chakra: {shinobi.chakra}</Text>
+            <Text>Poder: {shinobi.power}</Text>
+            <Text>Técnica: {shinobi.technique}</Text>
+          </Points>
+        </Details>
+      </Row>
     </Container>
   );
 };
