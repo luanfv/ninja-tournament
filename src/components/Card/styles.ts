@@ -21,8 +21,6 @@ const Container = styled.TouchableOpacity<ICard>`
 `;
 
 const Header = styled.View`
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
   align-items: flex-end;
   background-color: ${({ theme }) => theme.colors.black};
   padding: 0 8px;

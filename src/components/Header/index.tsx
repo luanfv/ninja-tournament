@@ -19,9 +19,9 @@ const Header: React.FC<IHeader> = ({
   return (
     <>
       <Container>
-        <DynamicComponent>{leftComponent}</DynamicComponent>
+        <DynamicComponent aligm="left">{leftComponent}</DynamicComponent>
         <Title>{title}</Title>
-        <DynamicComponent>{rightComponent}</DynamicComponent>
+        <DynamicComponent aligm="right">{rightComponent}</DynamicComponent>
       </Container>
 
       {description && (

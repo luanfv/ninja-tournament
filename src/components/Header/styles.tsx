@@ -5,6 +5,10 @@ interface IDescription {
   hasError?: boolean;
 }
 
+interface IDynamicComponent {
+  aligm: 'left' | 'right';
+}
+
 const Container = styled.View`
   width: 100%;
   padding: ${({ theme }) => theme.spacing}px;
@@ -16,8 +20,9 @@ const Container = styled.View`
     Platform.OS === 'ios' && `padding-top: ${theme.spacing * 2.5}px;`}
 `;
 
-const DynamicComponent = styled.View`
+const DynamicComponent = styled.View<IDynamicComponent>`
   width: 50px;
+  align-items: ${({ aligm }) => (aligm === 'left' ? 'flex-start' : 'flex-end')};
 `;
 
 const Title = styled.Text`

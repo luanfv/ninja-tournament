@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Alert } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { Alert, TouchableOpacity } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -14,7 +14,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { IShinobi, IRoutes } from '../../@types';
 import { useRound } from '../../hooks';
 import { Card, Footer, Header, Body } from '../../components';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 const Battle: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();
@@ -23,6 +22,22 @@ const Battle: React.FC = () => {
 
   const [shinobis, setShinobis] = useState<IShinobi[]>(params as IShinobi[]);
 
+  const handleRandomShinobis = useCallback(() => {
+    const positions: number[] = [];
+
+    do {
+      const number = Math.floor(Math.random() * 8);
+
+      const numberExists = positions.find((value) => value === number);
+
+      if (numberExists === undefined) {
+        positions.push(number);
+      }
+    } while (positions.length !== 8);
+
+    setShinobis((oldState) => positions.map((item) => oldState[item]));
+  }, []);
+
   return (
     <>
       <Header
@@ -30,6 +45,11 @@ const Battle: React.FC = () => {
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
+          </TouchableOpacity>
+        }
+        rightComponent={
+          <TouchableOpacity onPress={handleRandomShinobis} activeOpacity={0.8}>
+            <Icon name="reload" size={20} color="#fff" />
           </TouchableOpacity>
         }
       />
