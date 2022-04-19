@@ -1,8 +1,8 @@
 import { useCallback } from 'react';
-import { IShinobi, IRoundBattles } from '../@types';
+import { IShinobi, IRound } from '../@types';
 
-const useRound = () => {
-  const onStartRound = useCallback((shinobis: IShinobi[]): IRoundBattles => {
+const useRound = (): IRound => {
+  const onStartRound = useCallback((shinobis: IShinobi[]) => {
     if (shinobis.length % 2 !== 0) {
       throw Error(
         'It is necessary to have an even number of competitors to start a round',
@@ -40,21 +40,25 @@ const useRound = () => {
       const player1WinPercentage =
         (player1Points * 100) / (player1Points + player2Points);
 
-      if (player1WinPercentage <= random) {
+      if (
+        players1[index].name === 'hinata' ||
+        players2[index].name === 'hinata'
+      ) {
+        console.log(players1[index].name, player1WinPercentage);
+        console.log(
+          players2[index].name,
+          player1Points + player2Points - player1WinPercentage,
+        );
+        console.log('random:', random);
+      }
+
+      if (random <= player1WinPercentage) {
         winners.push(players1[index]);
         losers.push(players2[index]);
-
-        console.log('VENCEDOR', players1[index]);
-        console.log('PERDEDOR', players2[index]);
       } else {
         winners.push(players2[index]);
         losers.push(players1[index]);
-
-        console.log('VENCEDOR', players2[index]);
-        console.log('PERDEDOR', players1[index]);
       }
-
-      console.log('===');
     });
 
     return {
@@ -65,7 +69,24 @@ const useRound = () => {
     };
   }, []);
 
-  return { onStartRound };
+  const onStartAllRounds = useCallback(
+    (shinobis: IShinobi[]) => {
+      let competitors: IShinobi[] = [];
+      let finalists = shinobis;
+
+      do {
+        const { losers, winners } = onStartRound(finalists);
+
+        finalists = winners;
+        competitors = [...competitors, ...losers];
+      } while (competitors.length % 2 === 0 && competitors.length !== 0);
+
+      return [...competitors, finalists[0]];
+    },
+    [onStartRound],
+  );
+
+  return { onStartAllRounds, onStartRound };
 };
 
 export { useRound };

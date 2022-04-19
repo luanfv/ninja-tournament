@@ -17,7 +17,7 @@ import { Card, Footer, Header, Body } from '../../components';
 
 const Battle: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();
-  const { onStartRound } = useRound();
+  const { onStartAllRounds } = useRound();
   const { goBack } = useNavigation<NavigationProp<IRoutes, 'battle'>>();
 
   const [shinobis, setShinobis] = useState<IShinobi[]>(params as IShinobi[]);
@@ -77,11 +77,12 @@ const Battle: React.FC = () => {
       <Footer
         text="Iniciar torneio"
         onPress={() => {
-          const winner1 = onStartRound(shinobis).winners;
-          const winner2 = onStartRound(winner1).winners;
-          const winner = onStartRound(winner2).winners[0];
+          const result = onStartAllRounds(shinobis);
 
-          Alert.alert('VENCEDOR', `Vencedor(a) do torneio é ${winner.name}!`);
+          Alert.alert(
+            'VENCEDOR',
+            `Vencedor(a) do torneio é ${result[result.length - 1].name}!`,
+          );
         }}
       />
     </>

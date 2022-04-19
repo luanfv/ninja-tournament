@@ -20,7 +20,7 @@ interface IShinobis {
 
 const ShinobisContext = createContext<IShinobis>({} as IShinobis);
 
-export const ShinobisProvider: React.FC = ({ children }) => {
+const ShinobisProvider: React.FC = ({ children }) => {
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
   const [status, setStatus] = useState<IStatus>('loading');
 
@@ -66,7 +66,7 @@ export const ShinobisProvider: React.FC = ({ children }) => {
   );
 };
 
-export function useShinobis(): IShinobis {
+const useShinobis = (): IShinobis => {
   const context = useContext(ShinobisContext);
 
   if (!context) {
@@ -74,4 +74,6 @@ export function useShinobis(): IShinobis {
   }
 
   return context;
-}
+};
+
+export { ShinobisProvider, useShinobis };
