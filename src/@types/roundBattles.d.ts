@@ -1,10 +1,14 @@
 import { IShinobi } from './shinobi';
 
+interface IShinobiCompetitor extends IShinobi {
+  winPercentage: number;
+}
+
 interface IOnStartRound {
-  players1: IShinobi[];
-  players2: IShinobi[];
-  winners: IShinobi[];
-  losers: IShinobi[];
+  players1: IShinobiCompetitor[];
+  players2: IShinobiCompetitor[];
+  winners: IShinobiCompetitor[];
+  losers: IShinobiCompetitor[];
 }
 
 interface IRound {
@@ -12,4 +16,4 @@ interface IRound {
   onStartAllRounds: (shinobis: IShinobi[]) => IOnStartRound[];
 }
 
-export { IRound, IOnStartRound };
+export { IRound, IOnStartRound, IShinobiCompetitor };

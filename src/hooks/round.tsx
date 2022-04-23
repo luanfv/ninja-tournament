@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { IShinobi, IRound, IOnStartRound } from '../@types';
+import { IShinobi, IRound, IShinobiCompetitor, IOnStartRound } from '../@types';
 
 const useRound = (): IRound => {
   const onStartRound = useCallback((shinobis: IShinobi[]) => {
@@ -22,8 +22,10 @@ const useRound = (): IRound => {
       players2.push(movie);
     });
 
-    const winners: IShinobi[] = [];
-    const losers: IShinobi[] = [];
+    const formattedPlayers1: IShinobiCompetitor[] = [];
+    const formattedPlayers2: IShinobiCompetitor[] = [];
+    const winners: IShinobiCompetitor[] = [];
+    const losers: IShinobiCompetitor[] = [];
 
     players1.map((_, index) => {
       const player1Points =
@@ -37,33 +39,37 @@ const useRound = (): IRound => {
         players2[index].technique;
 
       const random = Math.floor(Math.random() * 100) + 1;
+
       const player1WinPercentage =
         (player1Points * 100) / (player1Points + player2Points);
+      const player2WinPercentage = 100 - player1WinPercentage;
 
-      if (
-        players1[index].name === 'hinata' ||
-        players2[index].name === 'hinata'
-      ) {
-        console.log(players1[index].name, player1WinPercentage);
-        console.log(
-          players2[index].name,
-          player1Points + player2Points - player1WinPercentage,
-        );
-        console.log('random:', random);
-      }
+      const player1Winner = random <= player1WinPercentage;
 
-      if (random <= player1WinPercentage) {
-        winners.push(players1[index]);
-        losers.push(players2[index]);
+      const player1: IShinobiCompetitor = {
+        ...players1[index],
+        winPercentage: player1WinPercentage,
+      };
+      const player2: IShinobiCompetitor = {
+        ...players2[index],
+        winPercentage: player2WinPercentage,
+      };
+
+      formattedPlayers1.push(player1);
+      formattedPlayers2.push(player2);
+
+      if (player1Winner) {
+        winners.push(player1);
+        losers.push(player2);
       } else {
-        winners.push(players2[index]);
-        losers.push(players1[index]);
+        winners.push(player2);
+        losers.push(player1);
       }
     });
 
     return {
-      players1,
-      players2,
+      players1: formattedPlayers1,
+      players2: formattedPlayers2,
       winners,
       losers,
     };
@@ -88,7 +94,7 @@ const useRound = (): IRound => {
     [onStartRound],
   );
 
-  return { onStartAllRounds, onStartRound };
+  return { onStartRound, onStartAllRounds };
 };
 
 export { useRound };

@@ -79,6 +79,20 @@ const Battle: React.FC = () => {
         onPress={() => {
           const result = onStartAllRounds(shinobis);
 
+          result.forEach((round) => {
+            round.winners.forEach((_, index) => {
+              console.log(
+                `${round.players1[index].name} (${round.players1[
+                  index
+                ].winPercentage.toFixed(2)}%) vs ${
+                  round.players2[index].name
+                } (${round.players2[index].winPercentage.toFixed(2)}%) = ${
+                  round.winners[index].name
+                }`,
+              );
+            });
+          });
+
           Alert.alert(
             'VENCEDOR',
             `Vencedor(a) do torneio é ${
