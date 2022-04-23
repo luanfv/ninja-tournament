@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Alert, TouchableOpacity } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -18,7 +18,8 @@ import { Card, Footer, Header, Body } from '../../components';
 const Battle: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();
   const { onStartAllRounds } = useRound();
-  const { goBack } = useNavigation<NavigationProp<IRoutes, 'battle'>>();
+  const { goBack, navigate } =
+    useNavigation<NavigationProp<IRoutes, 'battle'>>();
 
   const [shinobis, setShinobis] = useState<IShinobi[]>(params as IShinobi[]);
 
@@ -93,12 +94,14 @@ const Battle: React.FC = () => {
             });
           });
 
-          Alert.alert(
-            'VENCEDOR',
-            `Vencedor(a) do torneio é ${
-              result[result.length - 1].winners[0].name
-            }!`,
-          );
+          // Alert.alert(
+          //   'VENCEDOR',
+          //   `Vencedor(a) do torneio é ${
+          //     result[result.length - 1].winners[0].name
+          //   }!`,
+          // );
+
+          navigate('battleResult', result);
         }}
       />
     </>
