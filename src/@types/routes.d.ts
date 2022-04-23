@@ -1,10 +1,10 @@
-import { IRoundFinish } from './roundBattles';
+import { IRoundResult } from './round';
 import { IShinobi } from './shinobi';
 
 type IRoutes = {
   home: undefined;
   battle: IShinobi[];
-  battleResult: IRoundFinish[];
+  battleResult: IRoundResult[];
 };
 
 export { IRoutes };

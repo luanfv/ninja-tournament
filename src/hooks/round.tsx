@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { IShinobi, IRound, IShinobiCompetitor, IRoundFinish } from '../@types';
+import { IShinobi, IRound, IShinobiCompetitor, IRoundResult } from '../@types';
 
 const useRound = (): IRound => {
   const onStartRound = useCallback((shinobis: IShinobi[]) => {
@@ -25,11 +25,9 @@ const useRound = (): IRound => {
 
     const formattedPlayers1: IShinobiCompetitor[] = [];
     const formattedPlayers2: IShinobiCompetitor[] = [];
-    const winners: IShinobiCompetitor[] = [];
-    const losers: IShinobiCompetitor[] = [];
-    const test = [];
+    const result: IRoundResult[] = [];
 
-    players1.map((_, index) => {
+    players1.forEach((_, index) => {
       const player1Points =
         players1[index].chakra +
         players1[index].power +
@@ -60,53 +58,32 @@ const useRound = (): IRound => {
       formattedPlayers1.push(player1);
       formattedPlayers2.push(player2);
 
-      if (isPlayer1Winner) {
-        winners.push(player1);
-        losers.push(player2);
-      } else {
-        winners.push(player2);
-        losers.push(player1);
-      }
-
-      test.push({
+      result.push({
         player1: player1,
         player2: player2,
         winner: isPlayer1Winner ? player1 : player2,
-        loser: !isPlayer1Winner ? player1 : player2,
       });
     });
 
-    return {
-      players1: formattedPlayers1,
-      players2: formattedPlayers2,
-      winners,
-      losers,
-    };
+    return result;
   }, []);
 
   const onStartAllRounds = useCallback(
     (shinobis: IShinobi[]) => {
-      let length: number = 0;
       let finalists = shinobis;
-      const rounds: IRoundFinish[] = [];
+      let result: IRoundResult[] = [];
+      let length: number = 0;
 
       do {
         const data = onStartRound(finalists);
+        const winners = data.map((item) => item.winner);
 
-        data.winners.forEach((_, index) => {
-          rounds.push({
-            player1: data.players1[index],
-            player2: data.players2[index],
-            winner: data.winners[index],
-            loser: data.losers[index],
-          });
-        });
-
-        finalists = data.winners;
-        length = length + data.losers.length;
+        result = [...result, ...data];
+        finalists = winners;
+        length = length + winners.length;
       } while (length % 2 === 0 && length !== 0);
 
-      return rounds;
+      return result;
     },
     [onStartRound],
   );

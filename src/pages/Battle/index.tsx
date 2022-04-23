@@ -77,7 +77,9 @@ const Battle: React.FC = () => {
 
       <Footer
         text="Iniciar torneio"
-        onPress={() => navigate('battleResult', onStartAllRounds(shinobis))}
+        onPress={() =>
+          navigate('battleResult', onStartAllRounds(shinobis).reverse())
+        }
       />
     </>
   );

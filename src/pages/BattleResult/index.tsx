@@ -17,8 +17,6 @@ const BattleResult: React.FC = () => {
   const { goBack, reset } =
     useNavigation<NavigationProp<IRoutes, 'battleResult'>>();
 
-  console.log(params);
-
   return (
     <>
       <Header
