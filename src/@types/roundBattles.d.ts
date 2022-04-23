@@ -9,7 +9,7 @@ interface IOnStartRound {
 
 interface IRound {
   onStartRound: (shinobis: IShinobi[]) => IOnStartRound;
-  onStartAllRounds: (shinobis: IShinobi[]) => IShinobi[];
+  onStartAllRounds: (shinobis: IShinobi[]) => IOnStartRound[];
 }
 
-export { IRound };
+export { IRound, IOnStartRound };

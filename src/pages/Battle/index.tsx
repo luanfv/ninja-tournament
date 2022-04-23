@@ -81,7 +81,9 @@ const Battle: React.FC = () => {
 
           Alert.alert(
             'VENCEDOR',
-            `Vencedor(a) do torneio é ${result[result.length - 1].name}!`,
+            `Vencedor(a) do torneio é ${
+              result[result.length - 1].winners[0].name
+            }!`,
           );
         }}
       />

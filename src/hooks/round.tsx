@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { IShinobi, IRound } from '../@types';
+import { IShinobi, IRound, IOnStartRound } from '../@types';
 
 const useRound = (): IRound => {
   const onStartRound = useCallback((shinobis: IShinobi[]) => {
@@ -71,17 +71,19 @@ const useRound = (): IRound => {
 
   const onStartAllRounds = useCallback(
     (shinobis: IShinobi[]) => {
-      let competitors: IShinobi[] = [];
+      let length: number = 0;
       let finalists = shinobis;
+      let rounds: IOnStartRound[] = [];
 
       do {
-        const { losers, winners } = onStartRound(finalists);
+        const data = onStartRound(finalists);
 
-        finalists = winners;
-        competitors = [...competitors, ...losers];
-      } while (competitors.length % 2 === 0 && competitors.length !== 0);
+        rounds = [...rounds, data];
+        finalists = data.winners;
+        length = length + data.losers.length;
+      } while (length % 2 === 0 && length !== 0);
 
-      return [...competitors, finalists[0]];
+      return rounds;
     },
     [onStartRound],
   );
