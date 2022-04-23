@@ -77,32 +77,7 @@ const Battle: React.FC = () => {
 
       <Footer
         text="Iniciar torneio"
-        onPress={() => {
-          const result = onStartAllRounds(shinobis);
-
-          result.forEach((round) => {
-            round.winners.forEach((_, index) => {
-              console.log(
-                `${round.players1[index].name} (${round.players1[
-                  index
-                ].winPercentage.toFixed(2)}%) vs ${
-                  round.players2[index].name
-                } (${round.players2[index].winPercentage.toFixed(2)}%) = ${
-                  round.winners[index].name
-                }`,
-              );
-            });
-          });
-
-          // Alert.alert(
-          //   'VENCEDOR',
-          //   `Vencedor(a) do torneio é ${
-          //     result[result.length - 1].winners[0].name
-          //   }!`,
-          // );
-
-          navigate('battleResult', result);
-        }}
+        onPress={() => navigate('battleResult', onStartAllRounds(shinobis))}
       />
     </>
   );

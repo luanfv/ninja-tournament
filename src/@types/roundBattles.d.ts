@@ -4,16 +4,23 @@ interface IShinobiCompetitor extends IShinobi {
   winPercentage: number;
 }
 
-interface IOnStartRound {
+interface IRoundResult {
   players1: IShinobiCompetitor[];
   players2: IShinobiCompetitor[];
   winners: IShinobiCompetitor[];
   losers: IShinobiCompetitor[];
 }
 
-interface IRound {
-  onStartRound: (shinobis: IShinobi[]) => IOnStartRound;
-  onStartAllRounds: (shinobis: IShinobi[]) => IOnStartRound[];
+interface IRoundFinish {
+  player1: IShinobiCompetitor;
+  player2: IShinobiCompetitor;
+  winner: IShinobiCompetitor;
+  loser: IShinobiCompetitor;
 }
 
-export { IRound, IOnStartRound, IShinobiCompetitor };
+interface IRound {
+  onStartRound: (shinobis: IShinobi[]) => IRoundResult;
+  onStartAllRounds: (shinobis: IShinobi[]) => IRoundFinish[];
+}
+
+export { IShinobiCompetitor, IRoundResult, IRoundFinish, IRound };

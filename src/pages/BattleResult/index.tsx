@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, View } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -9,7 +9,8 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { IRoutes } from '../../@types';
-import { Footer, Header, Body } from '../../components';
+import { Footer, Header, Body, Separator } from '../../components';
+import { FlatList } from 'react-native-gesture-handler';
 
 const BattleResult: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();
@@ -29,7 +30,24 @@ const BattleResult: React.FC = () => {
         }
       />
 
-      <Body />
+      <Body>
+        <FlatList
+          data={params}
+          keyExtractor={(_, index) => String(index)}
+          renderItem={({ item }) => (
+            <View>
+              <Text>
+                {item.player1.name} ({item.player1.winPercentage.toFixed(2)}%)
+                vs {item.player2.name} ({item.player2.winPercentage.toFixed(2)}
+                %)
+              </Text>
+
+              <Text>VENCEDOR: {item.winner.name}</Text>
+            </View>
+          )}
+          ItemSeparatorComponent={() => <Separator />}
+        />
+      </Body>
 
       <Footer
         text="Voltar para home"
