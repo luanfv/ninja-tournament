@@ -6816,10 +6816,10 @@ react-native-codegen@^0.0.13:
     jscodeshift "^0.13.1"
     nullthrows "^1.1.1"
 
-react-native-draggable-flatlist@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-3.1.0.tgz#c18b429aaa5d333f792c84e38740da32eaf96bf4"
-  integrity sha512-o6TzR9/Uk8jW+j9Mdi6f9v5Vb9lkbYEnlCNmTYnYNa4DKxC3Ldm51py0Rq2vcTaynBnnUaZR6wWVvuZFiKDtdQ==
+react-native-draggable-flatlist@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-draggable-flatlist/-/react-native-draggable-flatlist-3.1.1.tgz#b27009035153ed8d897217392447fb3c98316aea"
+  integrity sha512-hvzfMgG+HPIYCpoYy+R+FaoylRc4HbcP+gvghG0ISGwsU8HETcM8WmUEAaDTr7EeKmnG1BbV43MMExMjIQXRmA==
 
 react-native-gesture-handler@^2.4.0:
   version "2.4.0"
