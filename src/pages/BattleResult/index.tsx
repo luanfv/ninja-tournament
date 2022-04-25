@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -32,15 +32,72 @@ const BattleResult: React.FC = () => {
         <FlatList
           data={params}
           keyExtractor={(_, index) => String(index)}
+          ListHeaderComponent={() => (
+            <View style={{ alignItems: 'center', justifyContent: 'center', height: 120 }}>
+              <Image
+                source={{ uri: params[0].winner.image }}
+                style={{ width: 80, height: 80 }}
+              />
+              <Text>{params[0].winner.name}</Text>
+            </View>
+          )}
           renderItem={({ item }) => (
-            <View>
-              <Text>
-                {item.player1.name} ({item.player1.winPercentage.toFixed(2)}%)
-                vs {item.player2.name} ({item.player2.winPercentage.toFixed(2)}
-                %)
-              </Text>
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                alignContent: 'center',
+              }}
+            >
+              <View style={{ alignItems: 'center', justifyContent: 'center', height: 120 }}>
+                <Image
+                  source={{ uri: item.player1.image }}
+                  style={{ width: 80, height: 80 }}
+                />
+                <Text>{item.player1.name}</Text>
+              </View>
 
-              <Text>VENCEDOR: {item.winner.name}</Text>
+              <View style={{ alignItems: 'center', justifyContent: 'center', height: 120 }}>
+                <Image
+                  source={{ uri: item.player2.image }}
+                  style={{ width: 80, height: 80 }}
+                />
+                <Text>{item.player2.name}</Text>
+              </View>
+
+              <View
+                style={{
+                  position: 'absolute',
+                  height: 120,
+                  width: `${item.player1.winPercentage}%`,
+                  zIndex: -1,
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                }}
+              >
+                <View
+                  style={{ height: 20, width: '100%', backgroundColor: 'blue' }}
+                >
+                  <Text style={{ color: '#fff', textAlign: 'left', marginLeft: 90 }}>{item.player1.winPercentage.toFixed(2)}%</Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  position: 'absolute',
+                  height: 120,
+                  width: '100%',
+                  zIndex: -2,
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                }}
+              >
+                <View
+                  style={{ height: 20, width: '100%', backgroundColor: 'red' }}
+                >
+                  <Text style={{ color: '#fff', textAlign: 'right', marginRight: 90 }}>{item.player2.winPercentage.toFixed(2)}%</Text>
+                </View>
+              </View>
             </View>
           )}
           ItemSeparatorComponent={() => <Separator />}

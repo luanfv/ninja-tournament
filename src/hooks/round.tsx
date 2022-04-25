@@ -73,14 +73,17 @@ const useRound = (): IRound => {
       let finalists = shinobis;
       let result: IRoundResult[] = [];
       let length: number = 0;
+      let round = 1;
 
       do {
+        console.log(round);
         const data = onStartRound(finalists);
         const winners = data.map((item) => item.winner);
 
         result = [...result, ...data];
         finalists = winners;
         length = length + winners.length;
+        round = round + 1;
       } while (length % 2 === 0 && length !== 0);
 
       return result;
