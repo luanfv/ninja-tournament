@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -10,12 +10,21 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { IRoutes } from '../../@types';
 import { Footer, Header, Body, Separator } from '../../components';
-import { FlatList } from 'react-native-gesture-handler';
+import {
+  Percentage,
+  PercentageValue,
+  Player,
+  PlayerImage,
+  PlayerName,
+  Row,
+} from './styles';
+import { useTheme } from 'styled-components/native';
 
 const BattleResult: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();
   const { goBack, reset } =
     useNavigation<NavigationProp<IRoutes, 'battleResult'>>();
+  const { spacing } = useTheme();
 
   return (
     <>
@@ -29,79 +38,54 @@ const BattleResult: React.FC = () => {
       />
 
       <Body>
-        <FlatList
-          data={params}
-          keyExtractor={(_, index) => String(index)}
-          ListHeaderComponent={() => (
-            <View style={{ alignItems: 'center', justifyContent: 'center', height: 120 }}>
-              <Image
-                source={{ uri: params[0].winner.image }}
-                style={{ width: 80, height: 80 }}
-              />
-              <Text>{params[0].winner.name}</Text>
+        <ScrollView
+          contentContainerStyle={{
+            padding: spacing,
+          }}
+        >
+          <Player>
+            <PlayerImage source={{ uri: params[0][0].winner.image }} />
+            <PlayerName>{params[0][0].winner.name}</PlayerName>
+          </Player>
+
+          {params.map((round, index) => (
+            <View key={String(index)}>
+              <Separator />
+
+              <Text>Round {params.length - index}</Text>
+              {round.map((item, index2) => (
+                <Row key={String(index2)}>
+                  <Player>
+                    <PlayerImage
+                      source={{ uri: item.player1.image }}
+                      loser={!item.player1.winner}
+                    />
+                    <Text>{item.player1.name}</Text>
+                  </Player>
+
+                  <Percentage>
+                    <PercentageValue
+                      winner={item.player1.winner}
+                      value={item.player1.winPercentage}
+                    />
+                    <PercentageValue
+                      winner={item.player2.winner}
+                      value={item.player2.winPercentage}
+                    />
+                  </Percentage>
+
+                  <Player>
+                    <PlayerImage
+                      source={{ uri: item.player2.image }}
+                      loser={!item.player2.winner}
+                    />
+                    <Text>{item.player2.name}</Text>
+                  </Player>
+                </Row>
+              ))}
             </View>
-          )}
-          renderItem={({ item }) => (
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                alignContent: 'center',
-              }}
-            >
-              <View style={{ alignItems: 'center', justifyContent: 'center', height: 120 }}>
-                <Image
-                  source={{ uri: item.player1.image }}
-                  style={{ width: 80, height: 80 }}
-                />
-                <Text>{item.player1.name}</Text>
-              </View>
-
-              <View style={{ alignItems: 'center', justifyContent: 'center', height: 120 }}>
-                <Image
-                  source={{ uri: item.player2.image }}
-                  style={{ width: 80, height: 80 }}
-                />
-                <Text>{item.player2.name}</Text>
-              </View>
-
-              <View
-                style={{
-                  position: 'absolute',
-                  height: 120,
-                  width: `${item.player1.winPercentage}%`,
-                  zIndex: -1,
-                  justifyContent: 'center',
-                  alignContent: 'center',
-                }}
-              >
-                <View
-                  style={{ height: 20, width: '100%', backgroundColor: 'blue' }}
-                >
-                  <Text style={{ color: '#fff', textAlign: 'left', marginLeft: 90 }}>{item.player1.winPercentage.toFixed(2)}%</Text>
-                </View>
-              </View>
-
-              <View
-                style={{
-                  position: 'absolute',
-                  height: 120,
-                  width: '100%',
-                  zIndex: -2,
-                  justifyContent: 'center',
-                  alignContent: 'center',
-                }}
-              >
-                <View
-                  style={{ height: 20, width: '100%', backgroundColor: 'red' }}
-                >
-                  <Text style={{ color: '#fff', textAlign: 'right', marginRight: 90 }}>{item.player2.winPercentage.toFixed(2)}%</Text>
-                </View>
-              </View>
-            </View>
-          )}
-          ItemSeparatorComponent={() => <Separator />}
-        />
+          ))}
+        </ScrollView>
       </Body>
 
       <Footer
