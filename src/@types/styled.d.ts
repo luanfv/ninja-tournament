@@ -5,8 +5,10 @@ interface IStyleGuide {
     white: string;
     black: string;
     gray: string;
+    grayDark: string;
     red: string;
     green: string;
+    gold: string;
   };
   fonts: {
     large: string;

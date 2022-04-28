@@ -1,5 +1,5 @@
-import React from 'react';
-import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import React, { useCallback } from 'react';
+import { ScrollView, TouchableOpacity, View } from 'react-native';
 import {
   NavigationProp,
   RouteProp,
@@ -10,21 +10,40 @@ import Icon from 'react-native-vector-icons/Ionicons';
 
 import { IRoutes } from '../../@types';
 import { Footer, Header, Body, Separator } from '../../components';
+import { useTheme } from 'styled-components/native';
 import {
-  Percentage,
-  PercentageValue,
+  Card,
+  CardHeader,
+  CardHeaderText,
+  Champion,
+  ChampionContainer,
+  ChampionText,
+  Content,
   Player,
   PlayerImage,
   PlayerName,
-  Row,
+  PlayerPercent,
+  Title,
 } from './styles';
-import { useTheme } from 'styled-components/native';
 
 const BattleResult: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();
   const { goBack, reset } =
     useNavigation<NavigationProp<IRoutes, 'battleResult'>>();
-  const { spacing } = useTheme();
+  const { spacing, colors } = useTheme();
+
+  const getTitleOfRound = useCallback((value, length) => {
+    switch (value) {
+      case 0:
+        return 'Final';
+
+      case 1:
+        return 'Semifinal';
+
+      default:
+        return `${length - value}ª Rodada`;
+    }
+  }, []);
 
   return (
     <>
@@ -43,48 +62,64 @@ const BattleResult: React.FC = () => {
             padding: spacing,
           }}
         >
-          <Player>
-            <PlayerImage source={{ uri: params[0][0].winner.image }} />
-            <PlayerName>{params[0][0].winner.name}</PlayerName>
-          </Player>
+          <ChampionContainer>
+            <Player>
+              <PlayerImage
+                source={{ uri: params[0][0].winner.image }}
+                champion
+              />
+              <PlayerName winner>{params[0][0].winner.name}</PlayerName>
+            </Player>
+            <Champion>
+              <Icon name="trophy-sharp" size={50} color={colors.gold} />
+              <ChampionText>CAMPEÃ(O)</ChampionText>
+            </Champion>
+          </ChampionContainer>
 
-          {params.map((round, index) => (
-            <View key={String(index)}>
-              <Separator />
+          {params.map((round, index) => {
+            return (
+              <View key={String(index)}>
+                <Separator />
 
-              <Text>Round {params.length - index}</Text>
-              {round.map((item, index2) => (
-                <Row key={String(index2)}>
-                  <Player>
-                    <PlayerImage
-                      source={{ uri: item.player1.image }}
-                      loser={!item.player1.winner}
-                    />
-                    <Text>{item.player1.name}</Text>
-                  </Player>
+                <Title>{getTitleOfRound(index, params.length)}</Title>
+                {round.map((item, index2) => (
+                  <Card key={String(index2)}>
+                    <CardHeader>
+                      <CardHeaderText>
+                        VENCEDOR: {item.winner.name}
+                      </CardHeaderText>
+                    </CardHeader>
 
-                  <Percentage>
-                    <PercentageValue
-                      winner={item.player1.winner}
-                      value={item.player1.winPercentage}
-                    />
-                    <PercentageValue
-                      winner={item.player2.winner}
-                      value={item.player2.winPercentage}
-                    />
-                  </Percentage>
+                    <Content>
+                      <Player>
+                        <PlayerImage source={{ uri: item.player1.image }} />
+                        <PlayerName winner={item.player1.winner}>
+                          {item.player1.name}
+                        </PlayerName>
+                        <PlayerPercent winner={item.player1.winner}>
+                          chances de vitória:{' '}
+                          {item.player1.winPercentage.toFixed(2)}%
+                        </PlayerPercent>
+                      </Player>
 
-                  <Player>
-                    <PlayerImage
-                      source={{ uri: item.player2.image }}
-                      loser={!item.player2.winner}
-                    />
-                    <Text>{item.player2.name}</Text>
-                  </Player>
-                </Row>
-              ))}
-            </View>
-          ))}
+                      <Title>VS</Title>
+
+                      <Player>
+                        <PlayerImage source={{ uri: item.player2.image }} />
+                        <PlayerName winner={item.player2.winner}>
+                          {item.player2.name}
+                        </PlayerName>
+                        <PlayerPercent winner={item.player2.winner}>
+                          chances de vitória:{' '}
+                          {item.player2.winPercentage.toFixed(2)}%
+                        </PlayerPercent>
+                      </Player>
+                    </Content>
+                  </Card>
+                ))}
+              </View>
+            );
+          })}
         </ScrollView>
       </Body>
 
