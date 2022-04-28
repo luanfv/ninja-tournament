@@ -4,7 +4,7 @@ import { IShinobi } from './shinobi';
 type IRoutes = {
   home: undefined;
   battle: IShinobi[];
-  battleResult: IRoundResult[];
+  battleResult: IRoundResult[][];
 };
 
 export { IRoutes };

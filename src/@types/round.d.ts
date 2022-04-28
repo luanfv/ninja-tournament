@@ -2,6 +2,7 @@ import { IShinobi } from './shinobi';
 
 interface IShinobiCompetitor extends IShinobi {
   winPercentage: number;
+  winner: boolean;
 }
 
 interface IRoundResult {
@@ -12,7 +13,7 @@ interface IRoundResult {
 
 interface IRound {
   onStartRound: (shinobis: IShinobi[]) => IRoundResult[];
-  onStartAllRounds: (shinobis: IShinobi[]) => IRoundResult[];
+  onStartAllRounds: (shinobis: IShinobi[]) => IRoundResult[][];
 }
 
 export { IShinobiCompetitor, IRoundResult, IRound };
