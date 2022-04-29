@@ -1,8 +1,10 @@
 import styled from 'styled-components/native';
+import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 
 interface ICard {
   isSelected: boolean;
   margin?: number;
+  isLoaded?: boolean;
 }
 
 interface IText {
@@ -32,8 +34,12 @@ const Row = styled.View`
 const Image = styled.Image<ICard>`
   width: 120px;
   height: 120px;
-  background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.secondary : theme.colors.primary};
+  ${({ isLoaded }) => !isLoaded && 'width: 0px; height: 0px;'}
+`;
+
+const ImageLoading = styled(ShimmerPlaceHolder)`
+  width: 120px;
+  height: 120px;
 `;
 
 const Details = styled.View`
@@ -59,4 +65,14 @@ const Text = styled.Text<IText>`
   color: ${({ theme, color = 'black' }) => theme.colors[color]};
 `;
 
-export { Container, Header, Row, Image, Details, Name, Points, Text };
+export {
+  Container,
+  Header,
+  Row,
+  Image,
+  Details,
+  Name,
+  Points,
+  Text,
+  ImageLoading,
+};

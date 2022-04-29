@@ -1,8 +1,7 @@
 interface IShinobi {
-  [x: string]: any;
   chakra: number;
   id: number;
-  image?: string;
+  image: string;
   name: string;
   power: number;
   technique: number;

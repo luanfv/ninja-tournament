@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { ICard } from '../../@types';
 import {
@@ -6,6 +7,7 @@ import {
   Details,
   Header,
   Image,
+  ImageLoading,
   Name,
   Points,
   Row,
@@ -21,6 +23,8 @@ const Card: React.FC<ICard> = ({
   onPress,
   onLongPress,
 }) => {
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
   return (
     <Container
       onPress={onPress}
@@ -37,9 +41,13 @@ const Card: React.FC<ICard> = ({
       )}
 
       <Row>
-        {shinobi.image && (
-          <Image source={{ uri: shinobi.image }} isSelected={isSelected} />
-        )}
+        {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
+        <Image
+          source={{ uri: shinobi.image }}
+          isSelected={isSelected}
+          isLoaded={isImageLoaded}
+          onLoadEnd={() => setIsImageLoaded(true)}
+        />
 
         <Details>
           <Name isSelected={isSelected}>{shinobi.name}</Name>

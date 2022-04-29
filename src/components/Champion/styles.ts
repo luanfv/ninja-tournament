@@ -1,4 +1,9 @@
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import styled from 'styled-components/native';
+
+interface IPlayerImage {
+  isLoaded?: boolean;
+}
 
 const Container = styled.View`
   align-items: center;
@@ -11,7 +16,14 @@ const Player = styled.View`
   justify-content: center;
 `;
 
-const PlayerImage = styled.Image`
+const PlayerImage = styled.Image<IPlayerImage>`
+  width: 120px;
+  height: 120px;
+  border-radius: 60px;
+  ${({ isLoaded }) => !isLoaded && 'width: 0px; height: 0px;'}
+`;
+
+const ImageLoading = styled(ShimmerPlaceholder)`
   width: 120px;
   height: 120px;
   border-radius: 60px;
@@ -35,4 +47,12 @@ const TrophyText = styled.Text`
   font-weight: bold;
 `;
 
-export { Container, Player, PlayerImage, PlayerName, Trophy, TrophyText };
+export {
+  Container,
+  Player,
+  PlayerImage,
+  PlayerName,
+  Trophy,
+  TrophyText,
+  ImageLoading,
+};

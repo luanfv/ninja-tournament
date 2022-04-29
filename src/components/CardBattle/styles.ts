@@ -1,7 +1,9 @@
+import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import styled from 'styled-components/native';
 
 interface IPlayer {
   winner?: boolean;
+  isLoaded?: boolean;
 }
 
 const Container = styled.View`
@@ -39,8 +41,14 @@ const PlayerImage = styled.Image<IPlayer>`
   width: 80px;
   height: 80px;
   border-radius: 2px;
+  ${({ isLoaded }) => !isLoaded && 'width: 0px; height: 0px;'}
 `;
 
+const ImageLoading = styled(ShimmerPlaceholder)`
+  width: 80px;
+  height: 80px;
+  border-radius: 2px;
+`;
 const PlayerName = styled.Text<IPlayer>`
   font-size: ${({ theme }) => theme.fonts.medium};
   color: ${({ winner, theme }) =>
@@ -66,6 +74,7 @@ export {
   Content,
   Player,
   PlayerImage,
+  ImageLoading,
   PlayerName,
   PlayerPercent,
   Versus,
