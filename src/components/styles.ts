@@ -15,6 +15,7 @@ const Separator = styled.View`
 const Title = styled.Text`
   font-size: ${({ theme }) => theme.fonts.large};
   color: ${({ theme }) => theme.colors.primary};
+  font-weight: bold;
 `;
 
 export { Body, Separator, Title };
