@@ -7,30 +7,24 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { useTheme } from 'styled-components/native';
 
 import { IRoutes } from '../../@types';
-import { Footer, Header, Body, Separator } from '../../components';
-import { useTheme } from 'styled-components/native';
 import {
-  Card,
-  CardHeader,
-  CardHeaderText,
+  Footer,
+  Header,
+  Body,
+  Separator,
+  CardBattle,
   Champion,
-  ChampionContainer,
-  ChampionText,
-  Content,
-  Player,
-  PlayerImage,
-  PlayerName,
-  PlayerPercent,
   Title,
-} from './styles';
+} from '../../components';
 
 const BattleResult: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();
   const { goBack, reset } =
     useNavigation<NavigationProp<IRoutes, 'battleResult'>>();
-  const { spacing, colors } = useTheme();
+  const { spacing } = useTheme();
 
   const getTitleOfRound = useCallback((value, length) => {
     switch (value) {
@@ -62,19 +56,7 @@ const BattleResult: React.FC = () => {
             padding: spacing,
           }}
         >
-          <ChampionContainer>
-            <Player>
-              <PlayerImage
-                source={{ uri: params[0][0].winner.image }}
-                champion
-              />
-              <PlayerName winner>{params[0][0].winner.name}</PlayerName>
-            </Player>
-            <Champion>
-              <Icon name="trophy-sharp" size={50} color={colors.gold} />
-              <ChampionText>CAMPEÃ(O)</ChampionText>
-            </Champion>
-          </ChampionContainer>
+          <Champion shinobi={params[0][0].winner} />
 
           {params.map((round, index) => {
             return (
@@ -82,40 +64,9 @@ const BattleResult: React.FC = () => {
                 <Separator />
 
                 <Title>{getTitleOfRound(index, params.length)}</Title>
+
                 {round.map((item, index2) => (
-                  <Card key={String(index2)}>
-                    <CardHeader>
-                      <CardHeaderText>
-                        VENCEDOR: {item.winner.name}
-                      </CardHeaderText>
-                    </CardHeader>
-
-                    <Content>
-                      <Player>
-                        <PlayerImage source={{ uri: item.player1.image }} />
-                        <PlayerName winner={item.player1.winner}>
-                          {item.player1.name}
-                        </PlayerName>
-                        <PlayerPercent winner={item.player1.winner}>
-                          chances de vitória:{' '}
-                          {item.player1.winPercentage.toFixed(2)}%
-                        </PlayerPercent>
-                      </Player>
-
-                      <Title>VS</Title>
-
-                      <Player>
-                        <PlayerImage source={{ uri: item.player2.image }} />
-                        <PlayerName winner={item.player2.winner}>
-                          {item.player2.name}
-                        </PlayerName>
-                        <PlayerPercent winner={item.player2.winner}>
-                          chances de vitória:{' '}
-                          {item.player2.winPercentage.toFixed(2)}%
-                        </PlayerPercent>
-                      </Player>
-                    </Content>
-                  </Card>
+                  <CardBattle key={index2} competitor={item} />
                 ))}
               </View>
             );

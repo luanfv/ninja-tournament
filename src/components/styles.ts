@@ -12,4 +12,9 @@ const Separator = styled.View`
   border-color: ${({ theme }) => theme.colors.gray};
 `;
 
-export { Body, Separator };
+const Title = styled.Text`
+  font-size: ${({ theme }) => theme.fonts.large};
+  color: ${({ theme }) => theme.colors.black};
+`;
+
+export { Body, Separator, Title };
