@@ -28,6 +28,7 @@ const DynamicComponent = styled.View<IDynamicComponent>`
 const Title = styled.Text`
   font-size: ${({ theme }) => theme.fonts.large};
   color: ${({ theme }) => theme.colors.white};
+  font-weight: bold;
 `;
 
 const Description = styled.View<IDescription>`
