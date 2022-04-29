@@ -11,7 +11,7 @@ const Container = styled.TouchableOpacity<IContainer>`
   align-items: center;
   justify-content: center;
   background-color: ${({ theme, disabled }) =>
-    disabled ? theme.colors.gray : theme.colors.green};
+    disabled ? theme.colors.gray : theme.colors.secondary};
 `;
 
 const Text = styled.Text`

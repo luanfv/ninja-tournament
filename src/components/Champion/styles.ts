@@ -19,7 +19,8 @@ const PlayerImage = styled.Image`
 
 const PlayerName = styled.Text`
   font-size: ${({ theme }) => theme.fonts.medium};
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.primary};
+  font-weight: bold;
 `;
 
 const Trophy = styled.View`
@@ -29,8 +30,9 @@ const Trophy = styled.View`
 `;
 
 const TrophyText = styled.Text`
-  color: ${({ theme }) => theme.colors.gold};
+  color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fonts.large};
+  font-weight: bold;
 `;
 
 export { Container, Player, PlayerImage, PlayerName, Trophy, TrophyText };

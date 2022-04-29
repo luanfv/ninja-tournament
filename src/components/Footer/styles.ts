@@ -7,7 +7,7 @@ const Container = styled.View`
   width: 100%;
   height: ${({ theme }) => (iOS ? theme.spacing * 5.5 : theme.spacing * 4)}px;
   padding: ${({ theme }) => theme.spacing}px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.primary};
 
   ${({ theme }) => iOS && `padding-bottom: ${theme.spacing * 2.5}px;`}
 `;

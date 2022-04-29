@@ -8,7 +8,8 @@ interface IStyleGuide {
     grayDark: string;
     red: string;
     green: string;
-    gold: string;
+    primary: string;
+    secondary: string;
   };
   fonts: {
     large: string;

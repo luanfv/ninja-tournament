@@ -10,10 +10,9 @@ interface IText {
 }
 
 const Container = styled.TouchableOpacity<ICard>`
-  /* flex-direction: row; */
   border-width: 1px;
   border-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.green : theme.colors.black};
+    isSelected ? theme.colors.secondary : theme.colors.primary};
   border-radius: 2px;
   background-color: ${({ theme }) => theme.colors.white};
 
@@ -22,7 +21,7 @@ const Container = styled.TouchableOpacity<ICard>`
 
 const Header = styled.View`
   align-items: flex-end;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.primary};
   padding: 0 8px;
 `;
 
@@ -34,7 +33,7 @@ const Image = styled.Image<ICard>`
   width: 120px;
   height: 120px;
   background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.green : theme.colors.black};
+    isSelected ? theme.colors.secondary : theme.colors.primary};
 `;
 
 const Details = styled.View`
@@ -44,10 +43,11 @@ const Details = styled.View`
 const Name = styled.Text<ICard>`
   padding: 4px;
   background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.green : theme.colors.black};
+    isSelected ? theme.colors.secondary : theme.colors.primary};
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fonts.large};
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
+  font-weight: bold;
 `;
 
 const Points = styled.View`

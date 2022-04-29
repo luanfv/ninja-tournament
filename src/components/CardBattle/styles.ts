@@ -6,7 +6,7 @@ interface IPlayer {
 
 const Container = styled.View`
   border-width: 1px;
-  border-color: ${({ theme }) => theme.colors.black};
+  border-color: ${({ theme }) => theme.colors.primary};
   border-radius: 4px;
   margin-top: ${({ theme }) => theme.spacing / 2}px;
   margin-bottom: ${({ theme }) => theme.spacing / 2}px;
@@ -16,7 +16,7 @@ const Container = styled.View`
 const Header = styled.View`
   padding: ${({ theme }) => theme.spacing / 2}px;
   margin-bottom: ${({ theme }) => theme.spacing / 2}px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.primary};
 `;
 
 const HeaderText = styled.Text`
@@ -44,18 +44,19 @@ const PlayerImage = styled.Image<IPlayer>`
 const PlayerName = styled.Text<IPlayer>`
   font-size: ${({ theme }) => theme.fonts.medium};
   color: ${({ winner, theme }) =>
-    winner ? theme.colors.black : theme.colors.grayDark};
+    winner ? theme.colors.primary : theme.colors.grayDark};
+  font-weight: bold;
 `;
 
 const PlayerPercent = styled.Text<IPlayer>`
   font-size: ${({ theme }) => theme.fonts.small};
   color: ${({ winner, theme }) =>
-    winner ? theme.colors.black : theme.colors.grayDark};
+    winner ? theme.colors.primary : theme.colors.grayDark};
 `;
 
 const Versus = styled.Text`
   font-size: ${({ theme }) => theme.fonts.large};
-  color: ${({ theme }) => theme.colors.black};
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 export {

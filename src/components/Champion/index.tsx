@@ -26,7 +26,7 @@ const Champion: React.FC<IChampion> = ({ shinobi }) => {
         <PlayerName>{shinobi.name}</PlayerName>
       </Player>
       <Trophy>
-        <Icon name="trophy-sharp" size={50} color={colors.gold} />
+        <Icon name="trophy-sharp" size={50} color={colors.secondary} />
         <TrophyText>CAMPEÃ(O)</TrophyText>
       </Trophy>
     </Container>

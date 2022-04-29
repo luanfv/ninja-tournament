@@ -15,7 +15,7 @@ export default () => (
     <Providers>
       <ThemeProvider theme={theme}>
         <StatusBar
-          backgroundColor={theme.colors.black}
+          backgroundColor={theme.colors.primary}
           barStyle="light-content"
         />
 

@@ -4,11 +4,12 @@ const theme: DefaultTheme = {
   colors: {
     white: '#f4f4f4',
     black: '#121015',
-    gray: '#a8a8a8',
+    gray: '#9e958c',
     grayDark: '#848484',
     red: '#fa5858',
     green: '#52b96f',
-    gold: '#f29d1d',
+    primary: '#005274',
+    secondary: '#f37020',
   },
   fonts: {
     large: '16px',

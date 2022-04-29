@@ -9,7 +9,7 @@ const Loading: React.FC = () => {
 
   return (
     <Container>
-      <ActivityIndicator color={colors.black} size="large" />
+      <ActivityIndicator color={colors.primary} size="large" />
     </Container>
   );
 };

@@ -12,7 +12,7 @@ interface IDynamicComponent {
 const Container = styled.View`
   width: 100%;
   padding: ${({ theme }) => theme.spacing}px;
-  background-color: ${({ theme }) => theme.colors.black};
+  background-color: ${({ theme }) => theme.colors.primary};
   flex-direction: row;
   justify-content: space-between;
 
