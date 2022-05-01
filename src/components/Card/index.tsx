@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from 'styled-components';
@@ -7,7 +7,6 @@ import { ICard } from '../../@types';
 import {
   Container,
   Details,
-  Header,
   Image,
   ImageLoading,
   Name,
@@ -21,12 +20,16 @@ const Card: React.FC<ICard> = ({
   isSelected = false,
   disabled,
   margin,
-  position,
   onPress,
   onLongPress,
 }) => {
   const { colors } = useTheme();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  const color = useMemo(
+    () => (isSelected ? colors.secondary : colors.primary),
+    [colors.primary, colors.secondary, isSelected],
+  );
 
   return (
     <TouchableOpacity
@@ -38,29 +41,22 @@ const Card: React.FC<ICard> = ({
       <Container
         isSelected={isSelected}
         margin={margin}
-        colors={[
-          isSelected ? colors.secondary : colors.primary,
-          isSelected ? colors.secondary : colors.primary,
-          colors.white,
-        ]}
+        colors={[color, color, colors.white]}
       >
-        {/* {position && (
-          <Header>
-            <Text color="white">{position}</Text>
-          </Header>
-        )} */}
-
         <Row>
-          {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
-          <Image
-            source={{ uri: shinobi.image }}
-            isSelected={isSelected}
-            isLoaded={isImageLoaded}
-            onLoadEnd={() => setIsImageLoaded(true)}
-          />
+          <>
+            {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
+
+            <Image
+              source={{ uri: shinobi.image }}
+              isSelected={isSelected}
+              isLoaded={isImageLoaded}
+              onLoadEnd={() => setIsImageLoaded(true)}
+            />
+          </>
 
           <Details>
-            <Name isSelected={isSelected}>{shinobi.name}</Name>
+            <Name>{shinobi.name}</Name>
 
             <Points>
               <Text>Chakra: {shinobi.chakra}</Text>

@@ -40,7 +40,7 @@ const Trophy = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: ${({ theme }) => theme.spacing / 2}px;
-  margin-left: 20px;
+  margin-left: ${({ theme }) => theme.spacing}px;
 `;
 
 const TrophyText = styled.Text`

@@ -13,16 +13,15 @@ interface IText {
 }
 
 const Container = styled(LinearGradient)<ICard>`
+  overflow: hidden;
   border-width: 1px;
+  border-radius: 40px;
   border-color: ${({ theme, isSelected }) =>
     isSelected ? theme.colors.secondary : theme.colors.primary};
-  border-radius: 40px;
-  /* background-color: ${({ theme }) => theme.colors.white}; */
+  background-color: ${({ theme, isSelected }) =>
+    isSelected ? theme.colors.secondary : theme.colors.primary};
 
   ${({ theme, margin }) => margin && `margin: ${theme.spacing * margin}px`};
-
-  background-color: red;
-  overflow: hidden;
 `;
 
 const Header = styled.View`
@@ -38,28 +37,27 @@ const Row = styled.View`
 const Image = styled.Image<ICard>`
   width: 100px;
   height: 100px;
-  border-radius: 60px;
+  border-radius: 50px;
   ${({ isLoaded }) => !isLoaded && 'width: 0px; height: 0px;'}
 
   margin: 10px;
 `;
 
 const ImageLoading = styled(ShimmerPlaceHolder)`
-  width: 120px;
-  height: 120px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  margin: 10px;
 `;
 
 const Details = styled.View`
   flex: 1;
 `;
 
-const Name = styled.Text<ICard>`
+const Name = styled.Text`
   padding: 4px;
-  /* background-color: ${({ theme, isSelected }) =>
-    isSelected ? theme.colors.secondary : theme.colors.primary}; */
   color: ${({ theme }) => theme.colors.white};
   font-size: ${({ theme }) => theme.fonts.large};
-  /* text-transform: uppercase; */
   font-weight: bold;
 `;
 

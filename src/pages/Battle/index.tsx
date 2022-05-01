@@ -61,14 +61,13 @@ const Battle: React.FC = () => {
           data={shinobis}
           onDragEnd={({ data }) => setShinobis(data)}
           keyExtractor={(item) => String(item.id)}
-          renderItem={({ drag, isActive, item, index }) => (
+          renderItem={({ drag, isActive, item }) => (
             <ScaleDecorator>
               <Card
                 shinobi={item}
                 onLongPress={drag}
                 disabled={isActive}
                 margin={1}
-                position={Number(index) + 1}
               />
             </ScaleDecorator>
           )}

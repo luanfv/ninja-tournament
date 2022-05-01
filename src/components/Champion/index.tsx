@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useTheme } from 'styled-components';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { IShinobi } from '../../@types';
 import {
@@ -12,7 +13,6 @@ import {
   Trophy,
   TrophyText,
 } from './styles';
-import LinearGradient from 'react-native-linear-gradient';
 
 interface IChampion {
   shinobi: IShinobi;
