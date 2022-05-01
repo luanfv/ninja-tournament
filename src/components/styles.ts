@@ -18,4 +18,8 @@ const Title = styled.Text`
   font-weight: bold;
 `;
 
-export { Body, Separator, Title };
+const Spacing = styled.View`
+  margin: ${({ theme }) => theme.spacing}px;
+`;
+
+export { Body, Separator, Title, Spacing };

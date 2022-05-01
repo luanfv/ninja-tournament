@@ -13,6 +13,7 @@ import {
   Loading,
 } from '../../components';
 import { useShinobis } from '../../hooks/shinobis';
+import { Spacing } from '../../components/styles';
 
 const Home: React.FC = () => {
   const shinobisContext = useShinobis();
@@ -99,7 +100,9 @@ const Home: React.FC = () => {
                       />
                     ))}
 
-                    <Separator />
+                    <Spacing>
+                      <Separator />
+                    </Spacing>
                   </>
                 ) : (
                   <View />

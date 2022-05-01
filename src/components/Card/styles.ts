@@ -8,10 +8,6 @@ interface ICard {
   isLoaded?: boolean;
 }
 
-interface IText {
-  color?: 'white' | 'black';
-}
-
 const Container = styled(LinearGradient)<ICard>`
   overflow: hidden;
   border-width: 1px;
@@ -63,15 +59,22 @@ const Name = styled.Text`
 
 const Points = styled.View`
   padding: 4px;
-  padding-right: 10px;
+  padding-right: ${({ theme }) => theme.spacing}px;
   flex-direction: row;
   justify-content: space-between;
 `;
 
-const Text = styled.Text<IText>`
+const Point = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+`;
+
+const Text = styled.Text`
   font-size: ${({ theme }) => theme.fonts.medium};
   color: ${({ theme }) => theme.colors.white};
   font-weight: bold;
+  margin: auto 4px;
 `;
 
 export {
@@ -82,6 +85,7 @@ export {
   Details,
   Name,
   Points,
+  Point,
   Text,
   ImageLoading,
 };

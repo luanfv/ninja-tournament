@@ -2,6 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from 'styled-components';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { ICard } from '../../@types';
 import {
@@ -10,6 +11,7 @@ import {
   Image,
   ImageLoading,
   Name,
+  Point,
   Points,
   Row,
   Text,
@@ -59,9 +61,20 @@ const Card: React.FC<ICard> = ({
             <Name>{shinobi.name}</Name>
 
             <Points>
-              <Text>Chakra: {shinobi.chakra}</Text>
-              <Text>Poder: {shinobi.power}</Text>
-              <Text>Técnica: {shinobi.technique}</Text>
+              <Point>
+                <Icon name="md-fitness" size={20} color={colors.white} />
+                <Text>{shinobi.power}</Text>
+              </Point>
+
+              <Point>
+                <Icon name="md-flame" size={20} color={colors.white} />
+                <Text>{shinobi.technique}</Text>
+              </Point>
+
+              <Point>
+                <Icon name="md-flash" size={20} color={colors.white} />
+                <Text>{shinobi.chakra}</Text>
+              </Point>
             </Points>
           </Details>
         </Row>
