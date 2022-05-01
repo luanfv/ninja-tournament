@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTheme } from 'styled-components';
 
 import { ICard } from '../../@types';
 import {
@@ -23,43 +25,52 @@ const Card: React.FC<ICard> = ({
   onPress,
   onLongPress,
 }) => {
+  const { colors } = useTheme();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
-    <Container
+    <TouchableOpacity
       onPress={onPress}
       onLongPress={onLongPress}
-      isSelected={isSelected}
       activeOpacity={0.8}
       disabled={disabled}
-      margin={margin}
     >
-      {position && (
-        <Header>
-          <Text color="white">{position}</Text>
-        </Header>
-      )}
+      <Container
+        isSelected={isSelected}
+        margin={margin}
+        colors={[
+          isSelected ? colors.secondary : colors.primary,
+          isSelected ? colors.secondary : colors.primary,
+          colors.white,
+        ]}
+      >
+        {/* {position && (
+          <Header>
+            <Text color="white">{position}</Text>
+          </Header>
+        )} */}
 
-      <Row>
-        {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
-        <Image
-          source={{ uri: shinobi.image }}
-          isSelected={isSelected}
-          isLoaded={isImageLoaded}
-          onLoadEnd={() => setIsImageLoaded(true)}
-        />
+        <Row>
+          {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
+          <Image
+            source={{ uri: shinobi.image }}
+            isSelected={isSelected}
+            isLoaded={isImageLoaded}
+            onLoadEnd={() => setIsImageLoaded(true)}
+          />
 
-        <Details>
-          <Name isSelected={isSelected}>{shinobi.name}</Name>
+          <Details>
+            <Name isSelected={isSelected}>{shinobi.name}</Name>
 
-          <Points>
-            <Text>Chakra: {shinobi.chakra}</Text>
-            <Text>Poder: {shinobi.power}</Text>
-            <Text>Técnica: {shinobi.technique}</Text>
-          </Points>
-        </Details>
-      </Row>
-    </Container>
+            <Points>
+              <Text>Chakra: {shinobi.chakra}</Text>
+              <Text>Poder: {shinobi.power}</Text>
+              <Text>Técnica: {shinobi.technique}</Text>
+            </Points>
+          </Details>
+        </Row>
+      </Container>
+    </TouchableOpacity>
   );
 };
 

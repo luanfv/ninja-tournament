@@ -9,6 +9,7 @@ const Container = styled.View`
   align-items: center;
   justify-content: center;
   margin-bottom: ${({ theme }) => theme.spacing * 2}px;
+  flex-direction: row;
 `;
 
 const Player = styled.View`
@@ -39,6 +40,7 @@ const Trophy = styled.View`
   align-items: center;
   justify-content: center;
   margin-top: ${({ theme }) => theme.spacing / 2}px;
+  margin-left: 20px;
 `;
 
 const TrophyText = styled.Text`
