@@ -51,14 +51,17 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
         <Versus>VS</Versus>
 
         <Player>
-          {!isPlayer2ImageLoaded && (
-            <ImageLoading LinearGradient={LinearGradient} />
-          )}
-          <PlayerImage
-            source={{ uri: competitor.player2.image }}
-            isLoaded={isPlayer2ImageLoaded}
-            onLoadEnd={() => setIsPlayer2ImageLoaded(true)}
-          />
+          <>
+            {!isPlayer2ImageLoaded && (
+              <ImageLoading LinearGradient={LinearGradient} />
+            )}
+
+            <PlayerImage
+              source={{ uri: competitor.player2.image }}
+              isLoaded={isPlayer2ImageLoaded}
+              onLoadEnd={() => setIsPlayer2ImageLoaded(true)}
+            />
+          </>
 
           <PlayerName winner={competitor.player2.winner}>
             {competitor.player2.name}

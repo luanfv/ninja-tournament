@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
+import { useTheme } from 'styled-components';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { ICard } from '../../@types';
 import {
   Container,
   Details,
-  Header,
   Image,
   ImageLoading,
   Name,
+  Point,
   Points,
   Row,
   Text,
@@ -19,47 +22,64 @@ const Card: React.FC<ICard> = ({
   isSelected = false,
   disabled,
   margin,
-  position,
   onPress,
   onLongPress,
 }) => {
+  const { colors } = useTheme();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
+  const color = useMemo(
+    () => (isSelected ? colors.secondary : colors.primary),
+    [colors.primary, colors.secondary, isSelected],
+  );
+
   return (
-    <Container
+    <TouchableOpacity
       onPress={onPress}
       onLongPress={onLongPress}
-      isSelected={isSelected}
       activeOpacity={0.8}
       disabled={disabled}
-      margin={margin}
     >
-      {position && (
-        <Header>
-          <Text color="white">{position}</Text>
-        </Header>
-      )}
+      <Container
+        isSelected={isSelected}
+        margin={margin}
+        colors={[color, color, colors.white]}
+      >
+        <Row>
+          <>
+            {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
 
-      <Row>
-        {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
-        <Image
-          source={{ uri: shinobi.image }}
-          isSelected={isSelected}
-          isLoaded={isImageLoaded}
-          onLoadEnd={() => setIsImageLoaded(true)}
-        />
+            <Image
+              source={{ uri: shinobi.image }}
+              isSelected={isSelected}
+              isLoaded={isImageLoaded}
+              onLoadEnd={() => setIsImageLoaded(true)}
+            />
+          </>
 
-        <Details>
-          <Name isSelected={isSelected}>{shinobi.name}</Name>
+          <Details>
+            <Name>{shinobi.name}</Name>
 
-          <Points>
-            <Text>Chakra: {shinobi.chakra}</Text>
-            <Text>Poder: {shinobi.power}</Text>
-            <Text>Técnica: {shinobi.technique}</Text>
-          </Points>
-        </Details>
-      </Row>
-    </Container>
+            <Points>
+              <Point>
+                <Icon name="md-fitness" size={20} color={colors.white} />
+                <Text>{shinobi.power}</Text>
+              </Point>
+
+              <Point>
+                <Icon name="md-flame" size={20} color={colors.white} />
+                <Text>{shinobi.technique}</Text>
+              </Point>
+
+              <Point>
+                <Icon name="md-flash" size={20} color={colors.white} />
+                <Text>{shinobi.chakra}</Text>
+              </Point>
+            </Points>
+          </Details>
+        </Row>
+      </Container>
+    </TouchableOpacity>
   );
 };
 

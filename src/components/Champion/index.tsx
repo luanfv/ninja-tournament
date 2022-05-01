@@ -1,44 +1,44 @@
 import React, { useState } from 'react';
-import { useTheme } from 'styled-components';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 import { IShinobi } from '../../@types';
 import {
   Container,
+  Grinalda,
+  GrinaldaImage,
   ImageLoading,
   Player,
   PlayerImage,
   PlayerName,
-  Trophy,
-  TrophyText,
 } from './styles';
-import LinearGradient from 'react-native-linear-gradient';
 
 interface IChampion {
   shinobi: IShinobi;
 }
 
 const Champion: React.FC<IChampion> = ({ shinobi }) => {
-  const { colors } = useTheme();
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
     <Container>
       <Player>
-        {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
-        <PlayerImage
-          source={{ uri: shinobi.image }}
-          isLoaded={isImageLoaded}
-          onLoadEnd={() => setIsImageLoaded(true)}
-        />
+        <View>
+          {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
+
+          <PlayerImage
+            source={{ uri: shinobi.image }}
+            isLoaded={isImageLoaded}
+            onLoadEnd={() => setIsImageLoaded(true)}
+          />
+
+          <Grinalda>
+            <GrinaldaImage source={require('../../assets/grinalda.png')} />
+          </Grinalda>
+        </View>
 
         <PlayerName>{shinobi.name}</PlayerName>
       </Player>
-      <Trophy>
-        <Icon name="trophy-sharp" size={50} color={colors.secondary} />
-
-        <TrophyText>CAMPEÃ(O)</TrophyText>
-      </Trophy>
     </Container>
   );
 };
