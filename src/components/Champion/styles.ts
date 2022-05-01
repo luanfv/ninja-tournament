@@ -31,30 +31,29 @@ const ImageLoading = styled(ShimmerPlaceholder)`
 `;
 
 const PlayerName = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.medium};
-  color: ${({ theme }) => theme.colors.primary};
-  font-weight: bold;
-`;
-
-const Trophy = styled.View`
-  align-items: center;
-  justify-content: center;
-  margin-top: ${({ theme }) => theme.spacing / 2}px;
-  margin-left: ${({ theme }) => theme.spacing}px;
-`;
-
-const TrophyText = styled.Text`
-  color: ${({ theme }) => theme.colors.secondary};
   font-size: ${({ theme }) => theme.fonts.large};
+  color: ${({ theme }) => theme.colors.secondary};
   font-weight: bold;
+  margin-top: ${({ theme }) => theme.spacing}px;
+`;
+
+const Grinalda = styled.View`
+  position: absolute;
+  bottom: -45px;
+  right: -35px;
+`;
+
+const GrinaldaImage = styled.Image`
+  width: 190px;
+  height: 190px;
 `;
 
 export {
   Container,
+  Grinalda,
+  GrinaldaImage,
+  ImageLoading,
   Player,
   PlayerImage,
   PlayerName,
-  Trophy,
-  TrophyText,
-  ImageLoading,
 };
