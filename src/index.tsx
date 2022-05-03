@@ -1,21 +1,26 @@
+import 'react-native-gesture-handler';
+
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { QueryClientProvider } from 'react-query';
 import { ThemeProvider } from 'styled-components';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { Routes } from './routes';
-import { queryClient } from './settings/queryClient';
-import { theme } from './settings/theme';
+import { Providers } from './hooks';
+import { theme } from './settings';
 
 export default () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider theme={theme}>
-      <StatusBar
-        backgroundColor={theme.colors.black}
-        barStyle="light-content"
-      />
+  // eslint-disable-next-line react-native/no-inline-styles
+  <GestureHandlerRootView style={{ flex: 1 }}>
+    <Providers>
+      <ThemeProvider theme={theme}>
+        <StatusBar
+          backgroundColor={theme.colors.primary}
+          barStyle="light-content"
+        />
 
-      <Routes />
-    </ThemeProvider>
-  </QueryClientProvider>
+        <Routes />
+      </ThemeProvider>
+    </Providers>
+  </GestureHandlerRootView>
 );

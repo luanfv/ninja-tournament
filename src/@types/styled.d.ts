@@ -6,12 +6,16 @@ interface IStyleGuide {
     black: string;
     gray: string;
     red: string;
+    green: string;
+    primary: string;
+    secondary: string;
   };
   fonts: {
     large: string;
     medium: string;
     small: string;
   };
+  spacing: number;
 }
 
 declare module 'styled-components/native' {

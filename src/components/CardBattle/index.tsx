@@ -1,0 +1,79 @@
+import React, { useState } from 'react';
+import LinearGradient from 'react-native-linear-gradient';
+import { IRoundResult } from '../../@types';
+import {
+  Container,
+  Header,
+  HeaderText,
+  Content,
+  Player,
+  PlayerImage,
+  PlayerName,
+  PlayerPercent,
+  Versus,
+  ImageLoading,
+} from './styles';
+
+interface ICardBattle {
+  competitor: IRoundResult;
+}
+
+const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
+  const [isPlayer1ImageLoaded, setIsPlayer1ImageLoaded] = useState(false);
+  const [isPlayer2ImageLoaded, setIsPlayer2ImageLoaded] = useState(false);
+
+  return (
+    <Container>
+      <Header>
+        <HeaderText>VENCEDOR: {competitor.winner.name}</HeaderText>
+      </Header>
+
+      <Content>
+        <Player>
+          {!isPlayer1ImageLoaded && (
+            <ImageLoading LinearGradient={LinearGradient} />
+          )}
+          <PlayerImage
+            source={{ uri: competitor.player1.image }}
+            isLoaded={isPlayer1ImageLoaded}
+            onLoadEnd={() => setIsPlayer1ImageLoaded(true)}
+          />
+
+          <PlayerName winner={competitor.player1.winner}>
+            {competitor.player1.name}
+          </PlayerName>
+
+          <PlayerPercent winner={competitor.player1.winner}>
+            Chances de vitória: {competitor.player1.winPercentage.toFixed(2)}%
+          </PlayerPercent>
+        </Player>
+
+        <Versus>VS</Versus>
+
+        <Player>
+          <>
+            {!isPlayer2ImageLoaded && (
+              <ImageLoading LinearGradient={LinearGradient} />
+            )}
+
+            <PlayerImage
+              source={{ uri: competitor.player2.image }}
+              isLoaded={isPlayer2ImageLoaded}
+              onLoadEnd={() => setIsPlayer2ImageLoaded(true)}
+            />
+          </>
+
+          <PlayerName winner={competitor.player2.winner}>
+            {competitor.player2.name}
+          </PlayerName>
+
+          <PlayerPercent winner={competitor.player2.winner}>
+            Chances de vitória: {competitor.player2.winPercentage.toFixed(2)}%
+          </PlayerPercent>
+        </Player>
+      </Content>
+    </Container>
+  );
+};
+
+export { CardBattle };
