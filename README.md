@@ -1,5 +1,7 @@
 
 <section align="center">
+  <img src="./assets/icon.png" width="80" height="80" />
+
   <h3 align="center">Naruto Shuriken</h3>
 
   <p align="center">
