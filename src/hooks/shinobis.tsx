@@ -1,10 +1,5 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { createContext, useState, useContext, useCallback } from 'react';
+import { useQuery } from 'react-query';
 
 import { IShinobi } from '../@types';
 import { storageShinobis } from '../helpers';
@@ -55,9 +50,7 @@ const ShinobisProvider: React.FC = ({ children }) => {
     }
   }, []);
 
-  useEffect(() => {
-    getShinobis();
-  }, [getShinobis]);
+  useQuery('shinobis', getShinobis);
 
   return (
     <ShinobisContext.Provider value={{ shinobis, status, getById }}>
