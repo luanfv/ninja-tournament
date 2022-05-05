@@ -46,7 +46,7 @@ describe('Hook: useRound', () => {
   const { result } = renderHook(() => useRound());
 
   test('onStartRound: Response length', () => {
-    expect(result.current.onStartRound([player1, player2]).length).toBe(1);
+    expect(result.current.onStartRound(shinobis).length).toBe(2);
     expect(() => result.current.onStartRound([player1])).toThrow();
   });
 
@@ -69,4 +69,19 @@ describe('Hook: useRound', () => {
     const [player2Winner] = result.current.onStartRound([player1, player2], 90);
     expect(player2Winner.winner.id).toBe(player2.id);
   });
+
+  test('onStartAllRounds: Response length', () => {
+    const response = result.current.onStartAllRounds(shinobis);
+    const length1 = 2;
+    const length1x1 = 2;
+    const length1x2 = 1;
+
+    expect(response.length).toBe(length1);
+    expect(response[0].length).toBe(length1x1);
+    expect(response[1].length).toBe(length1x2);
+
+    expect(() => result.current.onStartAllRounds([player1])).toThrow();
+  });
+
+  test('onStartAllRounds: Winner', () => {});
 });
