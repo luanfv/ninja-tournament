@@ -12,8 +12,8 @@ interface IRoundResult {
 }
 
 interface IRound {
-  onStartRound: (shinobis: IShinobi[]) => IRoundResult[];
-  onStartAllRounds: (shinobis: IShinobi[]) => IRoundResult[][];
+  onStartRound: (shinobis: IShinobi[], random?: number) => IRoundResult[];
+  onStartAllRounds: (shinobis: IShinobi[], random?: number) => IRoundResult[][];
 }
 
 export { IShinobiCompetitor, IRoundResult, IRound };
