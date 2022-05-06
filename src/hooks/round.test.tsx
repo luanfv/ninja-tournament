@@ -62,7 +62,7 @@ describe('Hook: useRound', () => {
     expect(response.player2.winPercentage).toBe(100 - player1WinPercentage);
   });
 
-  test('onStartRound: Winner', () => {
+  test('onStartRound: Champion', () => {
     const [player1Winner] = result.current.onStartRound([player1, player2], 50);
     expect(player1Winner.winner.id).toBe(player1.id);
 
@@ -83,5 +83,19 @@ describe('Hook: useRound', () => {
     expect(() => result.current.onStartAllRounds([player1])).toThrow();
   });
 
-  test('onStartAllRounds: Winner', () => {});
+  test('onStartAllRounds: Champion', () => {
+    const [kakashi, ino, naruto, neji] = shinobis;
+
+    const fiftyPercent = result.current.onStartAllRounds(shinobis, 50);
+
+    expect(fiftyPercent[0][0].winner.id).toBe(kakashi.id);
+    expect(fiftyPercent[0][1].winner.id).toBe(naruto.id);
+    expect(fiftyPercent[1][0].winner.id).toBe(kakashi.id);
+
+    const twentyPercent = result.current.onStartAllRounds(shinobis, 80);
+
+    expect(twentyPercent[0][0].winner.id).toBe(ino.id);
+    expect(twentyPercent[0][1].winner.id).toBe(neji.id);
+    expect(twentyPercent[1][0].winner.id).toBe(neji.id);
+  });
 });
