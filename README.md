@@ -1,3 +1,4 @@
+<img src="https://build.appcenter.ms/v0.1/apps/ac6a0fe2-93b9-4897-9de4-f29bea7abac0/branches/master/badge" />
 
 <section align="center">
   <img src="./assets/icon.png" width="80" height="80" />
