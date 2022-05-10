@@ -2,7 +2,7 @@
 <section align="center">
   <img src="./assets/icon.png" width="80" height="80" />
 
-  <h3 align="center">Naruto Shuriken</h3>
+  <h3 align="center">Torneio Shinobi</h3>
 
   <p align="center">
     Torneio shinobi do universo Naruto, aplicativo desenvolvido com React-Native + TypeScript
@@ -33,7 +33,7 @@
 
 Aplicativo criado com **React Native + TypeScript** para simular um torneio shinobi de Naruto Classico baseado nos tazos de 2009 da Elma. Para iniciar o torneio o usuário precisa selecionar 8 competidores e ordenar de forma que achar melhor, após fazer isso, haverá três rodadas diferentes para descobrir quem é o vencedor no final.
 
-Importante salientar que Naruto Shuriken não possui o cálculo de pontos baseado em quem tiver mais vence, mas sim em um sistema de porcentagem, onde quem tiver mais pontos possui mais chances de vitória, sendo assim, os torneios se tornam dinâmicos.
+Importante salientar que Torneio Shinobi não possui o cálculo de pontos baseado em quem tiver mais vence, mas sim em um sistema de porcentagem, onde quem tiver mais pontos possui mais chances de vitória, sendo assim, os torneios se tornam dinâmicos.
 
 
 ## EXTENSÕES DO VSCODE
