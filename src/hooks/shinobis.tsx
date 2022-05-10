@@ -1,14 +1,9 @@
-import React, {
-  createContext,
-  useState,
-  useContext,
-  useEffect,
-  useCallback,
-} from 'react';
+import React, { createContext, useState, useContext, useCallback } from 'react';
+import { useQuery } from 'react-query';
 
 import { IShinobi } from '../@types';
-import { storageShinobis } from '../helpers';
 import { serviceShinobis } from '../services';
+import { useStorage } from './storage';
 
 type IStatus = 'success' | 'fail' | 'loading';
 
@@ -21,6 +16,8 @@ interface IShinobis {
 const ShinobisContext = createContext<IShinobis>({} as IShinobis);
 
 const ShinobisProvider: React.FC = ({ children }) => {
+  const storage = useStorage();
+
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
   const [status, setStatus] = useState<IStatus>('loading');
 
@@ -37,27 +34,28 @@ const ShinobisProvider: React.FC = ({ children }) => {
         throw Error();
       }
 
-      await storageShinobis.set(response);
+      await storage.setShinobis(response);
 
       setShinobis(response);
       setStatus('success');
     } catch {
-      const storage = await storageShinobis.get();
+      storage
+        .getShinobis()
+        .then((response) => {
+          if (response) {
+            setShinobis(response);
+            setStatus('success');
 
-      if (storage) {
-        setShinobis(storage);
-        setStatus('success');
+            return;
+          }
 
-        return;
-      }
-
-      setStatus('fail');
+          throw Error();
+        })
+        .catch(() => setStatus('fail'));
     }
-  }, []);
+  }, [storage]);
 
-  useEffect(() => {
-    getShinobis();
-  }, [getShinobis]);
+  useQuery('shinobis', getShinobis);
 
   return (
     <ShinobisContext.Provider value={{ shinobis, status, getById }}>
