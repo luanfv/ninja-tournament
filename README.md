@@ -95,7 +95,7 @@ $ yarn android
 $ cd ios && pod install && cd ..
 ```
 
-2. Abra o arquivo `ios/CopaFilmes.xcworkspace` do projeto no XCode e execute.
+2. Abra o arquivo `ios/NarutoShuriken.xcworkspace` do projeto no XCode e execute.
 
 
 ## PADRÃO DE COMMIT
