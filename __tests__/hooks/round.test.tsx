@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useRound } from './round';
+import { useRound } from '../../src/hooks';
 
 const shinobis = [
   {
