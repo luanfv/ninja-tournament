@@ -1,5 +1,4 @@
-import { useState, useCallback } from 'react';
-import { useQuery } from 'react-query';
+import { useState, useCallback, useEffect } from 'react';
 
 import { IShinobi } from '../@types';
 import { serviceShinobis } from '../services';
@@ -50,7 +49,11 @@ const useShinobis = (): IShinobis => {
     }
   }, [storage]);
 
-  useQuery('shinobis', getShinobis);
+  useEffect(() => {
+    getShinobis();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return { shinobis, status, getById };
 };

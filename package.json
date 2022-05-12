@@ -28,7 +28,6 @@
     "react-native-screens": "^3.13.1",
     "react-native-shimmer-placeholder": "^2.0.8",
     "react-native-vector-icons": "^9.1.0",
-    "react-query": "^3.38.1",
     "styled-components": "^5.3.5"
   },
   "devDependencies": {
