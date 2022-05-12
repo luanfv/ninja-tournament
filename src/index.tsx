@@ -6,9 +6,9 @@ import { ThemeProvider } from 'styled-components';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { QueryClientProvider } from 'react-query';
 
-import { Routes } from './routes';
-import { Providers } from './hooks';
 import { queryClient, theme } from './settings';
+import { Providers } from './context';
+import { Routes } from './routes';
 
 export default () => (
   // eslint-disable-next-line react-native/no-inline-styles

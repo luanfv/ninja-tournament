@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { useQuery } from 'react-query';
 
 import { IShinobi } from '../@types';
@@ -13,9 +13,7 @@ interface IShinobis {
   getById: (id: number) => IShinobi | undefined;
 }
 
-const ShinobisContext = createContext<IShinobis>({} as IShinobis);
-
-const ShinobisProvider: React.FC = ({ children }) => {
+const useShinobis = (): IShinobis => {
   const storage = useStorage();
 
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
@@ -54,21 +52,7 @@ const ShinobisProvider: React.FC = ({ children }) => {
 
   useQuery('shinobis', getShinobis);
 
-  return (
-    <ShinobisContext.Provider value={{ shinobis, status, getById }}>
-      {children}
-    </ShinobisContext.Provider>
-  );
+  return { shinobis, status, getById };
 };
 
-const useShinobis = (): IShinobis => {
-  const context = useContext(ShinobisContext);
-
-  if (!context) {
-    throw new Error('useShinobis must be used within an ShinobisProvider');
-  }
-
-  return context;
-};
-
-export { ShinobisProvider, useShinobis };
+export { useShinobis };
