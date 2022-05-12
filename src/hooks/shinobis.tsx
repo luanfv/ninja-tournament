@@ -39,19 +39,16 @@ const ShinobisProvider: React.FC = ({ children }) => {
       setShinobis(response);
       setStatus('success');
     } catch {
-      storage
-        .getShinobis()
-        .then((response) => {
-          if (response) {
-            setShinobis(response);
-            setStatus('success');
+      const response = await storage.getShinobis();
 
-            return;
-          }
+      if (response.length === 0) {
+        setStatus('fail');
 
-          throw Error();
-        })
-        .catch(() => setStatus('fail'));
+        return;
+      }
+
+      setShinobis(response);
+      setStatus('success');
     }
   }, [storage]);
 

@@ -19,20 +19,30 @@ const useStorage = (): IStorage => {
   }, []);
 
   const getShinobis = useCallback(async () => {
-    const response = await getStorage('shinobis');
+    try {
+      const response = await getStorage('shinobis');
 
-    if (!response) {
-      return undefined;
+      if (!response) {
+        throw new Error();
+      }
+
+      const shinobis = JSON.parse(response) as IShinobi[];
+
+      return shinobis;
+    } catch {
+      return [];
     }
-
-    const shinobis = JSON.parse(response) as IShinobi[];
-
-    return shinobis;
   }, [getStorage]);
 
   const setShinobis = useCallback(
     async (item: IShinobi[]) => {
-      await setStorage('shinobis', item);
+      try {
+        await setStorage('shinobis', item);
+
+        return true;
+      } catch {
+        return false;
+      }
     },
     [setStorage],
   );
