@@ -38,10 +38,8 @@ const shinobis = [
 ];
 
 describe('Hook: useRound', () => {
-  const [player1, player2] = shinobis;
-  const { result } = renderHook(() => useRound());
-
   it('onStartRound: Should return a list with round information if it has a number for competitors', () => {
+    const { result } = renderHook(() => useRound());
     const response = result.current.onStartRound(shinobis);
     const length = response.length;
 
@@ -49,10 +47,16 @@ describe('Hook: useRound', () => {
   });
 
   it('onStartRound: Must fail if it has an odd number of competitors for the round', () => {
+    const { result } = renderHook(() => useRound());
+    const [player1] = shinobis;
+
     expect(() => result.current.onStartRound([player1])).toThrow();
   });
 
   it('onStartRound: Must know the winning percentage of the two competitors in the round', () => {
+    const { result } = renderHook(() => useRound());
+    const [player1, player2] = shinobis;
+
     const [response] = result.current.onStartRound([player1, player2]);
 
     expect(response.player1.winPercentage.toFixed(2)).toBe('70.37');
@@ -60,6 +64,9 @@ describe('Hook: useRound', () => {
   });
 
   it('onStartRound: Must return round information and validate that the correct competitor has won', () => {
+    const { result } = renderHook(() => useRound());
+    const [player1, player2] = shinobis;
+
     const [player1Winner] = result.current.onStartRound([player1, player2], 50);
     expect(player1Winner.winner.id).toBe(player1.id);
 
@@ -68,6 +75,9 @@ describe('Hook: useRound', () => {
   });
 
   it('onStartAllRounds: Must hold a tournament and validate if the size of the array returned is correct', () => {
+    const { result } = renderHook(() => useRound());
+    const [player1] = shinobis;
+
     const response = result.current.onStartAllRounds(shinobis);
     const length1 = 2;
     const length1x1 = 2;
@@ -81,10 +91,15 @@ describe('Hook: useRound', () => {
   });
 
   it('onStartAllRounds: Must fail if there are an odd number of competitors for the tournament', () => {
+    const { result } = renderHook(() => useRound());
+    const [player1] = shinobis;
+
     expect(() => result.current.onStartAllRounds([player1])).toThrow();
   });
 
   it('onStartAllRounds: Must return tournament information and validate that the correct competitor has won', () => {
+    const { result } = renderHook(() => useRound());
+
     const [kakashi, ino, naruto, neji] = shinobis;
 
     const fiftyPercent = result.current.onStartAllRounds(shinobis, 50);

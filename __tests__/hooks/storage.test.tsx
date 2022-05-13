@@ -33,9 +33,8 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 }));
 
 describe('Hook: useStorage', () => {
-  const { result } = renderHook(() => useStorage());
-
   it('Should fetch the shinobi stored in storage and return an empty array', async () => {
+    const { result } = renderHook(() => useStorage());
     const shinobis = await result.current.getShinobis();
 
     expect(shinobis).toEqual([]);
@@ -43,6 +42,7 @@ describe('Hook: useStorage', () => {
   });
 
   it('Must add a array of shinobi in the storage and check if it was saved', async () => {
+    const { result } = renderHook(() => useStorage());
     const response = await result.current.setShinobis(mockShinobis);
 
     expect(response).toBeTruthy();
