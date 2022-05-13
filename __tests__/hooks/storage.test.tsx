@@ -1,8 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { IShinobi } from '../../src/@types';
-import { useStorage } from '../../src/hooks/storage';
+import { IShinobi } from '@src/@types';
+import { useStorage } from '@src/hooks/storage';
 
 const mockItems: IShinobi[] = [];
 

@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
 
-import { IShinobi } from '../@types';
-import { serviceShinobis } from '../services';
+import { IShinobi } from '@src/@types';
+import { serviceShinobis } from '@src/services';
 import { useStorage } from './storage';
 
 type IStatus = 'success' | 'fail' | 'loading';

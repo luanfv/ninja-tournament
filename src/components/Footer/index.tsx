@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { IFooter } from '../../@types';
-import { Button } from '../Button';
+import { IFooter } from '@src/@types';
+import { Button } from '@src/components';
 import { Container } from './styles';
 
 const Footer: React.FC<IFooter> = ({ ...rest }) => {

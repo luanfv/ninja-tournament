@@ -3,7 +3,7 @@ import { Text, RefreshControl, View, FlatList } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { IShinobi, IRoutes } from '../../@types';
+import { IShinobi, IRoutes } from '@src/@types';
 import {
   Footer,
   Card,
@@ -11,9 +11,9 @@ import {
   Body,
   Separator,
   Loading,
-} from '../../components';
-import { useShinobisContext } from '../../context';
-import { Spacing } from '../../components/styles';
+} from '@src/components';
+import { useShinobisContext } from '@src/context';
+import { Spacing } from '@src/components/styles';
 
 const Home: React.FC = () => {
   const shinobisContext = useShinobisContext();

@@ -11,9 +11,9 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { IShinobi, IRoutes } from '../../@types';
-import { useRound } from '../../hooks';
-import { Card, Footer, Header, Body } from '../../components';
+import { IShinobi, IRoutes } from '@src/@types';
+import { useRound } from '@src/hooks';
+import { Card, Footer, Header, Body } from '@src/components';
 
 const Battle: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();

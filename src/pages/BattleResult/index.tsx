@@ -9,7 +9,7 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
 
-import { IRoutes } from '../../@types';
+import { IRoutes } from '@src/@types';
 import {
   Footer,
   Header,
@@ -18,7 +18,7 @@ import {
   CardBattle,
   Champion,
   Title,
-} from '../../components';
+} from '@src/components';
 
 const BattleResult: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();

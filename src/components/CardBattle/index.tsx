@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
-import { IRoundResult } from '../../@types';
+import { IRoundResult } from '@src/@types';
 import {
   Container,
   Header,

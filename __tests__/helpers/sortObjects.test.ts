@@ -1,4 +1,4 @@
-import { sortObjects } from '../../src/helpers';
+import { sortObjects } from '@src/helpers';
 
 describe('Helper: sortObjects', () => {
   it('Should return an array with the following format: [{ id: 1 }, { id: 3 }, { id: 9 }]', () => {

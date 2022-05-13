@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { IShinobi, IStorage } from '../@types';
+import { IShinobi, IStorage } from '@src/@types';
 
 type IStorageType = 'shinobis';
 

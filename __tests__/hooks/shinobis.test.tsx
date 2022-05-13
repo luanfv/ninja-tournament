@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react-hooks';
 
-import { useShinobis } from '../../src/hooks';
-import { serviceShinobis } from '../../src/services/shinobis';
+import { useShinobis } from '@src/hooks/shinobis';
+import { serviceShinobis } from '@src/services/shinobis';
 
 const mockShinobi = {
   chakra: 10,

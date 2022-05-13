@@ -1,8 +1,8 @@
 import { collection, getDocs } from 'firebase/firestore/lite';
 
-import { firebase } from '../settings';
-import { IShinobi } from '../@types/shinobi';
-import { sortObjects } from '../helpers';
+import { firebase } from '@src/settings';
+import { IShinobi } from '@src/@types/shinobi';
+import { sortObjects } from '@src/helpers';
 
 const serviceShinobis = {
   getFirebase: async (): Promise<IShinobi[]> => {

@@ -1,7 +1,7 @@
 import React, { createContext, useContext } from 'react';
 
-import { IShinobi } from '../@types';
-import { useShinobis } from '../hooks';
+import { IShinobi } from '@src/@types';
+import { useShinobis } from '@src/hooks';
 
 type IStatus = 'success' | 'fail' | 'loading';
 

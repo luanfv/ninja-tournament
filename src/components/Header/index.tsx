@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IHeader } from '../../@types';
+import { IHeader } from '@src/@types';
 import {
   Container,
   Description,

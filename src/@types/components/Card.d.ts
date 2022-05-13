@@ -1,4 +1,4 @@
-import { IShinobi } from '../';
+import { IShinobi } from '@src/@types';
 
 interface ICard {
   shinobi: IShinobi;

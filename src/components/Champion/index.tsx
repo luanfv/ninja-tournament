@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { IShinobi } from '../../@types';
+import { IShinobi } from '@src/@types';
 import {
   Container,
   Grinalda,
@@ -33,7 +33,7 @@ const Champion: React.FC<IChampion> = ({ shinobi }) => {
           />
 
           <Grinalda>
-            <GrinaldaImage source={require('../../assets/grinalda.png')} />
+            <GrinaldaImage source={require('@src/assets/grinalda.png')} />
           </Grinalda>
         </View>
 
