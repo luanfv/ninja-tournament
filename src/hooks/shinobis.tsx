@@ -1,9 +1,8 @@
-import React, { createContext, useState, useContext, useCallback } from 'react';
-import { useQuery } from 'react-query';
+import { useState, useCallback, useEffect } from 'react';
 
 import { IShinobi } from '../@types';
-import { storageShinobis } from '../helpers';
 import { serviceShinobis } from '../services';
+import { useStorage } from './storage';
 
 type IStatus = 'success' | 'fail' | 'loading';
 
@@ -13,9 +12,9 @@ interface IShinobis {
   getById: (id: number) => IShinobi | undefined;
 }
 
-const ShinobisContext = createContext<IShinobis>({} as IShinobis);
+const useShinobis = (): IShinobis => {
+  const storage = useStorage();
 
-const ShinobisProvider: React.FC = ({ children }) => {
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
   const [status, setStatus] = useState<IStatus>('loading');
 
@@ -32,41 +31,31 @@ const ShinobisProvider: React.FC = ({ children }) => {
         throw Error();
       }
 
-      await storageShinobis.set(response);
+      await storage.setShinobis(response);
 
       setShinobis(response);
       setStatus('success');
     } catch {
-      const storage = await storageShinobis.get();
+      const response = await storage.getShinobis();
 
-      if (storage) {
-        setShinobis(storage);
-        setStatus('success');
+      if (response.length === 0) {
+        setStatus('fail');
 
         return;
       }
 
-      setStatus('fail');
+      setShinobis(response);
+      setStatus('success');
     }
+  }, [storage]);
+
+  useEffect(() => {
+    getShinobis();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useQuery('shinobis', getShinobis);
-
-  return (
-    <ShinobisContext.Provider value={{ shinobis, status, getById }}>
-      {children}
-    </ShinobisContext.Provider>
-  );
+  return { shinobis, status, getById };
 };
 
-const useShinobis = (): IShinobis => {
-  const context = useContext(ShinobisContext);
-
-  if (!context) {
-    throw new Error('useShinobis must be used within an ShinobisProvider');
-  }
-
-  return context;
-};
-
-export { ShinobisProvider, useShinobis };
+export { useShinobis };

@@ -12,11 +12,11 @@ import {
   Separator,
   Loading,
 } from '../../components';
-import { useShinobis } from '../../hooks/shinobis';
+import { useShinobisContext } from '../../context';
 import { Spacing } from '../../components/styles';
 
 const Home: React.FC = () => {
-  const shinobisContext = useShinobis();
+  const shinobisContext = useShinobisContext();
   const isFocused = useIsFocused();
   const { navigate } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
