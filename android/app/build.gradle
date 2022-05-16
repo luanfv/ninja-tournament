@@ -226,6 +226,8 @@ android {
             resValue "string", "CodePushDeploymentKey", '""'
         }
         releaseStaging {
+            minifyEnabled enableProguardInReleaseBuilds
+            proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
             matchingFallbacks = ['release']
             resValue "string", "CodePushDeploymentKey", '"QwRvOjlMLsoo1Mfn_1OGHrjP8JtGPr1eDEndO"'
         }
