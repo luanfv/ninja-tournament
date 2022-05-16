@@ -26,4 +26,6 @@ const App: React.FC = () => (
   </GestureHandlerRootView>
 );
 
-export default CodePush()(App);
+export default CodePush({
+  checkFrequency: CodePush.CheckFrequency.ON_APP_RESUME,
+})(App);
