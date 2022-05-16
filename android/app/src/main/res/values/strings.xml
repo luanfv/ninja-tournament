@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Torneio Shinobi</string>
+    <string moduleConfig="true" name="CodePushDeploymentKey">4QQJo3apMLgktZzjwd8zcu4I0WxAxQai_4dlF</string>
 </resources>
