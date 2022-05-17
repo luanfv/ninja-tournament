@@ -26,4 +26,4 @@ const App: React.FC = () => (
   </GestureHandlerRootView>
 );
 
-export default CodePush()(App);
+export default CodePush(App);
