@@ -30,7 +30,8 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
     <Container>
       <Header>
         <HeaderText>
-          {language.components.cardBattle.winner}: {competitor.winner.name}
+          {language.components.cardBattle.winner.toUpperCase()}:{' '}
+          {competitor.winner.name}
         </HeaderText>
       </Header>
 
@@ -50,7 +51,7 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
           </PlayerName>
 
           <PlayerPercent winner={competitor.player1.winner}>
-            {language.components.cardBattle.winner}:{' '}
+            {language.components.cardBattle.percentageToWin}:{' '}
             {competitor.player1.winPercentage.toFixed(2)}%
           </PlayerPercent>
         </Player>
@@ -75,7 +76,7 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
           </PlayerName>
 
           <PlayerPercent winner={competitor.player2.winner}>
-            {language.components.cardBattle.winner}:{' '}
+            {language.components.cardBattle.percentageToWin}:{' '}
             {competitor.player2.winPercentage.toFixed(2)}%
           </PlayerPercent>
         </Player>
