@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+
 import { IRoundResult } from '@src/@types';
 import {
   Container,
@@ -13,6 +14,7 @@ import {
   Versus,
   ImageLoading,
 } from './styles';
+import { useLanguage } from '@src/hooks';
 
 interface ICardBattle {
   competitor: IRoundResult;
@@ -22,10 +24,14 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
   const [isPlayer1ImageLoaded, setIsPlayer1ImageLoaded] = useState(false);
   const [isPlayer2ImageLoaded, setIsPlayer2ImageLoaded] = useState(false);
 
+  const { language } = useLanguage();
+
   return (
     <Container>
       <Header>
-        <HeaderText>VENCEDOR: {competitor.winner.name}</HeaderText>
+        <HeaderText>
+          {language.components.cardBattle.winner}: {competitor.winner.name}
+        </HeaderText>
       </Header>
 
       <Content>
@@ -44,7 +50,8 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
           </PlayerName>
 
           <PlayerPercent winner={competitor.player1.winner}>
-            Chances de vitória: {competitor.player1.winPercentage.toFixed(2)}%
+            {language.components.cardBattle.winner}:{' '}
+            {competitor.player1.winPercentage.toFixed(2)}%
           </PlayerPercent>
         </Player>
 
@@ -68,7 +75,8 @@ const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {
           </PlayerName>
 
           <PlayerPercent winner={competitor.player2.winner}>
-            Chances de vitória: {competitor.player2.winPercentage.toFixed(2)}%
+            {language.components.cardBattle.winner}:{' '}
+            {competitor.player2.winPercentage.toFixed(2)}%
           </PlayerPercent>
         </Player>
       </Content>

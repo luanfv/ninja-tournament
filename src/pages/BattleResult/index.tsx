@@ -19,6 +19,7 @@ import {
   Champion,
   Title,
 } from '@src/components';
+import { useLanguage } from '@src/hooks';
 
 const BattleResult: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();
@@ -26,23 +27,28 @@ const BattleResult: React.FC = () => {
     useNavigation<NavigationProp<IRoutes, 'battleResult'>>();
   const { spacing } = useTheme();
 
-  const getTitleOfRound = useCallback((value, length) => {
-    switch (value) {
-      case 0:
-        return 'Final';
+  const { language } = useLanguage();
 
-      case 1:
-        return 'Semifinal';
+  const getTitleOfRound = useCallback(
+    (value, length) => {
+      switch (value) {
+        case 0:
+          return language.pages.battleResult.finalRound;
 
-      default:
-        return `${length - value}ª Rodada`;
-    }
-  }, []);
+        case 1:
+          return language.pages.battleResult.semifinalRound;
+
+        default:
+          return `${length - value}ª ${language.pages.battleResult.round}`;
+      }
+    },
+    [language],
+  );
 
   return (
     <>
       <Header
-        title="RESULTADO"
+        title={language.pages.battleResult.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -75,7 +81,7 @@ const BattleResult: React.FC = () => {
       </Body>
 
       <Footer
-        text="Voltar para home"
+        text={language.pages.battleResult.footerButton}
         onPress={() => reset({ index: 1, routes: [{ name: 'home' }] })}
       />
     </>
