@@ -1,13 +1,14 @@
 import { useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { IShinobi, IStorage } from '@src/@types';
+import { IShinobi } from '@src/@types';
+import { IUseStorage } from '@src/@types/hooks';
 
 type IStorageType = 'shinobis';
 
 const host = '@NarutoShuriken';
 
-const useStorage = (): IStorage => {
+const useStorage = (): IUseStorage => {
   const getStorage = useCallback(async (value: IStorageType) => {
     const response = await AsyncStorage.getItem(`${host}/${value}`);
 

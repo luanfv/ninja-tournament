@@ -2,8 +2,9 @@ import { useMemo } from 'react';
 import { NativeModules, Platform } from 'react-native';
 
 import { en_US, pt_BR } from '@src/settings/i18n';
+import { IUseLanguage } from '@src/@types/hooks';
 
-const useLanguage = () => {
+const useLanguage = (): IUseLanguage => {
   const language = useMemo(() => {
     const deviceLanguage =
       Platform.OS === 'ios'

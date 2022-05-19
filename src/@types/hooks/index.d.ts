@@ -1,3 +1,4 @@
-export type { IRound } from './round';
-export type { IShinobis, IStatus } from './shinobis';
-export type { IStorage } from './storage';
+export type { IUseRound } from './round';
+export type { IUseShinobis, IStatus } from './shinobis';
+export type { IUseStorage } from './storage';
+export type { IUseLanguage } from './language';

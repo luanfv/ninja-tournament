@@ -1,7 +1,7 @@
 import { ILanguage } from '@src/@types';
 
-interface IRound {
+interface IUseLanguage {
   language: ILanguage;
 }
 
-export { IRound };
+export { IUseLanguage };

@@ -1,12 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
 
 import { IShinobi } from '@src/@types';
-import { IShinobis, IStatus } from '@src/@types/hooks';
+import { IUseShinobis, IStatus } from '@src/@types/hooks';
 import { serviceShinobis } from '@src/services';
 
 import { useStorage } from './storage';
 
-const useShinobis = (): IShinobis => {
+const useShinobis = (): IUseShinobis => {
   const storage = useStorage();
 
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
