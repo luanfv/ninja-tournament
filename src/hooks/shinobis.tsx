@@ -1,16 +1,10 @@
 import { useState, useCallback, useEffect } from 'react';
 
 import { IShinobi } from '@src/@types';
+import { IShinobis, IStatus } from '@src/@types/hooks';
 import { serviceShinobis } from '@src/services';
+
 import { useStorage } from './storage';
-
-type IStatus = 'success' | 'fail' | 'loading';
-
-interface IShinobis {
-  shinobis: IShinobi[];
-  status: IStatus;
-  getById: (id: number) => IShinobi | undefined;
-}
 
 const useShinobis = (): IShinobis => {
   const storage = useStorage();

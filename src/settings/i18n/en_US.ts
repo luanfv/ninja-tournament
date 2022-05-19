@@ -1,4 +1,4 @@
-import { ILanguage } from '@src/@types/index';
+import { ILanguage } from '@src/@types';
 
 const en_US: ILanguage = {
   type: 'en_US',

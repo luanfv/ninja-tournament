@@ -1,11 +1,7 @@
 import { useCallback } from 'react';
 
-import {
-  IShinobi,
-  IRound,
-  IShinobiCompetitor,
-  IRoundResult,
-} from '@src/@types';
+import { IShinobi, IShinobiCompetitor, IRoundResult } from '@src/@types';
+import { IRound } from '@src/@types/hooks';
 
 const useRound = (): IRound => {
   const onStartRound = useCallback(

@@ -1,4 +1,4 @@
-import { IShinobi } from './shinobi';
+import { IShinobi } from '@src/@types/shinobi';
 
 interface IStorage {
   getShinobis: () => Promise<IShinobi[]>;

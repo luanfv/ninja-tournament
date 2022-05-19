@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { IFooter } from '@src/@types';
+import { IFooter } from '@src/@types/components';
 import { Button } from '@src/components';
 import { Container } from './styles';
 

@@ -4,7 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import { useTheme } from 'styled-components';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { ICard } from '@src/@types';
+import { ICard } from '@src/@types/components';
 import {
   Container,
   Details,

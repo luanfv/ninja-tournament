@@ -52,7 +52,6 @@ const mockServiceRequestFail = (): Promise<IShinobi[]> => {
 
 describe('Hook: useStorage', () => {
   beforeEach(() => {
-    // Limpa a implementação do mock em cada "it"
     mockSerivce.getFirebase.mockClear();
   });
 

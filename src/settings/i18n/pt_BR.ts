@@ -1,4 +1,4 @@
-import { ILanguage } from '@src/@types/index';
+import { ILanguage } from '@src/@types';
 
 const pt_BR: ILanguage = {
   type: 'pt_BR',
