@@ -1,9 +1,11 @@
 import { renderHook } from '@testing-library/react-hooks';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useShinobis } from '@src/hooks/shinobis';
 import { serviceShinobis } from '@src/services/shinobis';
+import { IShinobi } from '@src/@types';
 
-const mockShinobi = {
+const mockShinobi: IShinobi = {
   chakra: 10,
   id: 7,
   image: '',
@@ -15,26 +17,49 @@ const mockShinobi = {
 const mockShinobis = [mockShinobi];
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  getItem: jest.fn(() => {
-    return new Promise((_, reject) => {
-      setTimeout(() => reject(), 100);
-    });
-  }),
+  getItem: jest.fn(),
 }));
+
+const mockAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
+
+const mockAsyncStorageRequest = (): Promise<string> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(JSON.stringify(mockShinobis));
+    }, 100);
+  });
+};
 
 jest.mock('../../src/services/shinobis');
 
-const mockSerivce = serviceShinobis as any;
+const mockSerivce = serviceShinobis as jest.Mocked<typeof serviceShinobis>;
+
+const mockServiceRequest = (data: IShinobi[]): Promise<IShinobi[]> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(data);
+    }, 100);
+  });
+};
+
+const mockServiceRequestFail = (): Promise<IShinobi[]> => {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject();
+    }, 100);
+  });
+};
 
 describe('Hook: useStorage', () => {
   beforeEach(() => {
-    // Limpa a implementação do mock em cada "it"
     mockSerivce.getFirebase.mockClear();
   });
 
   describe('Firebase', () => {
     it('Should return a list of competitors', async () => {
-      mockSerivce.getFirebase.mockImplementation(() => mockShinobis);
+      mockSerivce.getFirebase.mockImplementation(() =>
+        mockServiceRequest(mockShinobis),
+      );
 
       const { result, waitForNextUpdate } = renderHook(() => useShinobis());
 
@@ -48,7 +73,9 @@ describe('Hook: useStorage', () => {
     });
 
     it('Must filter the competitor', async () => {
-      mockSerivce.getFirebase.mockImplementation(() => mockShinobis);
+      mockSerivce.getFirebase.mockImplementation(() =>
+        mockServiceRequest(mockShinobis),
+      );
 
       const { result, waitForNextUpdate } = renderHook(() => useShinobis());
 
@@ -60,7 +87,7 @@ describe('Hook: useStorage', () => {
 
   describe('No connection', () => {
     it('Should return an empty list', async () => {
-      mockSerivce.getFirebase.mockImplementation(() => undefined);
+      mockSerivce.getFirebase.mockImplementation(() => mockServiceRequest([]));
 
       const { result, waitForNextUpdate } = renderHook(() => useShinobis());
 
@@ -69,14 +96,37 @@ describe('Hook: useStorage', () => {
       expect(result.current.shinobis).toEqual([]);
     });
 
-    it('Should return "undefined" when it doesn\'t find the search competitor', async () => {
-      mockSerivce.getFirebase.mockImplementation(() => undefined);
+    it('Should return "undefined" when it does not find the search competitor', async () => {
+      mockSerivce.getFirebase.mockImplementation(() => mockServiceRequest([]));
 
       const { result, waitForNextUpdate } = renderHook(() => useShinobis());
 
       await waitForNextUpdate();
 
       expect(result.current.getById(7)).toBeFalsy();
+    });
+
+    it('Should return an empty shinobis array and the failure status if it cannot perform the firebase request and has nothing stored in the Async Storage', async () => {
+      mockSerivce.getFirebase.mockImplementation(mockServiceRequestFail);
+
+      const { result, waitForNextUpdate } = renderHook(() => useShinobis());
+
+      await waitForNextUpdate();
+
+      expect(result.current.shinobis).toEqual([]);
+      expect(result.current.status).toEqual('fail');
+    });
+
+    it('Should return an array of shinobis and the success status if it cannot make the firebase request, but has data stored in the Async Storage', async () => {
+      mockSerivce.getFirebase.mockImplementation(mockServiceRequestFail);
+      mockAsyncStorage.getItem.mockImplementation(mockAsyncStorageRequest);
+
+      const { result, waitForNextUpdate } = renderHook(() => useShinobis());
+
+      await waitForNextUpdate();
+
+      expect(result.current.shinobis).toEqual(mockShinobis);
+      expect(result.current.status).toEqual('success');
     });
   });
 });

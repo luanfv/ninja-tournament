@@ -1,10 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { renderHook } from '@testing-library/react-hooks';
 
-import { IShinobi } from '@src/@types';
 import { useStorage } from '@src/hooks/storage';
-
-const mockItems: IShinobi[] = [];
 
 const mockShinobi = {
   chakra: 10,
@@ -18,19 +15,17 @@ const mockShinobi = {
 const mockShinobis = [mockShinobi];
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
-  setItem: jest.fn((item, value) => {
-    return new Promise((resolve, _) => {
-      mockItems[item] = value;
-
-      setTimeout(() => resolve(value), 100);
-    });
-  }),
-  getItem: jest.fn((item) => {
-    return new Promise((resolve, _) => {
-      setTimeout(() => resolve(mockItems[item]), 100);
-    });
-  }),
+  setItem: jest.fn(),
+  getItem: jest.fn(),
 }));
+
+const mockAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
+
+const mockAsyncStorageGetItem = (): Promise<string> => {
+  return new Promise((resolve, _) => {
+    setTimeout(() => resolve(JSON.stringify(mockShinobis)), 100);
+  });
+};
 
 describe('Hook: useStorage', () => {
   it('Should fetch the shinobi stored in storage and return an empty array', async () => {
@@ -42,6 +37,10 @@ describe('Hook: useStorage', () => {
   });
 
   it('Must add a array of shinobi in the storage and check if it was saved', async () => {
+    mockAsyncStorage.getItem.mockImplementation(() =>
+      mockAsyncStorageGetItem(),
+    );
+
     const { result } = renderHook(() => useStorage());
     const response = await result.current.setShinobis(mockShinobis);
 

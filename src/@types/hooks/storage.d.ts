@@ -1,8 +1,8 @@
-import { IShinobi } from './shinobi';
+import { IShinobi } from '@src/@types/shinobi';
 
-interface IStorage {
+interface IUseStorage {
   getShinobis: () => Promise<IShinobi[]>;
   setShinobis: (item: IShinobi[]) => Promise<boolean>;
 }
 
-export { IStorage };
+export { IUseStorage };

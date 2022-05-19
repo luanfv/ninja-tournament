@@ -1,13 +1,9 @@
 import { useCallback } from 'react';
 
-import {
-  IShinobi,
-  IRound,
-  IShinobiCompetitor,
-  IRoundResult,
-} from '@src/@types';
+import { IShinobi, IShinobiCompetitor, IRoundResult } from '@src/@types';
+import { IUseRound } from '@src/@types/hooks';
 
-const useRound = (): IRound => {
+const useRound = (): IUseRound => {
   const onStartRound = useCallback(
     (shinobis: IShinobi[], random = Math.floor(Math.random() * 100) + 1) => {
       if (shinobis.length % 2 !== 0) {

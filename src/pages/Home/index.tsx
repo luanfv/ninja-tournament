@@ -14,6 +14,7 @@ import {
 } from '@src/components';
 import { useShinobisContext } from '@src/context';
 import { Spacing } from '@src/components/styles';
+import { useLanguage } from '@src/hooks';
 
 const Home: React.FC = () => {
   const shinobisContext = useShinobisContext();
@@ -26,6 +27,8 @@ const Home: React.FC = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const flatlistRef = useRef<FlatList>(null);
+
+  const { language } = useLanguage();
 
   const onResetShinobis = useCallback((allShinobis: IShinobi[]) => {
     setShinobisToBattle([]);
@@ -70,9 +73,9 @@ const Home: React.FC = () => {
   return (
     <>
       <Header
-        title="SELEÇÃO DE COMPETIDOERES"
+        title={language.pages.home.headerTitle}
         isDescriptionError={shinobisToBattle.length !== 8}
-        description={`Shinobis selecionados: ${shinobisToBattle.length} de 8`}
+        description={`${language.pages.home.headerDescription}: ${shinobisToBattle.length} ${language.pages.home.headerDescriptionOf} 8`}
       />
 
       {shinobisContext.status === 'loading' && <Loading />}
@@ -126,7 +129,7 @@ const Home: React.FC = () => {
           </Body>
 
           <Footer
-            text="Avançar"
+            text={language.pages.home.footerButton}
             disabled={shinobisToBattle.length !== 8}
             onPress={() => navigate('battle', shinobisToBattle)}
           />
