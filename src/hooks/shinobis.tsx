@@ -27,10 +27,6 @@ const useShinobis = (): IShinobis => {
     try {
       const response = await serviceShinobis.getFirebase();
 
-      if (!response) {
-        throw Error();
-      }
-
       await storage.setShinobis(response);
 
       setShinobis(response);
