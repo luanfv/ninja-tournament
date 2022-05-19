@@ -20,7 +20,7 @@ const Header: React.FC<IHeader> = ({
     <>
       <Container>
         <DynamicComponent aligm="left">{leftComponent}</DynamicComponent>
-        <Title>{title}</Title>
+        <Title>{title.toUpperCase()}</Title>
         <DynamicComponent aligm="right">{rightComponent}</DynamicComponent>
       </Container>
 

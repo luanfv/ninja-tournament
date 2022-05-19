@@ -12,7 +12,7 @@ import DraggableFlatList, {
 import Icon from 'react-native-vector-icons/Ionicons';
 
 import { IShinobi, IRoutes } from '@src/@types';
-import { useRound } from '@src/hooks';
+import { useLanguage, useRound } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
 
 const Battle: React.FC = () => {
@@ -22,6 +22,8 @@ const Battle: React.FC = () => {
     useNavigation<NavigationProp<IRoutes, 'battle'>>();
 
   const [shinobis, setShinobis] = useState<IShinobi[]>(params as IShinobi[]);
+
+  const { language } = useLanguage();
 
   const handleRandomShinobis = useCallback(() => {
     const positions: number[] = [];
@@ -42,7 +44,7 @@ const Battle: React.FC = () => {
   return (
     <>
       <Header
-        title="TORNEIO"
+        title={language.pages.battle.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -75,7 +77,7 @@ const Battle: React.FC = () => {
       </Body>
 
       <Footer
-        text="Iniciar torneio"
+        text={language.pages.battle.footerButton}
         onPress={() =>
           navigate('battleResult', onStartAllRounds(shinobis).reverse())
         }
