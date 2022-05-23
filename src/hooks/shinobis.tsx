@@ -1,14 +1,12 @@
 import { useState, useCallback, useEffect } from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { IShinobi } from '@src/@types';
 import { IUseShinobis, IStatus } from '@src/@types/hooks';
 import { serviceShinobis } from '@src/services';
-
-import { useStorage } from './storage';
+import { storages } from '@src/settings';
 
 const useShinobis = (): IUseShinobis => {
-  const storage = useStorage();
-
   const [shinobis, setShinobis] = useState<IShinobi[]>([]);
   const [status, setStatus] = useState<IStatus>('loading');
 
@@ -17,30 +15,38 @@ const useShinobis = (): IUseShinobis => {
     [shinobis],
   );
 
-  const getShinobis = useCallback(async () => {
+  const updateShinobis = useCallback(async () => {
     try {
       const response = await serviceShinobis.getFirebase();
 
-      await storage.setShinobis(response);
+      await AsyncStorage.setItem(storages.SHINOBIS, JSON.stringify(response));
 
       setShinobis(response);
       setStatus('success');
     } catch {
-      const response = await storage.getShinobis();
+      AsyncStorage.getItem(storages.SHINOBIS)
+        .then((response) => {
+          if (!response) {
+            throw Error();
+          }
 
-      if (response.length === 0) {
-        setStatus('fail');
+          const value = JSON.parse(response);
 
-        return;
-      }
+          if (!Array.isArray(value)) {
+            throw Error();
+          }
 
-      setShinobis(response);
-      setStatus('success');
+          setShinobis(value);
+          setStatus('success');
+        })
+        .catch(() => {
+          setStatus('fail');
+        });
     }
-  }, [storage]);
+  }, []);
 
   useEffect(() => {
-    getShinobis();
+    updateShinobis();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
