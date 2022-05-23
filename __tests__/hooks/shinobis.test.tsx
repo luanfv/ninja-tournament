@@ -18,6 +18,7 @@ const mockShinobis = [mockShinobi];
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
   getItem: jest.fn(),
+  setItem: jest.fn(),
 }));
 
 const mockAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
@@ -26,6 +27,14 @@ const mockAsyncStorageRequest = (): Promise<string> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(JSON.stringify(mockShinobis));
+    }, 100);
+  });
+};
+
+const mockAsyncStorageRequestFail = (): Promise<string> => {
+  return new Promise((_, reject) => {
+    setTimeout(() => {
+      reject();
     }, 100);
   });
 };
@@ -50,7 +59,7 @@ const mockServiceRequestFail = (): Promise<IShinobi[]> => {
   });
 };
 
-describe('Hook: useStorage', () => {
+describe('Hook: useShinobis', () => {
   beforeEach(() => {
     mockSerivce.getFirebase.mockClear();
   });
@@ -108,6 +117,7 @@ describe('Hook: useStorage', () => {
 
     it('Should return an empty shinobis array and the failure status if it cannot perform the firebase request and has nothing stored in the Async Storage', async () => {
       mockSerivce.getFirebase.mockImplementation(mockServiceRequestFail);
+      mockAsyncStorage.getItem.mockImplementation(mockAsyncStorageRequestFail);
 
       const { result, waitForNextUpdate } = renderHook(() => useShinobis());
 
