@@ -23,10 +23,10 @@ jest.mock('@react-native-async-storage/async-storage', () => ({
 
 const mockAsyncStorage = AsyncStorage as jest.Mocked<typeof AsyncStorage>;
 
-const mockAsyncStorageRequest = (): Promise<string> => {
+const mockAsyncStorageRequest = (data: any): Promise<string> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(JSON.stringify(mockShinobis));
+      resolve(JSON.stringify(data));
     }, 100);
   });
 };
@@ -129,7 +129,9 @@ describe('Hook: useShinobis', () => {
 
     it('Should return an array of shinobis and the success status if it cannot make the firebase request, but has data stored in the Async Storage', async () => {
       mockSerivce.getFirebase.mockImplementation(mockServiceRequestFail);
-      mockAsyncStorage.getItem.mockImplementation(mockAsyncStorageRequest);
+      mockAsyncStorage.getItem.mockImplementation(() =>
+        mockAsyncStorageRequest(mockShinobis),
+      );
 
       const { result, waitForNextUpdate } = renderHook(() => useShinobis());
 
@@ -137,6 +139,34 @@ describe('Hook: useShinobis', () => {
 
       expect(result.current.shinobis).toEqual(mockShinobis);
       expect(result.current.status).toEqual('success');
+    });
+
+    it('Should fail firebase fetch and return default value from Async Storage when never added value', async () => {
+      mockSerivce.getFirebase.mockImplementation(mockServiceRequestFail);
+      mockAsyncStorage.getItem.mockImplementation(() =>
+        mockAsyncStorageRequest(undefined),
+      );
+
+      const { result, waitForNextUpdate } = renderHook(() => useShinobis());
+
+      await waitForNextUpdate();
+
+      expect(result.current.shinobis).toEqual([]);
+      expect(result.current.status).toEqual('fail');
+    });
+
+    it('Should fail to fetch in firebase and return a different value from array in Async Storage', async () => {
+      mockSerivce.getFirebase.mockImplementation(mockServiceRequestFail);
+      mockAsyncStorage.getItem.mockImplementation(() =>
+        mockAsyncStorageRequest({}),
+      );
+
+      const { result, waitForNextUpdate } = renderHook(() => useShinobis());
+
+      await waitForNextUpdate();
+
+      expect(result.current.shinobis).toEqual([]);
+      expect(result.current.status).toEqual('fail');
     });
   });
 });
