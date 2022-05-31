@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Text, RefreshControl, View, FlatList } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import firestore from '@react-native-firebase/firestore';
 
 import { IShinobi, IRoutes } from '@src/@types';
 import {
@@ -69,6 +70,21 @@ const Home: React.FC = () => {
       });
     }
   }, [isFocused, shinobisContext, onResetShinobis]);
+
+  useEffect(() => {
+    firestore()
+      .collection('ninjas')
+      .get()
+      .then((response) => {
+        const data = response.docs.map((doc) => {
+          return {
+            ...doc.data(),
+          };
+        }) as IShinobi[];
+
+        console.log(data);
+      });
+  }, []);
 
   return (
     <>
