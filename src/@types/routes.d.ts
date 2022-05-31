@@ -1,4 +1,4 @@
-import { IRoundResult } from './hooks/round';
+import { IRoundResult } from './round';
 import { IShinobi } from './shinobi';
 
 type IRoutes = {
