@@ -1,1 +1,0 @@
-export { serviceShinobis } from './shinobis';
