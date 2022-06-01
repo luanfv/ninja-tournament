@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { IRoundResult } from '@src/@types';
+import { IBattle } from '@src/@types';
 import {
   Container,
   Header,
@@ -17,7 +17,7 @@ import {
 import { useLanguage } from '@src/hooks';
 
 interface ICardBattle {
-  competitor: IRoundResult;
+  competitor: IBattle;
 }
 
 const CardBattle: React.FC<ICardBattle> = ({ competitor }) => {

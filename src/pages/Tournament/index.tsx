@@ -11,21 +11,22 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-import { IShinobi, IRoutes } from '@src/@types';
-import { useLanguage, useRound } from '@src/hooks';
+import { INinja } from '@src/@types';
+import { IRoutes } from '@src/@types/routes';
+import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
 
-const Battle: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();
-  const { onStartAllRounds } = useRound();
+const Tournament: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'tournament'>>();
+  const { onStartAllRounds } = useBattle();
   const { goBack, navigate } =
-    useNavigation<NavigationProp<IRoutes, 'battle'>>();
+    useNavigation<NavigationProp<IRoutes, 'tournament'>>();
 
-  const [shinobis, setShinobis] = useState<IShinobi[]>(params as IShinobi[]);
+  const [ninjas, setNinjas] = useState<INinja[]>(params as INinja[]);
 
   const { language } = useLanguage();
 
-  const handleRandomShinobis = useCallback(() => {
+  const handleRandomNinjas = useCallback(() => {
     const positions: number[] = [];
 
     do {
@@ -38,20 +39,20 @@ const Battle: React.FC = () => {
       }
     } while (positions.length !== 8);
 
-    setShinobis((oldState) => positions.map((item) => oldState[item]));
+    setNinjas((oldState) => positions.map((item) => oldState[item]));
   }, []);
 
   return (
     <>
       <Header
-        title={language.pages.battle.headerTitle}
+        title={language.pages.tournament.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
           </TouchableOpacity>
         }
         rightComponent={
-          <TouchableOpacity onPress={handleRandomShinobis} activeOpacity={0.8}>
+          <TouchableOpacity onPress={handleRandomNinjas} activeOpacity={0.8}>
             <Icon name="reload" size={20} color="#fff" />
           </TouchableOpacity>
         }
@@ -60,13 +61,13 @@ const Battle: React.FC = () => {
       <Body>
         <DraggableFlatList
           showsVerticalScrollIndicator={false}
-          data={shinobis}
-          onDragEnd={({ data }) => setShinobis(data)}
+          data={ninjas}
+          onDragEnd={({ data }) => setNinjas(data)}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ drag, isActive, item }) => (
             <ScaleDecorator>
               <Card
-                shinobi={item}
+                ninja={item}
                 onLongPress={drag}
                 disabled={isActive}
                 margin={1}
@@ -77,13 +78,13 @@ const Battle: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.battle.footerButton}
+        text={language.pages.tournament.footerButton}
         onPress={() =>
-          navigate('battleResult', onStartAllRounds(shinobis).reverse())
+          navigate('tournamentScore', onStartAllRounds(ninjas).reverse())
         }
       />
     </>
   );
 };
 
-export { Battle };
+export { Tournament };

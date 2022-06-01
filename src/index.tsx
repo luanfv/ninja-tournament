@@ -1,19 +1,27 @@
 import 'react-native-gesture-handler';
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StatusBar } from 'react-native';
+import auth from '@react-native-firebase/auth';
 import { ThemeProvider } from 'styled-components';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CodePush from 'react-native-code-push';
 
 import { theme } from './settings';
-import { Providers } from './context';
 import { Routes } from './routes';
 
-const App: React.FC = () => (
-  // eslint-disable-next-line react-native/no-inline-styles
-  <GestureHandlerRootView style={{ flex: 1 }}>
-    <Providers>
+const App: React.FC = () => {
+  useEffect(() => {
+    const user = auth().currentUser;
+
+    if (!user) {
+      auth().signInAnonymously();
+    }
+  }, []);
+
+  return (
+    // eslint-disable-next-line react-native/no-inline-styles
+    <GestureHandlerRootView style={{ flex: 1 }}>
       <ThemeProvider theme={theme}>
         <StatusBar
           backgroundColor={theme.colors.primary}
@@ -22,8 +30,8 @@ const App: React.FC = () => (
 
         <Routes />
       </ThemeProvider>
-    </Providers>
-  </GestureHandlerRootView>
-);
+    </GestureHandlerRootView>
+  );
+};
 
 export default CodePush(App);

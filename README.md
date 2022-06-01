@@ -60,6 +60,8 @@ Para executar o projeto em sua maquina siga os passos abaixo.
 
 ### Pré-requisitos
 
+Baixe as chaves necessarias para utilizar o firebase.
+
 Tenha instalado e configurado em sua máquina as seguintes ferramentas: 
 - [Node.js](https://nodejs.org/en/);
 - [Yarn](https://yarnpkg.com/);

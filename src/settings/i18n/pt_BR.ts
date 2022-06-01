@@ -5,15 +5,15 @@ const pt_BR: ILanguage = {
   pages: {
     home: {
       headerTitle: 'seleção de competidores',
-      headerDescription: 'shinobis selecionados',
+      headerDescription: 'ninjas selecionados',
       headerDescriptionOf: 'de',
       footerButton: 'avançar',
     },
-    battle: {
+    tournament: {
       headerTitle: 'torneio',
       footerButton: 'iniciar torneio',
     },
-    battleResult: {
+    tournamentScore: {
       headerTitle: 'resultado',
       footerButton: 'voltar para home',
       finalRound: 'final',

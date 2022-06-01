@@ -1,21 +1,22 @@
 import { useCallback } from 'react';
 
-import { IShinobi, IShinobiCompetitor, IRoundResult } from '@src/@types';
-import { IUseRound } from '@src/@types/hooks';
+import { INinja, INinjaCompetitor, IBattle } from '@src/@types';
+import { IUseBattle } from '@src/@types/hooks';
+import { onRandomNumberFrom1To100 } from '@src/helpers';
 
-const useRound = (): IUseRound => {
+const useBattle = (): IUseBattle => {
   const onStartRound = useCallback(
-    (shinobis: IShinobi[], random = Math.floor(Math.random() * 100) + 1) => {
-      if (shinobis.length % 2 !== 0) {
+    (ninjas: INinja[], random = onRandomNumberFrom1To100()) => {
+      if (ninjas.length % 2 !== 0) {
         throw Error(
           'It is necessary to have an even number of competitors to start a round',
         );
       }
 
-      const players1: IShinobi[] = [];
-      const players2: IShinobi[] = [];
+      const players1: INinja[] = [];
+      const players2: INinja[] = [];
 
-      shinobis.forEach((movie, index) => {
+      ninjas.forEach((movie, index) => {
         if (index % 2 === 0) {
           players1.push(movie);
 
@@ -25,9 +26,9 @@ const useRound = (): IUseRound => {
         players2.push(movie);
       });
 
-      const formattedPlayers1: IShinobiCompetitor[] = [];
-      const formattedPlayers2: IShinobiCompetitor[] = [];
-      const result: IRoundResult[] = [];
+      const formattedPlayers1: INinjaCompetitor[] = [];
+      const formattedPlayers2: INinjaCompetitor[] = [];
+      const result: IBattle[] = [];
 
       players1.forEach((_, index) => {
         const player1Points =
@@ -46,12 +47,12 @@ const useRound = (): IUseRound => {
 
         const isPlayer1Winner = random <= player1WinPercentage;
 
-        const player1: IShinobiCompetitor = {
+        const player1: INinjaCompetitor = {
           ...players1[index],
           winPercentage: player1WinPercentage,
           winner: isPlayer1Winner,
         };
-        const player2: IShinobiCompetitor = {
+        const player2: INinjaCompetitor = {
           ...players2[index],
           winPercentage: player2WinPercentage,
           winner: !isPlayer1Winner,
@@ -73,9 +74,9 @@ const useRound = (): IUseRound => {
   );
 
   const onStartAllRounds = useCallback(
-    (shinobis: IShinobi[], random = Math.floor(Math.random() * 100) + 1) => {
-      let finalists = shinobis;
-      let result: IRoundResult[][] = [];
+    (ninjas: INinja[], random = onRandomNumberFrom1To100()) => {
+      let finalists = ninjas;
+      let result: IBattle[][] = [];
       let length: number = 0;
 
       do {
@@ -95,4 +96,4 @@ const useRound = (): IUseRound => {
   return { onStartRound, onStartAllRounds };
 };
 
-export { useRound };
+export { useBattle };
