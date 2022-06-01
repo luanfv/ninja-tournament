@@ -4,7 +4,8 @@ import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import firestore from '@react-native-firebase/firestore';
 
-import { IShinobi, IRoutes, IStatus } from '@src/@types';
+import { INinja, IStatusLoading } from '@src/@types';
+import { IRoutes } from '@src/@types/routes';
 import {
   Footer,
   Card,
@@ -22,56 +23,54 @@ const Home: React.FC = () => {
     useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
-  const [status, setStatus] = useState<IStatus>('loading');
-  const [ninjas, setNinjas] = useState<IShinobi[]>([]);
-  const [competitors, setCompetitors] = useState<IShinobi[]>([]);
-  const [selectedCompetitors, setSelectedCompetitors] = useState<IShinobi[]>(
-    [],
-  );
+  const [status, setStatus] = useState<IStatusLoading>('loading');
+  const [ninjas, setNinjas] = useState<INinja[]>([]);
+  const [competitors, setCompetitors] = useState<INinja[]>([]);
+  const [selectedCompetitors, setSelectedCompetitors] = useState<INinja[]>([]);
 
   const flatlistRef = useRef<FlatList>(null);
 
   const { language } = useLanguage();
 
-  const onResetShinobis = useCallback(() => {
+  const onResetNinjas = useCallback(() => {
     setSelectedCompetitors([]);
     setCompetitors(ninjas);
   }, [ninjas]);
 
-  const handleSelectCompetitor = useCallback((shinobi: IShinobi) => {
+  const handleSelectCompetitor = useCallback((ninja: INinja) => {
     setCompetitors((oldState) =>
-      oldState.filter((state) => state.id !== shinobi.id),
+      oldState.filter((state) => state.id !== ninja.id),
     );
-    setSelectedCompetitors((oldState) => [...oldState, shinobi]);
+    setSelectedCompetitors((oldState) => [...oldState, ninja]);
   }, []);
 
-  const handleDeselectCompetitor = useCallback((shinobi: IShinobi) => {
+  const handleDeselectCompetitor = useCallback((ninja: INinja) => {
     setSelectedCompetitors((oldState) =>
-      oldState.filter((state) => state.id !== shinobi.id),
+      oldState.filter((state) => state.id !== ninja.id),
     );
-    setCompetitors((oldState) => [...oldState, shinobi]);
+    setCompetitors((oldState) => [...oldState, ninja]);
   }, []);
 
   const handleRefresh = useCallback(() => {
     try {
       setIsRefreshing(true);
 
-      onResetShinobis();
+      onResetNinjas();
     } finally {
       setIsRefreshing(false);
     }
-  }, [onResetShinobis]);
+  }, [onResetNinjas]);
 
   useEffect(() => {
     if (isFocused) {
-      onResetShinobis();
+      onResetNinjas();
 
       flatlistRef.current?.scrollToOffset({
         offset: 0,
         animated: false,
       });
     }
-  }, [isFocused, onResetShinobis]);
+  }, [isFocused, onResetNinjas]);
 
   useEffect(() => {
     firestore()
@@ -83,7 +82,7 @@ const Home: React.FC = () => {
           return {
             ...doc.data(),
           };
-        }) as IShinobi[];
+        }) as INinja[];
 
         if (data.length < 1) {
           throw Error();
@@ -92,7 +91,7 @@ const Home: React.FC = () => {
         setNinjas(data);
         setStatus('success');
       })
-      .catch(() => setStatus('fail'));
+      .catch(() => setStatus('failure'));
   }, []);
 
   return (
@@ -116,7 +115,7 @@ const Home: React.FC = () => {
                   {selectedCompetitors.map((competitor) => (
                     <Card
                       key={String(competitor.id)}
-                      shinobi={competitor}
+                      ninja={competitor}
                       onPress={() => handleDeselectCompetitor(competitor)}
                       isSelected
                       margin={1}
@@ -134,7 +133,7 @@ const Home: React.FC = () => {
             keyExtractor={(item) => String(item.id)}
             renderItem={({ item }) => (
               <Card
-                shinobi={item}
+                ninja={item}
                 onPress={() => handleSelectCompetitor(item)}
                 margin={1}
               />

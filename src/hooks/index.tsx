@@ -1,2 +1,2 @@
-export { useRound } from './round';
+export { useBattle } from './battle';
 export { useLanguage } from './language';

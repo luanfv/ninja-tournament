@@ -1,7 +1,7 @@
-import { IShinobi } from '@src/@types';
+import { INinja } from '@src/@types';
 
 interface ICard {
-  shinobi: IShinobi;
+  ninja: INinja;
   isSelected?: boolean;
   disabled?: boolean;
   margin?: number;

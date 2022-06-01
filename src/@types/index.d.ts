@@ -1,6 +1,4 @@
-export type { IShinobi } from './shinobi';
-export type { IRoutes } from './routes';
+export type { INinja } from './ninja';
 export type { ILanguage } from './language';
-export type { IRoundResult, IShinobiCompetitor } from './round';
-export type { IStorages } from './storage';
-export type { IStatus } from './home';
+export type { IBattle, INinjaCompetitor } from './battle';
+export type { IStatusLoading } from './statusLoading';

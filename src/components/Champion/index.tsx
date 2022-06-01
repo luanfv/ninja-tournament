@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { IShinobi } from '@src/@types';
+import { INinja } from '@src/@types';
 import {
   Container,
   Grinalda,
@@ -14,10 +14,10 @@ import {
 } from './styles';
 
 interface IChampion {
-  shinobi: IShinobi;
+  ninja: INinja;
 }
 
-const Champion: React.FC<IChampion> = ({ shinobi }) => {
+const Champion: React.FC<IChampion> = ({ ninja }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
@@ -27,7 +27,7 @@ const Champion: React.FC<IChampion> = ({ shinobi }) => {
           {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
 
           <PlayerImage
-            source={{ uri: shinobi.image }}
+            source={{ uri: ninja.image }}
             isLoaded={isImageLoaded}
             onLoadEnd={() => setIsImageLoaded(true)}
           />
@@ -37,7 +37,7 @@ const Champion: React.FC<IChampion> = ({ shinobi }) => {
           </Grinalda>
         </View>
 
-        <PlayerName>{shinobi.name}</PlayerName>
+        <PlayerName>{ninja.name}</PlayerName>
       </Player>
     </Container>
   );

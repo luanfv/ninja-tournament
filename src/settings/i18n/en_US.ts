@@ -5,7 +5,7 @@ const en_US: ILanguage = {
   pages: {
     home: {
       headerTitle: 'selection of competitors',
-      headerDescription: 'selected shinobi',
+      headerDescription: 'selected ninja',
       headerDescriptionOf: 'of',
       footerButton: 'next',
     },

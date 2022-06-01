@@ -18,7 +18,7 @@ import {
 } from './styles';
 
 const Card: React.FC<ICard> = ({
-  shinobi,
+  ninja,
   isSelected = false,
   disabled,
   margin,
@@ -50,7 +50,7 @@ const Card: React.FC<ICard> = ({
             {!isImageLoaded && <ImageLoading LinearGradient={LinearGradient} />}
 
             <Image
-              source={{ uri: shinobi.image }}
+              source={{ uri: ninja.image }}
               isSelected={isSelected}
               isLoaded={isImageLoaded}
               onLoadEnd={() => setIsImageLoaded(true)}
@@ -58,22 +58,22 @@ const Card: React.FC<ICard> = ({
           </>
 
           <Details>
-            <Name>{shinobi.name}</Name>
+            <Name>{ninja.name}</Name>
 
             <Points>
               <Point>
                 <Icon name="md-fitness" size={20} color={colors.white} />
-                <Text>{shinobi.power}</Text>
+                <Text>{ninja.power}</Text>
               </Point>
 
               <Point>
                 <Icon name="md-flame" size={20} color={colors.white} />
-                <Text>{shinobi.technique}</Text>
+                <Text>{ninja.technique}</Text>
               </Point>
 
               <Point>
                 <Icon name="md-flash" size={20} color={colors.white} />
-                <Text>{shinobi.chakra}</Text>
+                <Text>{ninja.chakra}</Text>
               </Point>
             </Points>
           </Details>

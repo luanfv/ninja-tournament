@@ -5,7 +5,7 @@ const pt_BR: ILanguage = {
   pages: {
     home: {
       headerTitle: 'seleção de competidores',
-      headerDescription: 'shinobis selecionados',
+      headerDescription: 'ninjas selecionados',
       headerDescriptionOf: 'de',
       footerButton: 'avançar',
     },

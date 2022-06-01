@@ -1,2 +1,2 @@
-export type { IUseRound } from './round';
+export type { IUseBattle } from './battle';
 export type { IUseLanguage } from './language';
