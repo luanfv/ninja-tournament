@@ -7,11 +7,11 @@ interface ILanguage {
       headerDescriptionOf: string;
       footerButton: string;
     };
-    battle: {
+    tournament: {
       headerTitle: string;
       footerButton: string;
     };
-    battleResult: {
+    tournamentScore: {
       headerTitle: string;
       footerButton: string;
       finalRound: string;

@@ -151,7 +151,7 @@ const Home: React.FC = () => {
       <Footer
         text={language.pages.home.footerButton}
         disabled={selectedCompetitors.length !== 8}
-        onPress={() => navigate('battle', selectedCompetitors)}
+        onPress={() => navigate('tournament', selectedCompetitors)}
       />
     </>
   );

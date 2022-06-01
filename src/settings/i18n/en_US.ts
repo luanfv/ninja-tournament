@@ -9,11 +9,11 @@ const en_US: ILanguage = {
       headerDescriptionOf: 'of',
       footerButton: 'next',
     },
-    battle: {
+    tournament: {
       headerTitle: 'tournament',
       footerButton: 'start tournament',
     },
-    battleResult: {
+    tournamentScore: {
       headerTitle: 'result',
       footerButton: 'back to home',
       finalRound: 'final',

@@ -16,11 +16,11 @@ import { IRoutes } from '@src/@types/routes';
 import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
 
-const Battle: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'battle'>>();
+const Tournament: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'tournament'>>();
   const { onStartAllRounds } = useBattle();
   const { goBack, navigate } =
-    useNavigation<NavigationProp<IRoutes, 'battle'>>();
+    useNavigation<NavigationProp<IRoutes, 'tournament'>>();
 
   const [ninjas, setNinjas] = useState<INinja[]>(params as INinja[]);
 
@@ -45,7 +45,7 @@ const Battle: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.battle.headerTitle}
+        title={language.pages.tournament.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -78,13 +78,13 @@ const Battle: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.battle.footerButton}
+        text={language.pages.tournament.footerButton}
         onPress={() =>
-          navigate('battleResult', onStartAllRounds(ninjas).reverse())
+          navigate('tournamentScore', onStartAllRounds(ninjas).reverse())
         }
       />
     </>
   );
 };
 
-export { Battle };
+export { Tournament };

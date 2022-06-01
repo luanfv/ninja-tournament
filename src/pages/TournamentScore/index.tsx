@@ -23,10 +23,10 @@ import {
 } from '@src/components';
 import { useLanguage } from '@src/hooks';
 
-const BattleResult: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'battleResult'>>();
+const TournamentScore: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'tournamentScore'>>();
   const { goBack, reset } =
-    useNavigation<NavigationProp<IRoutes, 'battleResult'>>();
+    useNavigation<NavigationProp<IRoutes, 'tournamentScore'>>();
   const { spacing } = useTheme();
 
   const { language } = useLanguage();
@@ -35,13 +35,13 @@ const BattleResult: React.FC = () => {
     (value, length) => {
       switch (value) {
         case 0:
-          return language.pages.battleResult.finalRound;
+          return language.pages.tournamentScore.finalRound;
 
         case 1:
-          return language.pages.battleResult.semifinalRound;
+          return language.pages.tournamentScore.semifinalRound;
 
         default:
-          return `${length - value}ª ${language.pages.battleResult.round}`;
+          return `${length - value}ª ${language.pages.tournamentScore.round}`;
       }
     },
     [language],
@@ -76,7 +76,7 @@ const BattleResult: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.battleResult.headerTitle}
+        title={language.pages.tournamentScore.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -109,11 +109,11 @@ const BattleResult: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.battleResult.footerButton}
+        text={language.pages.tournamentScore.footerButton}
         onPress={() => reset({ index: 1, routes: [{ name: 'home' }] })}
       />
     </>
   );
 };
 
-export { BattleResult };
+export { TournamentScore };

@@ -9,11 +9,11 @@ const pt_BR: ILanguage = {
       headerDescriptionOf: 'de',
       footerButton: 'avançar',
     },
-    battle: {
+    tournament: {
       headerTitle: 'torneio',
       footerButton: 'iniciar torneio',
     },
-    battleResult: {
+    tournamentScore: {
       headerTitle: 'resultado',
       footerButton: 'voltar para home',
       finalRound: 'final',
