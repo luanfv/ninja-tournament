@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-import { INinja } from '@src/@types';
+import { IChampion } from '@src/@types/components';
 import {
   Container,
   Grinalda,
@@ -12,10 +12,6 @@ import {
   PlayerImage,
   PlayerName,
 } from './styles';
-
-interface IChampion {
-  ninja: INinja;
-}
 
 const Champion: React.FC<IChampion> = ({ ninja }) => {
   const [isImageLoaded, setIsImageLoaded] = useState(false);
