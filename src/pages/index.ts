@@ -1,3 +1,3 @@
 export { Home } from './Home';
-export { Battle } from './Battle';
-export { BattleResult } from './BattleResult';
+export { Tournament } from './Tournament';
+export { TournamentScore } from './TournamentScore';

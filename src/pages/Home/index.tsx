@@ -1,9 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Text, RefreshControl, View, FlatList } from 'react-native';
+import { RefreshControl, View, FlatList } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import firestore from '@react-native-firebase/firestore';
 
-import { IShinobi, IRoutes } from '@src/@types';
+import { INinja, IStatusLoading } from '@src/@types';
+import { IRoutes } from '@src/@types/routes';
 import {
   Footer,
   Card,
@@ -12,129 +14,145 @@ import {
   Separator,
   Loading,
 } from '@src/components';
-import { useShinobisContext } from '@src/context';
 import { Spacing } from '@src/components/styles';
 import { useLanguage } from '@src/hooks';
 
 const Home: React.FC = () => {
-  const shinobisContext = useShinobisContext();
   const isFocused = useIsFocused();
   const { navigate } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
 
-  const [shinobis, setShinobis] = useState<IShinobi[]>([]);
-  const [shinobisToBattle, setShinobisToBattle] = useState<IShinobi[]>([]);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [status, setStatus] = useState<IStatusLoading>('loading');
+  const [ninjas, setNinjas] = useState<INinja[]>([]);
+  const [competitors, setCompetitors] = useState<INinja[]>([]);
+  const [selectedCompetitors, setSelectedCompetitors] = useState<INinja[]>([]);
 
   const flatlistRef = useRef<FlatList>(null);
 
   const { language } = useLanguage();
 
-  const onResetShinobis = useCallback((allShinobis: IShinobi[]) => {
-    setShinobisToBattle([]);
-    setShinobis(allShinobis);
+  const onResetNinjas = useCallback(() => {
+    setSelectedCompetitors([]);
+    setCompetitors(ninjas);
+  }, [ninjas]);
+
+  const handleSelectCompetitor = useCallback((ninja: INinja) => {
+    setCompetitors((oldState) =>
+      oldState.filter((state) => state.id !== ninja.id),
+    );
+    setSelectedCompetitors((oldState) => [...oldState, ninja]);
   }, []);
 
-  const handleAddNinjaToBattle = useCallback((shinobi: IShinobi) => {
-    setShinobis((oldState) =>
-      oldState.filter((state) => state.id !== shinobi.id),
+  const handleDeselectCompetitor = useCallback((ninja: INinja) => {
+    setSelectedCompetitors((oldState) =>
+      oldState.filter((state) => state.id !== ninja.id),
     );
-    setShinobisToBattle((oldState) => [...oldState, shinobi]);
-  }, []);
-
-  const handleARemoveNinjaToBattle = useCallback((shinobi: IShinobi) => {
-    setShinobisToBattle((oldState) =>
-      oldState.filter((state) => state.id !== shinobi.id),
-    );
-    setShinobis((oldState) => [...oldState, shinobi]);
+    setCompetitors((oldState) => [...oldState, ninja]);
   }, []);
 
   const handleRefresh = useCallback(() => {
     try {
       setIsRefreshing(true);
 
-      onResetShinobis(shinobisContext.shinobis);
+      onResetNinjas();
     } finally {
       setIsRefreshing(false);
     }
-  }, [shinobisContext.shinobis, onResetShinobis]);
+  }, [onResetNinjas]);
 
   useEffect(() => {
     if (isFocused) {
-      onResetShinobis(shinobisContext.shinobis);
+      onResetNinjas();
 
       flatlistRef.current?.scrollToOffset({
         offset: 0,
         animated: false,
       });
     }
-  }, [isFocused, shinobisContext, onResetShinobis]);
+  }, [isFocused, onResetNinjas]);
+
+  useEffect(() => {
+    firestore()
+      .collection('ninjas')
+      .orderBy('id')
+      .get()
+      .then((response) => {
+        const data = response.docs.map((doc) => {
+          return {
+            ...doc.data(),
+          };
+        }) as INinja[];
+
+        if (data.length < 1) {
+          throw Error();
+        }
+
+        setNinjas(data);
+        setStatus('success');
+      })
+      .catch(() => setStatus('failure'));
+  }, []);
 
   return (
     <>
       <Header
         title={language.pages.home.headerTitle}
-        isDescriptionError={shinobisToBattle.length !== 8}
-        description={`${language.pages.home.headerDescription}: ${shinobisToBattle.length} ${language.pages.home.headerDescriptionOf} 8`}
+        isDescriptionError={selectedCompetitors.length !== 8}
+        description={`${language.pages.home.headerDescription}: ${selectedCompetitors.length} ${language.pages.home.headerDescriptionOf} 8`}
       />
 
-      {shinobisContext.status === 'loading' && <Loading />}
+      <Body>
+        {status === 'loading' && <Loading />}
 
-      {shinobisContext.status === 'fail' && (
-        <Text>Falha ao buscar os shinobis</Text>
-      )}
+        {status === 'success' && (
+          <FlatList
+            ref={flatlistRef}
+            data={competitors}
+            ListHeaderComponent={() =>
+              selectedCompetitors.length > 0 ? (
+                <>
+                  {selectedCompetitors.map((competitor) => (
+                    <Card
+                      key={String(competitor.id)}
+                      ninja={competitor}
+                      onPress={() => handleDeselectCompetitor(competitor)}
+                      isSelected
+                      margin={1}
+                    />
+                  ))}
 
-      {shinobisContext.status === 'success' && (
-        <>
-          <Body>
-            <FlatList
-              ref={flatlistRef}
-              data={shinobis}
-              ListHeaderComponent={() =>
-                shinobisToBattle.length > 0 ? (
-                  <>
-                    {shinobisToBattle.map((shinobi) => (
-                      <Card
-                        key={String(shinobi.id)}
-                        shinobi={shinobi}
-                        onPress={() => handleARemoveNinjaToBattle(shinobi)}
-                        isSelected
-                        margin={1}
-                      />
-                    ))}
-
-                    <Spacing>
-                      <Separator />
-                    </Spacing>
-                  </>
-                ) : (
-                  <View />
-                )
-              }
-              keyExtractor={(item) => String(item.id)}
-              renderItem={({ item }) => (
-                <Card
-                  shinobi={item}
-                  onPress={() => handleAddNinjaToBattle(item)}
-                  margin={1}
-                />
-              )}
-              refreshControl={
-                <RefreshControl
-                  refreshing={isRefreshing}
-                  onRefresh={handleRefresh}
-                />
-              }
-            />
-          </Body>
-
-          <Footer
-            text={language.pages.home.footerButton}
-            disabled={shinobisToBattle.length !== 8}
-            onPress={() => navigate('battle', shinobisToBattle)}
+                  <Spacing>
+                    <Separator />
+                  </Spacing>
+                </>
+              ) : (
+                <View />
+              )
+            }
+            keyExtractor={(item) => String(item.id)}
+            renderItem={({ item }) => (
+              <Card
+                ninja={item}
+                onPress={() => handleSelectCompetitor(item)}
+                margin={1}
+              />
+            )}
+            refreshControl={
+              <RefreshControl
+                refreshing={isRefreshing}
+                onRefresh={handleRefresh}
+              />
+            }
           />
-        </>
-      )}
+        )}
+      </Body>
+
+      <Footer
+        text={language.pages.home.footerButton}
+        disabled={selectedCompetitors.length !== 8}
+        onPress={() => navigate('tournament', selectedCompetitors)}
+      />
     </>
   );
 };

@@ -1,4 +1,4 @@
-interface IShinobi {
+interface INinja {
   chakra: number;
   id: number;
   image: string;
@@ -7,4 +7,4 @@ interface IShinobi {
   technique: number;
 }
 
-export { IShinobi };
+export { INinja };
