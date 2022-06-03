@@ -1,7 +1,7 @@
 import { sortObjects } from '@src/helpers';
 
-describe('Helper: sortObjects', () => {
-  it('Should return an array with the following format: [{ id: 1 }, { id: 3 }, { id: 9 }]', () => {
+describe('Helper: sortObjects (src/helpers/sortObjects.ts)', () => {
+  it('Should return [{ id: 1 }, { id: 3 }, { id: 9 }]', () => {
     const input = [{ id: 3 }, { id: 9 }, { id: 1 }];
     const output = [{ id: 1 }, { id: 3 }, { id: 9 }];
 
@@ -10,19 +10,19 @@ describe('Helper: sortObjects', () => {
     expect(response).toEqual(output);
   });
 
-  it('Should return an empty array if passing an empty array', () => {
+  it('Should return [] if passing an empty array', () => {
     const response = sortObjects([], 'id');
 
     expect(response).toEqual([]);
   });
 
-  it('Should return an error if you pass a key that does not exist', () => {
+  it("Should return an error if using a key that doesn't exist", () => {
     const input = [{ id: 3 }];
 
     expect(() => sortObjects(input, 'name')).toThrow();
   });
 
-  it('Should return an error if the objects key is not a "string" or "number', () => {
+  it('Should return an error if the objects key is not a "string" or "number"', () => {
     const inputFunction = [
       {
         id: () => {},

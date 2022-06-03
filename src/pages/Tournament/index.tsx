@@ -18,7 +18,7 @@ import { Card, Footer, Header, Body } from '@src/components';
 
 const Tournament: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'tournament'>>();
-  const { onStartAllRounds } = useBattle();
+  const { onStartTournament } = useBattle();
   const { goBack, navigate } =
     useNavigation<NavigationProp<IRoutes, 'tournament'>>();
 
@@ -80,7 +80,7 @@ const Tournament: React.FC = () => {
       <Footer
         text={language.pages.tournament.footerButton}
         onPress={() =>
-          navigate('tournamentScore', onStartAllRounds(ninjas).reverse())
+          navigate('tournamentScore', onStartTournament(ninjas).reverse())
         }
       />
     </>
