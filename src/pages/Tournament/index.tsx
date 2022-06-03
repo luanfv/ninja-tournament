@@ -10,6 +10,7 @@ import DraggableFlatList, {
   ScaleDecorator,
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/Ionicons';
+import LottieView from 'lottie-react-native';
 
 import { INinja } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
@@ -24,6 +25,7 @@ const Tournament: React.FC = () => {
     useNavigation<NavigationProp<IRoutes, 'tournament'>>();
 
   const [ninjas, setNinjas] = useState<INinja[]>(params as INinja[]);
+  const [isInitTournament, setIsInitTournament] = useState(false);
 
   const { language } = useLanguage();
 
@@ -34,6 +36,19 @@ const Tournament: React.FC = () => {
       return positions.map((item) => oldState[item]);
     });
   }, []);
+
+  const handleStartTournament = useCallback(() => {
+    setIsInitTournament(true);
+    const tournamentResult = onStartTournament(ninjas).reverse();
+
+    setTimeout(() => {
+      navigate('tournamentScore', tournamentResult);
+    }, 1000 * 2);
+
+    setTimeout(() => {
+      setIsInitTournament(false);
+    }, 1000 * 3);
+  }, [navigate, ninjas, onStartTournament]);
 
   return (
     <>
@@ -51,31 +66,39 @@ const Tournament: React.FC = () => {
         }
       />
 
-      <Body>
-        <DraggableFlatList
-          showsVerticalScrollIndicator={false}
-          data={ninjas}
-          onDragEnd={({ data }) => setNinjas(data)}
-          keyExtractor={(item) => String(item.id)}
-          renderItem={({ drag, isActive, item }) => (
-            <ScaleDecorator>
-              <Card
-                ninja={item}
-                onLongPress={drag}
-                disabled={isActive}
-                margin={1}
-              />
-            </ScaleDecorator>
-          )}
+      {isInitTournament ? (
+        <LottieView
+          source={require('@src/assets/animations/battle.json')}
+          autoPlay
+          loop={false}
         />
-      </Body>
+      ) : (
+        <>
+          <Body>
+            <DraggableFlatList
+              showsVerticalScrollIndicator={false}
+              data={ninjas}
+              onDragEnd={({ data }) => setNinjas(data)}
+              keyExtractor={(item) => String(item.id)}
+              renderItem={({ drag, isActive, item }) => (
+                <ScaleDecorator>
+                  <Card
+                    ninja={item}
+                    onLongPress={drag}
+                    disabled={isActive}
+                    margin={1}
+                  />
+                </ScaleDecorator>
+              )}
+            />
+          </Body>
 
-      <Footer
-        text={language.pages.tournament.footerButton}
-        onPress={() =>
-          navigate('tournamentScore', onStartTournament(ninjas).reverse())
-        }
-      />
+          <Footer
+            text={language.pages.tournament.footerButton}
+            onPress={handleStartTournament}
+          />
+        </>
+      )}
     </>
   );
 };

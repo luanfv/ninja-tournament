@@ -1,5 +1,6 @@
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import styled from 'styled-components/native';
+import LottieView from 'lottie-react-native';
 
 interface IPlayerImage {
   isLoaded?: boolean;
@@ -48,6 +49,10 @@ const GrinaldaImage = styled.Image`
   height: 190px;
 `;
 
+const CelebrationAnimation = styled(LottieView)`
+  position: absolute;
+`;
+
 export {
   Container,
   Grinalda,
@@ -56,4 +61,5 @@ export {
   Player,
   PlayerImage,
   PlayerName,
+  CelebrationAnimation,
 };
