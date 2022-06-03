@@ -4,6 +4,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import { IChampion } from '@src/@types/components';
 import {
+  CelebrationAnimation,
   Container,
   Grinalda,
   GrinaldaImage,
@@ -35,6 +36,12 @@ const Champion: React.FC<IChampion> = ({ ninja }) => {
 
         <PlayerName>{ninja.name}</PlayerName>
       </Player>
+
+      <CelebrationAnimation
+        source={require('@src/assets/animations/celebration.json')}
+        autoPlay
+        loop={false}
+      />
     </Container>
   );
 };
