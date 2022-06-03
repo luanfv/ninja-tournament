@@ -15,6 +15,7 @@ import { INinja } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
 import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
+import { randomArrayPosition } from '@src/helpers';
 
 const Tournament: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'tournament'>>();
@@ -27,19 +28,11 @@ const Tournament: React.FC = () => {
   const { language } = useLanguage();
 
   const handleRandomNinjas = useCallback(() => {
-    const positions: number[] = [];
+    setNinjas((oldState) => {
+      const positions = randomArrayPosition(oldState.length);
 
-    do {
-      const number = Math.floor(Math.random() * 8);
-
-      const numberExists = positions.find((value) => value === number);
-
-      if (numberExists === undefined) {
-        positions.push(number);
-      }
-    } while (positions.length !== 8);
-
-    setNinjas((oldState) => positions.map((item) => oldState[item]));
+      return positions.map((item) => oldState[item]);
+    });
   }, []);
 
   return (
