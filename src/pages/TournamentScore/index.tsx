@@ -1,6 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { ScrollView, TouchableOpacity, View } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
 import {
   NavigationProp,
   RouteProp,
@@ -10,7 +9,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import { useTheme } from 'styled-components/native';
 
-import { INinja } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
 import {
   Footer,
@@ -46,32 +44,6 @@ const TournamentScore: React.FC = () => {
     },
     [language],
   );
-
-  useEffect(() => {
-    if (params) {
-      const competitors: INinja[] = [];
-
-      competitors.push(params[0][0].winner);
-
-      params.forEach((battles) => {
-        battles.forEach((competitor) => {
-          competitors.push(
-            competitor.winner === competitor.player1
-              ? competitor.player2
-              : competitor.player1,
-          );
-        });
-      });
-
-      firestore()
-        .collection('tournaments')
-        .add({
-          competitors,
-          createdAt: firestore.FieldValue.serverTimestamp(),
-        })
-        .catch((err) => console.log(err));
-    }
-  }, [params]);
 
   return (
     <>

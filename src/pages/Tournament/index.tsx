@@ -11,8 +11,9 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
+import firestore from '@react-native-firebase/firestore';
 
-import { INinja } from '@src/@types';
+import { IBattle, INinja } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
 import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
@@ -37,9 +38,36 @@ const Tournament: React.FC = () => {
     });
   }, []);
 
+  const submitTournament = useCallback((tournament: IBattle[][]) => {
+    const competitors: INinja[] = [];
+
+    competitors.push(tournament[0][0].winner);
+
+    tournament.forEach((battles) => {
+      battles.forEach((competitor) => {
+        competitors.push(
+          competitor.winner === competitor.player1
+            ? competitor.player2
+            : competitor.player1,
+        );
+      });
+    });
+
+    firestore()
+      .collection('tournaments')
+      .add({
+        competitors,
+        createdAt: firestore.FieldValue.serverTimestamp(),
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleStartTournament = useCallback(() => {
     setIsInitTournament(true);
+
     const tournamentResult = onStartTournament(ninjas).reverse();
+
+    submitTournament(tournamentResult);
 
     setTimeout(() => {
       navigate('tournamentScore', tournamentResult);
@@ -48,7 +76,7 @@ const Tournament: React.FC = () => {
     setTimeout(() => {
       setIsInitTournament(false);
     }, 1000 * 3);
-  }, [navigate, ninjas, onStartTournament]);
+  }, [navigate, ninjas, onStartTournament, submitTournament]);
 
   return (
     <>
