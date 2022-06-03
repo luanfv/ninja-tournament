@@ -2,11 +2,11 @@ import { useCallback } from 'react';
 
 import { INinja, INinjaCompetitor, IBattle } from '@src/@types';
 import { IUseBattle } from '@src/@types/hooks';
-import { onRandomNumberFrom1To100 } from '@src/helpers';
+import { randomNumberFrom1To100 } from '@src/helpers';
 
 const useBattle = (): IUseBattle => {
-  const onStartRound = useCallback(
-    (ninjas: INinja[], random = onRandomNumberFrom1To100()) => {
+  const onStartBattle = useCallback(
+    (ninjas: INinja[], random = randomNumberFrom1To100()) => {
       if (ninjas.length % 2 !== 0) {
         throw Error(
           'It is necessary to have an even number of competitors to start a round',
@@ -73,14 +73,14 @@ const useBattle = (): IUseBattle => {
     [],
   );
 
-  const onStartAllRounds = useCallback(
-    (ninjas: INinja[], random = onRandomNumberFrom1To100()) => {
+  const onStartTournament = useCallback(
+    (ninjas: INinja[], random = randomNumberFrom1To100()) => {
       let finalists = ninjas;
       let result: IBattle[][] = [];
       let length: number = 0;
 
       do {
-        const data = onStartRound(finalists, random);
+        const data = onStartBattle(finalists, random);
         const winners = data.map((item) => item.winner);
 
         result = [...result, data];
@@ -90,10 +90,10 @@ const useBattle = (): IUseBattle => {
 
       return result;
     },
-    [onStartRound],
+    [onStartBattle],
   );
 
-  return { onStartRound, onStartAllRounds };
+  return { onStartBattle, onStartTournament };
 };
 
 export { useBattle };

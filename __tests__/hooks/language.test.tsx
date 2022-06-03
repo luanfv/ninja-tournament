@@ -16,7 +16,7 @@ jest.mock('react-native', () => ({
 
 const mockRN = RN as jest.Mocked<typeof RN>;
 
-describe('Hook: useLanguage', () => {
+describe('Hook: useLanguage (src/hooks/language.tsx)', () => {
   it('Should be in en_US and return type = en_US', () => {
     mockRN.NativeModules.I18nManager.localeIdentifier = 'en_US';
 
