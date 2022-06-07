@@ -12,8 +12,9 @@ import DraggableFlatList, {
 import Icon from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
-import { IBattle, INinja } from '@src/@types';
+import { IBattle, INinja, INinjaCompetitor } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
 import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
@@ -39,8 +40,7 @@ const Tournament: React.FC = () => {
   }, []);
 
   const submitTournament = useCallback((tournament: IBattle[][]) => {
-    const competitors: INinja[] = [];
-
+    const competitors: INinjaCompetitor[] = [];
     competitors.push(tournament[0][0].winner);
 
     tournament.forEach((battles) => {
@@ -56,8 +56,11 @@ const Tournament: React.FC = () => {
     firestore()
       .collection('tournaments')
       .add({
+        user_uid: auth().currentUser?.uid,
         competitors,
+        winner: tournament[0][0].winner,
         createdAt: firestore.FieldValue.serverTimestamp(),
+        tournament: JSON.stringify(tournament),
       })
       .catch((err) => console.log(err));
   }, []);

@@ -92,6 +92,21 @@ const Home: React.FC = () => {
         setStatus('success');
       })
       .catch(() => setStatus('failure'));
+
+    // firestore()
+    //   .collection('tournaments')
+    //   .where('user_uid', '==', auth().currentUser?.uid)
+    //   .get()
+    //   .then((response) => {
+    //     const data = response.docs.map((doc) => {
+    //       return {
+    //         ...doc.data(),
+    //       };
+    //     });
+
+    //     navigate('tournamentScore', JSON.parse(data[0].tournament));
+    //   })
+    //   .catch((err) => console.log('ERRO', err));
   }, []);
 
   return (
