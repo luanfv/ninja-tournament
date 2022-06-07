@@ -11,9 +11,9 @@ const theme: DefaultTheme = {
     secondary: '#f37020',
   },
   fonts: {
-    large: '16px',
-    medium: '14px',
-    small: '12px',
+    large: 16,
+    medium: 14,
+    small: 12,
   },
   spacing: 20,
 };

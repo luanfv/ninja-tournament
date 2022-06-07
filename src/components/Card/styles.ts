@@ -1,6 +1,7 @@
 import styled from 'styled-components/native';
 import ShimmerPlaceHolder from 'react-native-shimmer-placeholder';
 import LinearGradient from 'react-native-linear-gradient';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface ICard {
   isSelected: boolean;
@@ -53,13 +54,13 @@ const Details = styled.View`
 const Name = styled.Text`
   padding: 4px;
   color: ${({ theme }) => theme.colors.white};
-  font-size: ${({ theme }) => theme.fonts.large};
+  font-size: ${({ theme }) => RFValue(theme.fonts.large)}px;
   font-weight: bold;
 `;
 
 const Points = styled.View`
   padding: 4px;
-  padding-right: ${({ theme }) => theme.spacing}px;
+  padding-right: ${({ theme }) => RFValue(theme.spacing)}px;
   flex-direction: row;
   justify-content: space-between;
 `;
@@ -71,7 +72,7 @@ const Point = styled.View`
 `;
 
 const Text = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.medium};
+  font-size: ${({ theme }) => RFValue(theme.fonts.medium)}px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: bold;
   margin: auto 4px;

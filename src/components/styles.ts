@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 const Body = styled.View`
   flex: 1;
@@ -13,13 +14,13 @@ const Separator = styled.View`
 `;
 
 const Title = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.large};
+  font-size: ${({ theme }) => RFValue(theme.fonts.large)}px;
   color: ${({ theme }) => theme.colors.primary};
   font-weight: bold;
 `;
 
 const Spacing = styled.View`
-  margin: ${({ theme }) => theme.spacing}px;
+  margin: ${({ theme }) => RFValue(theme.spacing)}px;
 `;
 
 export { Body, Separator, Title, Spacing };

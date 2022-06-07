@@ -1,5 +1,6 @@
 import { Platform } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface IDescription {
   hasError?: boolean;
@@ -11,7 +12,7 @@ interface IDynamicComponent {
 
 const Container = styled.View`
   width: 100%;
-  padding: ${({ theme }) => theme.spacing}px;
+  padding: ${({ theme }) => RFValue(theme.spacing)}px;
   background-color: ${({ theme }) => theme.colors.primary};
   flex-direction: row;
   justify-content: space-between;
@@ -26,7 +27,7 @@ const DynamicComponent = styled.View<IDynamicComponent>`
 `;
 
 const Title = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.large};
+  font-size: ${({ theme }) => RFValue(theme.fonts.large)}px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: bold;
 `;
@@ -38,14 +39,14 @@ const Description = styled.View<IDescription>`
   padding: 8px;
   ${({ hasError, theme }) =>
     hasError &&
-    `
-    border-top-width: 1px;
-    border-top-color: ${theme.colors.red};
-  `}
+    css`
+      border-top-width: 1px;
+      border-top-color: ${theme.colors.red};
+    `}
 `;
 
 const Text = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.medium};
+  font-size: ${({ theme }) => RFValue(theme.fonts.medium)}px;
   color: ${({ theme }) => theme.colors.white};
   font-weight: bold;
 `;
