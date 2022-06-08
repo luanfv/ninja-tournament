@@ -6,6 +6,7 @@ import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 import {
   Competitors,
   Dashboard,
+  Historic,
   Scoreboard,
   SelectedCompetitors,
 } from '@src/pages';
@@ -34,6 +35,11 @@ const Routes: React.FC = () => {
         <Stack.Screen
           name="scoreboard"
           component={gestureHandlerRootHOC(Scoreboard)}
+        />
+
+        <Stack.Screen
+          name="historic"
+          component={gestureHandlerRootHOC(Historic)}
         />
       </Stack.Navigator>
     </NavigationContainer>

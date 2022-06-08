@@ -40,6 +40,26 @@ const serviceScoreboards = {
 
     return response;
   },
+
+  getAll: async () => {
+    const response = await firestore()
+      .collection('scoreboards')
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    const scoreboards = response.docs.map((doc) => {
+      const scoreboard = doc.data();
+
+      return {
+        id: doc.id,
+        winner: scoreboard.winner.name,
+        length: scoreboard.competitors.length,
+        battles: JSON.parse(scoreboard.battles),
+      };
+    }) as IServiceScoreboardsGetResponse[];
+
+    return scoreboards;
+  },
 };
 
 export { serviceScoreboards };

@@ -10,6 +10,7 @@ interface IHistoric {
 interface IHistoricList {
   items: IHistoric[];
   status: IStatusLoading;
+  title?: string;
 }
 
 export { IHistoricList, IHistoric };

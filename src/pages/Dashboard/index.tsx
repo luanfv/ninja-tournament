@@ -27,7 +27,7 @@ const Dashboard: React.FC = () => {
         isMain: false,
         onPress: () => navigate('competitors', { length: 2 }),
       },
-      { type: 'historic', isMain: false, onPress: () => {} },
+      { type: 'historic', isMain: false, onPress: () => navigate('historic') },
     ],
     [navigate],
   );
@@ -56,7 +56,7 @@ const Dashboard: React.FC = () => {
       />
 
       <Body>
-        <HistoricList items={historic} status={status} />
+        <HistoricList items={historic} status={status} title="Meu histórico" />
       </Body>
     </>
   );

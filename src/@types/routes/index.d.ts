@@ -5,6 +5,7 @@ type IRoutes = {
   competitors: { length: 2 | 8 };
   selectedCompetitors: INinja[];
   scoreboard: IBattle[][];
+  historic: undefined;
 };
 
 export { IRoutes };

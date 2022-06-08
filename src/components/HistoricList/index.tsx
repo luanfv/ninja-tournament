@@ -7,7 +7,7 @@ import { Separator } from '@src/components/styles';
 import { NotFound, NotFoundAnimation, Title } from './styles';
 import { HistoricItem } from './Item';
 
-const HistoricList: React.FC<IHistoricList> = ({ status, items }) => {
+const HistoricList: React.FC<IHistoricList> = ({ status, items, title }) => {
   if (status === 'loading') {
     return <Loading />;
   }
@@ -15,7 +15,7 @@ const HistoricList: React.FC<IHistoricList> = ({ status, items }) => {
   if (items.length === 0) {
     return (
       <>
-        <Title>Meu histórico</Title>
+        {title && <Title>{title}</Title>}
 
         <NotFound>
           <NotFoundAnimation
@@ -33,13 +33,17 @@ const HistoricList: React.FC<IHistoricList> = ({ status, items }) => {
       <FlatList
         showsVerticalScrollIndicator={false}
         data={items}
-        ListHeaderComponent={() => (
-          <>
-            <Title>Meu histórico</Title>
+        ListHeaderComponent={() =>
+          title ? (
+            <>
+              <Title>{title}</Title>
 
-            <Separator />
-          </>
-        )}
+              <Separator />
+            </>
+          ) : (
+            <></>
+          )
+        }
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <HistoricItem
