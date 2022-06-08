@@ -54,13 +54,13 @@ const SelectedCompetitors: React.FC = () => {
     });
 
     firestore()
-      .collection('tournaments')
+      .collection('scoreboards')
       .add({
-        user_uid: auth().currentUser?.uid,
+        userUid: auth().currentUser?.uid,
         competitors,
         winner: tournament[0][0].winner,
         createdAt: firestore.FieldValue.serverTimestamp(),
-        tournament: JSON.stringify(tournament),
+        battles: JSON.stringify(tournament),
       })
       .catch((err) => console.log(err));
   }, []);

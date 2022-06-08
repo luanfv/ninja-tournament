@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 
 import { Container, Description, Icon, Message, Title } from './styles';
 
-const HistoricItem: React.FC<IHistoric> = ({ length, winner }) => {
+const HistoricItem: React.FC<IHistoric> = ({ length, winner, onPress }) => {
   const settings = useMemo(() => {
     if (length > 2) {
       return {
@@ -25,7 +25,7 @@ const HistoricItem: React.FC<IHistoric> = ({ length, winner }) => {
   }, [length, winner]);
 
   return (
-    <Container activeOpacity={0.8}>
+    <Container activeOpacity={0.8} onPress={onPress}>
       {settings && (
         <>
           <Icon name={settings.icon} />

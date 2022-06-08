@@ -4,7 +4,7 @@ import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
 import { Body, HeaderDashboard, HistoricList } from '@src/components';
-import { IStatusLoading } from '@src/@types';
+import { IBattle, IStatusLoading } from '@src/@types';
 import { useNavigation } from '@react-navigation/native';
 import { IRoutes } from '@src/@types/routes';
 import { IHistoric, IMenuItem } from '@src/@types/components';
@@ -31,16 +31,23 @@ const Dashboard: React.FC = () => {
 
   useEffect(() => {
     firestore()
-      .collection('tournaments')
-      .where('user_uid', '==', auth().currentUser?.uid)
+      .collection('scoreboards')
+      .where('userUid', '==', auth().currentUser?.uid)
       .orderBy('createdAt', 'desc')
       .get()
       .then((response) => {
         const data = response.docs.map((doc) => {
+          const scoreboard = doc.data();
+
           return {
             id: doc.id,
-            winner: doc.data().winner.name,
-            length: doc.data().competitors.length,
+            winner: scoreboard.winner.name,
+            length: scoreboard.competitors.length,
+            onPress: () =>
+              navigate(
+                'scoreboard',
+                JSON.parse(scoreboard.battles) as IBattle[][],
+              ),
           } as IHistoric;
         });
 
@@ -48,7 +55,7 @@ const Dashboard: React.FC = () => {
         setStatus('success');
       })
       .catch((err) => console.log('ERRO', err));
-  }, []);
+  }, [navigate]);
 
   return (
     <>

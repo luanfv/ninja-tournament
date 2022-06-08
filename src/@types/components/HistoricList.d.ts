@@ -4,6 +4,7 @@ interface IHistoric {
   id: string;
   winner: string;
   length: number;
+  onPress: () => void;
 }
 
 interface IHistoricList {

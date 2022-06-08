@@ -46,6 +46,7 @@ const HistoricList: React.FC<IHistoricList> = ({ status, items }) => {
             id={item.id}
             winner={item.winner}
             length={item.length}
+            onPress={item.onPress}
           />
         )}
         ItemSeparatorComponent={() => <Separator />}
