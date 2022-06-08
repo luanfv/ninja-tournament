@@ -7,7 +7,6 @@ import {
   useRoute,
 } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import firestore from '@react-native-firebase/firestore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -23,6 +22,7 @@ import {
 } from '@src/components';
 import { Spacing } from '@src/components/styles';
 import { useLanguage } from '@src/hooks';
+import { serviceNinjas } from '@src/services';
 
 const Competitors: React.FC = () => {
   const isFocused = useIsFocused();
@@ -81,22 +81,14 @@ const Competitors: React.FC = () => {
   }, [isFocused, onResetNinjas]);
 
   useEffect(() => {
-    firestore()
-      .collection('ninjas')
-      .orderBy('id')
+    serviceNinjas
       .get()
       .then((response) => {
-        const data = response.docs.map((doc) => {
-          return {
-            ...doc.data(),
-          };
-        }) as INinja[];
-
-        if (data.length < 1) {
+        if (response.length < 1) {
           throw Error();
         }
 
-        setNinjas(data);
+        setNinjas(response);
         setStatus('success');
       })
       .catch(() => setStatus('failure'));

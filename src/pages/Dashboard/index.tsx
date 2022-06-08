@@ -1,13 +1,12 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 
 import { Body, HeaderDashboard, HistoricList } from '@src/components';
-import { IBattle, IStatusLoading } from '@src/@types';
+import { IStatusLoading } from '@src/@types';
 import { useNavigation } from '@react-navigation/native';
 import { IRoutes } from '@src/@types/routes';
 import { IHistoric, IMenuItem } from '@src/@types/components';
+import { serviceScoreboards } from '@src/services';
 
 const Dashboard: React.FC = () => {
   const { navigate } =
@@ -34,26 +33,13 @@ const Dashboard: React.FC = () => {
   );
 
   useEffect(() => {
-    firestore()
-      .collection('scoreboards')
-      .where('userUid', '==', auth().currentUser?.uid)
-      .orderBy('createdAt', 'desc')
+    serviceScoreboards
       .get()
       .then((response) => {
-        const data = response.docs.map((doc) => {
-          const scoreboard = doc.data();
-
-          return {
-            id: doc.id,
-            winner: scoreboard.winner.name,
-            length: scoreboard.competitors.length,
-            onPress: () =>
-              navigate(
-                'scoreboard',
-                JSON.parse(scoreboard.battles) as IBattle[][],
-              ),
-          } as IHistoric;
-        });
+        const data = response.map((item) => ({
+          ...item,
+          onPress: () => navigate('scoreboard', item.battles),
+        })) as IHistoric[];
 
         setHistoric(data);
         setStatus('success');

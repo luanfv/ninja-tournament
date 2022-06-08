@@ -11,14 +11,13 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
-import firestore from '@react-native-firebase/firestore';
-import auth from '@react-native-firebase/auth';
 
 import { IBattle, INinja, INinjaCompetitor } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
 import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
 import { randomArrayPosition } from '@src/helpers';
+import { serviceScoreboards } from '@src/services';
 
 const SelectedCompetitors: React.FC = () => {
   const { params } = useRoute<RouteProp<IRoutes, 'selectedCompetitors'>>();
@@ -53,14 +52,11 @@ const SelectedCompetitors: React.FC = () => {
       });
     });
 
-    firestore()
-      .collection('scoreboards')
-      .add({
-        userUid: auth().currentUser?.uid,
+    serviceScoreboards
+      .post({
         competitors,
         winner: tournament[0][0].winner,
-        createdAt: firestore.FieldValue.serverTimestamp(),
-        battles: JSON.stringify(tournament),
+        battles: tournament,
       })
       .catch((err) => console.log(err));
   }, []);
