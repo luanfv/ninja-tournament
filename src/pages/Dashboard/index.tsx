@@ -28,7 +28,7 @@ interface IHistoric {
 
 const Dashboard: React.FC = () => {
   const { navigate } =
-    useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
+    useNavigation<NativeStackNavigationProp<IRoutes, 'dashboard'>>();
 
   const [historic, setHistoric] = useState<IHistoric[]>([]);
   const [status, setStatus] = useState<IStatusLoading>('loading');
@@ -37,7 +37,7 @@ const Dashboard: React.FC = () => {
     firestore()
       .collection('tournaments')
       .where('user_uid', '==', auth().currentUser?.uid)
-      // .orderBy('createdAt', 'desc')
+      .orderBy('createdAt', 'desc')
       .get()
       .then((response) => {
         const data = response.docs.map((doc) => {
