@@ -67,9 +67,13 @@ const Scoreboard: React.FC = () => {
           {params.map((round, index) => {
             return (
               <View key={String(index)}>
-                <Separator />
+                {params.length > 1 && (
+                  <>
+                    {index !== 0 && <Separator />}
 
-                <Title>{getTitleOfRound(index, params.length)}</Title>
+                    <Title>{getTitleOfRound(index, params.length)}</Title>
+                  </>
+                )}
 
                 {round.map((item, index2) => (
                   <CardBattle key={index2} competitor={item} />

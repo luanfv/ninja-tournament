@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { RefreshControl, View, FlatList } from 'react-native';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { RefreshControl, FlatList } from 'react-native';
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import firestore from '@react-native-firebase/firestore';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -21,6 +26,7 @@ import { useLanguage } from '@src/hooks';
 
 const Competitors: React.FC = () => {
   const isFocused = useIsFocused();
+  const { params } = useRoute<RouteProp<IRoutes, 'competitors'>>();
   const { navigate, goBack } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'competitors'>>();
 
@@ -100,8 +106,8 @@ const Competitors: React.FC = () => {
     <>
       <Header
         title={language.pages.home.headerTitle}
-        isDescriptionError={selectedCompetitors.length !== 8}
-        description={`${language.pages.home.headerDescription}: ${selectedCompetitors.length} ${language.pages.home.headerDescriptionOf} 8`}
+        isDescriptionError={selectedCompetitors.length !== params.length}
+        description={`${language.pages.home.headerDescription}: ${selectedCompetitors.length} ${language.pages.home.headerDescriptionOf} ${params.length}`}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -134,7 +140,7 @@ const Competitors: React.FC = () => {
                   </Spacing>
                 </>
               ) : (
-                <View />
+                <></>
               )
             }
             keyExtractor={(item) => String(item.id)}
@@ -157,7 +163,7 @@ const Competitors: React.FC = () => {
 
       <Footer
         text={language.pages.home.footerButton}
-        disabled={selectedCompetitors.length !== 8}
+        disabled={selectedCompetitors.length !== params.length}
         onPress={() => navigate('selectedCompetitors', selectedCompetitors)}
       />
     </>

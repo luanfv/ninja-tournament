@@ -21,9 +21,13 @@ const Dashboard: React.FC = () => {
       {
         type: 'tournament',
         isMain: true,
-        onPress: () => navigate('competitors'),
+        onPress: () => navigate('competitors', { length: 8 }),
       },
-      { type: 'battle', isMain: false, onPress: () => {} },
+      {
+        type: 'battle',
+        isMain: false,
+        onPress: () => navigate('competitors', { length: 2 }),
+      },
       { type: 'historic', isMain: false, onPress: () => {} },
     ],
     [navigate],
