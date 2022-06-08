@@ -1,13 +1,9 @@
+import { IHistoric } from '@src/@types/components';
 import React, { useMemo } from 'react';
 
 import { Container, Description, Icon, Message, Title } from './styles';
 
-interface IHistoricCard {
-  length: number;
-  winner: string;
-}
-
-const HistoricCard: React.FC<IHistoricCard> = ({ length, winner }) => {
+const HistoricItem: React.FC<IHistoric> = ({ length, winner }) => {
   const settings = useMemo(() => {
     if (length > 2) {
       return {
@@ -45,4 +41,4 @@ const HistoricCard: React.FC<IHistoricCard> = ({ length, winner }) => {
   );
 };
 
-export { HistoricCard };
+export { HistoricItem };

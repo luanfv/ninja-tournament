@@ -1,30 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList } from 'react-native';
+import React, { useEffect, useMemo, useState } from 'react';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-import { Body, Loading, Separator } from '@src/components';
-import { Card } from './components/Card';
-import { HistoricCard } from './components/HistoricCard';
-import {
-  Header,
-  CardList,
-  Welcome,
-  WelcomeText,
-  Title,
-  NotFound,
-  NotFoundAnimation,
-} from './styles';
+import { Body, HeaderDashboard, HistoricList } from '@src/components';
 import { IStatusLoading } from '@src/@types';
 import { useNavigation } from '@react-navigation/native';
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { IRoutes } from '@src/@types/routes';
-
-interface IHistoric {
-  id: string;
-  winner: string;
-  length: number;
-}
+import { IHistoric, IMenuItem } from '@src/@types/components';
 
 const Dashboard: React.FC = () => {
   const { navigate } =
@@ -32,6 +15,15 @@ const Dashboard: React.FC = () => {
 
   const [historic, setHistoric] = useState<IHistoric[]>([]);
   const [status, setStatus] = useState<IStatusLoading>('loading');
+
+  const menuItems = useMemo<IMenuItem[]>(
+    () => [
+      { type: 'tournament', isMain: true, onPress: () => navigate('home') },
+      { type: 'battle', isMain: false, onPress: () => {} },
+      { type: 'historic', isMain: false, onPress: () => {} },
+    ],
+    [navigate],
+  );
 
   useEffect(() => {
     firestore()
@@ -55,55 +47,17 @@ const Dashboard: React.FC = () => {
   }, []);
 
   return (
-    <Body>
-      <Header>
-        <Welcome>
-          <WelcomeText>Olá, seja bem-vindo(a) ao</WelcomeText>
-          <WelcomeText bold>TORNEIO NINJA</WelcomeText>
-        </Welcome>
+    <>
+      <HeaderDashboard
+        text1="Olá, seja bem-vindo(a) ao"
+        text2="TORNEIO NINJA"
+        menuItems={menuItems}
+      />
 
-        <CardList>
-          <Card isMain type="tournament" onPress={() => navigate('home')} />
-          <Card type="battle" onPress={() => {}} />
-          <Card type="historic" onPress={() => {}} />
-        </CardList>
-      </Header>
-
-      {status === 'loading' && <Loading />}
-
-      {status !== 'loading' && historic.length === 0 && (
-        <>
-          <Title>Meu histórico</Title>
-
-          <NotFound>
-            <NotFoundAnimation
-              source={require('@src/assets/animations/not_found.json')}
-              autoPlay
-              loop={false}
-            />
-          </NotFound>
-        </>
-      )}
-
-      {status === 'success' && (
-        <FlatList
-          showsVerticalScrollIndicator={false}
-          data={historic}
-          ListHeaderComponent={() => (
-            <>
-              <Title>Meu histórico</Title>
-
-              <Separator />
-            </>
-          )}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <HistoricCard winner={item.winner} length={item.length} />
-          )}
-          ItemSeparatorComponent={() => <Separator />}
-        />
-      )}
-    </Body>
+      <Body>
+        <HistoricList items={historic} status={status} />
+      </Body>
+    </>
   );
 };
 

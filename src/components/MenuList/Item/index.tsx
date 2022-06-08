@@ -1,15 +1,10 @@
 import React, { useMemo } from 'react';
 
 import { shadow } from '@src/settings/styles';
+import { IMenuItem } from '@src/@types/components';
 import { Container, Description, Icon, Message, Title } from './styles';
 
-interface ICard {
-  isMain?: boolean;
-  type: 'tournament' | 'battle' | 'historic';
-  onPress: () => void;
-}
-
-const Card: React.FC<ICard> = ({ isMain, type, onPress }) => {
+const MenuItem: React.FC<IMenuItem> = ({ isMain, type, onPress }) => {
   const settings = useMemo(() => {
     switch (type) {
       case 'tournament':
@@ -62,4 +57,4 @@ const Card: React.FC<ICard> = ({ isMain, type, onPress }) => {
   );
 };
 
-export { Card };
+export { MenuItem };
