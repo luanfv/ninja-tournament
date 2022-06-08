@@ -2,9 +2,9 @@ import { INinja, IBattle } from '@src/@types';
 
 type IRoutes = {
   dashboard: undefined;
-  home: undefined;
-  tournament: INinja[];
-  tournamentScore: IBattle[][];
+  competitors: undefined;
+  selectedCompetitors: INinja[];
+  scoreboard: IBattle[][];
 };
 
 export { IRoutes };

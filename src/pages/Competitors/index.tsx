@@ -19,10 +19,10 @@ import {
 import { Spacing } from '@src/components/styles';
 import { useLanguage } from '@src/hooks';
 
-const Home: React.FC = () => {
+const Competitors: React.FC = () => {
   const isFocused = useIsFocused();
   const { navigate, goBack } =
-    useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
+    useNavigation<NativeStackNavigationProp<IRoutes, 'competitors'>>();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [status, setStatus] = useState<IStatusLoading>('loading');
@@ -158,10 +158,10 @@ const Home: React.FC = () => {
       <Footer
         text={language.pages.home.footerButton}
         disabled={selectedCompetitors.length !== 8}
-        onPress={() => navigate('tournament', selectedCompetitors)}
+        onPress={() => navigate('selectedCompetitors', selectedCompetitors)}
       />
     </>
   );
 };
 
-export { Home };
+export { Competitors };

@@ -21,10 +21,10 @@ import {
 } from '@src/components';
 import { useLanguage } from '@src/hooks';
 
-const TournamentScore: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'tournamentScore'>>();
+const Scoreboard: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'scoreboard'>>();
   const { goBack, reset } =
-    useNavigation<NavigationProp<IRoutes, 'tournamentScore'>>();
+    useNavigation<NavigationProp<IRoutes, 'scoreboard'>>();
   const { spacing } = useTheme();
 
   const { language } = useLanguage();
@@ -88,4 +88,4 @@ const TournamentScore: React.FC = () => {
   );
 };
 
-export { TournamentScore };
+export { Scoreboard };

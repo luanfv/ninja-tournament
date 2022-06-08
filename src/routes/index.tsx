@@ -3,7 +3,12 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
-import { Home, Tournament, TournamentScore, Dashboard } from '@src/pages';
+import {
+  Competitors,
+  Dashboard,
+  Scoreboard,
+  SelectedCompetitors,
+} from '@src/pages';
 
 const Stack = createNativeStackNavigator();
 
@@ -16,16 +21,19 @@ const Routes: React.FC = () => {
           component={gestureHandlerRootHOC(Dashboard)}
         />
 
-        <Stack.Screen name="home" component={gestureHandlerRootHOC(Home)} />
-
         <Stack.Screen
-          name="tournament"
-          component={gestureHandlerRootHOC(Tournament)}
+          name="competitors"
+          component={gestureHandlerRootHOC(Competitors)}
         />
 
         <Stack.Screen
-          name="tournamentScore"
-          component={gestureHandlerRootHOC(TournamentScore)}
+          name="selectedCompetitors"
+          component={gestureHandlerRootHOC(SelectedCompetitors)}
+        />
+
+        <Stack.Screen
+          name="scoreboard"
+          component={gestureHandlerRootHOC(Scoreboard)}
         />
       </Stack.Navigator>
     </NavigationContainer>

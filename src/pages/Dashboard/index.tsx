@@ -18,7 +18,11 @@ const Dashboard: React.FC = () => {
 
   const menuItems = useMemo<IMenuItem[]>(
     () => [
-      { type: 'tournament', isMain: true, onPress: () => navigate('home') },
+      {
+        type: 'tournament',
+        isMain: true,
+        onPress: () => navigate('competitors'),
+      },
       { type: 'battle', isMain: false, onPress: () => {} },
       { type: 'historic', isMain: false, onPress: () => {} },
     ],

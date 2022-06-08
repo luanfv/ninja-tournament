@@ -20,11 +20,11 @@ import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
 import { randomArrayPosition } from '@src/helpers';
 
-const Tournament: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'tournament'>>();
+const SelectedCompetitors: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'selectedCompetitors'>>();
   const { onStartTournament } = useBattle();
   const { goBack, navigate } =
-    useNavigation<NavigationProp<IRoutes, 'tournament'>>();
+    useNavigation<NavigationProp<IRoutes, 'selectedCompetitors'>>();
 
   const [ninjas, setNinjas] = useState<INinja[]>(params as INinja[]);
   const [isInitTournament, setIsInitTournament] = useState(false);
@@ -73,7 +73,7 @@ const Tournament: React.FC = () => {
     submitTournament(tournamentResult);
 
     setTimeout(() => {
-      navigate('tournamentScore', tournamentResult);
+      navigate('scoreboard', tournamentResult);
     }, 1000 * 2);
 
     setTimeout(() => {
@@ -134,4 +134,4 @@ const Tournament: React.FC = () => {
   );
 };
 
-export { Tournament };
+export { SelectedCompetitors };
