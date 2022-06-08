@@ -82,7 +82,7 @@ const TournamentScore: React.FC = () => {
 
       <Footer
         text={language.pages.tournamentScore.footerButton}
-        onPress={() => reset({ index: 1, routes: [{ name: 'home' }] })}
+        onPress={() => reset({ index: 0, routes: [{ name: 'dashboard' }] })}
       />
     </>
   );

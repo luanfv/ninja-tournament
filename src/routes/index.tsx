@@ -3,7 +3,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { gestureHandlerRootHOC } from 'react-native-gesture-handler';
 
-import { Home, Tournament, TournamentScore } from '@src/pages';
+import { Home, Tournament, TournamentScore, Dashboard } from '@src/pages';
 
 const Stack = createNativeStackNavigator();
 
@@ -11,6 +11,11 @@ const Routes: React.FC = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="dashboard"
+          component={gestureHandlerRootHOC(Dashboard)}
+        />
+
         <Stack.Screen name="home" component={gestureHandlerRootHOC(Home)} />
 
         <Stack.Screen

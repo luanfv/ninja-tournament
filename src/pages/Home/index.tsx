@@ -3,6 +3,8 @@ import { RefreshControl, View, FlatList } from 'react-native';
 import { useIsFocused, useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import firestore from '@react-native-firebase/firestore';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { INinja, IStatusLoading } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
@@ -19,7 +21,7 @@ import { useLanguage } from '@src/hooks';
 
 const Home: React.FC = () => {
   const isFocused = useIsFocused();
-  const { navigate } =
+  const { navigate, goBack } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
@@ -92,21 +94,6 @@ const Home: React.FC = () => {
         setStatus('success');
       })
       .catch(() => setStatus('failure'));
-
-    // firestore()
-    //   .collection('tournaments')
-    //   .where('user_uid', '==', auth().currentUser?.uid)
-    //   .get()
-    //   .then((response) => {
-    //     const data = response.docs.map((doc) => {
-    //       return {
-    //         ...doc.data(),
-    //       };
-    //     });
-
-    //     navigate('tournamentScore', JSON.parse(data[0].tournament));
-    //   })
-    //   .catch((err) => console.log('ERRO', err));
   }, []);
 
   return (
@@ -115,6 +102,11 @@ const Home: React.FC = () => {
         title={language.pages.home.headerTitle}
         isDescriptionError={selectedCompetitors.length !== 8}
         description={`${language.pages.home.headerDescription}: ${selectedCompetitors.length} ${language.pages.home.headerDescriptionOf} 8`}
+        leftComponent={
+          <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
+            <Icon name="arrow-back" size={20} color="#fff" />
+          </TouchableOpacity>
+        }
       />
 
       <Body>
