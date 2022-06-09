@@ -1,3 +1,5 @@
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore';
+
 interface IServiceScoreboardsGetResponse {
   id: string;
   winner: string;
@@ -11,4 +13,12 @@ interface IServiceScoreboardsPostRequest {
   battles: IBattle[][];
 }
 
-export { IServiceScoreboardsGetResponse, IServiceScoreboardsPostRequest };
+type IServiceScoreboardsLastResponse =
+  | FirebaseFirestoreTypes.DocumentData
+  | undefined;
+
+export {
+  IServiceScoreboardsGetResponse,
+  IServiceScoreboardsPostRequest,
+  IServiceScoreboardsLastResponse,
+};

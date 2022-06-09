@@ -1,3 +1,4 @@
+import React from 'react';
 import { IStatusLoading } from '@src/@types/statusLoading';
 
 interface IHistoric {
@@ -11,6 +12,8 @@ interface IHistoricList {
   items: IHistoric[];
   status: IStatusLoading;
   title?: string;
+  onEndReached?: () => void;
+  ListFooterComponent?: React.ReactElement;
 }
 
 export { IHistoricList, IHistoric };

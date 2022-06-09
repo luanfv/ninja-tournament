@@ -1,12 +1,13 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
-import { Body, HeaderDashboard, HistoricList } from '@src/components';
+import { Body, HeaderDashboard, HistoricList, Loading } from '@src/components';
 import { IStatusLoading } from '@src/@types';
 import { useNavigation } from '@react-navigation/native';
 import { IRoutes } from '@src/@types/routes';
 import { IHistoric, IMenuItem } from '@src/@types/components';
 import { serviceScoreboards } from '@src/services';
+import { IServiceScoreboardsLastResponse } from '@src/@types/services';
 
 const Dashboard: React.FC = () => {
   const { navigate } =
@@ -14,6 +15,11 @@ const Dashboard: React.FC = () => {
 
   const [historic, setHistoric] = useState<IHistoric[]>([]);
   const [status, setStatus] = useState<IStatusLoading>('loading');
+
+  const [isLoadingHistoric, setIsLoadingHistoric] = useState(false);
+  const [hasStopRequest, setHasStopRequest] = useState(false);
+  const [lastResponse, setLastResponse] =
+    useState<IServiceScoreboardsLastResponse>(undefined);
 
   const menuItems = useMemo<IMenuItem[]>(
     () => [
@@ -32,20 +38,36 @@ const Dashboard: React.FC = () => {
     [navigate],
   );
 
-  useEffect(() => {
+  const handleGetHistoric = useCallback(() => {
+    if (hasStopRequest) {
+      return;
+    }
+
+    setIsLoadingHistoric(true);
+
     serviceScoreboards
-      .get()
+      .get(lastResponse, 10)
       .then((response) => {
-        const data = response.map((item) => ({
+        const data = response.data.map((item) => ({
           ...item,
           onPress: () => navigate('scoreboard', item.battles),
         })) as IHistoric[];
 
-        setHistoric(data);
+        setHistoric((oldState) => [...oldState, ...data]);
         setStatus('success');
+        setLastResponse(response.lastDoc);
       })
-      .catch((err) => console.log('ERRO', err));
-  }, [navigate]);
+      .catch((err) => {
+        console.log('ERRO', err);
+        setHasStopRequest(true);
+      })
+      .finally(() => setIsLoadingHistoric(false));
+  }, [hasStopRequest, lastResponse, navigate]);
+
+  useEffect(() => {
+    handleGetHistoric();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -56,7 +78,15 @@ const Dashboard: React.FC = () => {
       />
 
       <Body>
-        <HistoricList items={historic} status={status} title="Meu histórico" />
+        <HistoricList
+          items={historic}
+          status={status}
+          title="Meu histórico"
+          onEndReached={handleGetHistoric}
+          ListFooterComponent={
+            isLoadingHistoric ? <Loading margin={20} width={20} /> : <></>
+          }
+        />
       </Body>
     </>
   );

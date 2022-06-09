@@ -6,3 +6,4 @@ export type { IChampion } from './Champion';
 export type { IMenuList, IMenuItem } from './MenuList';
 export type { IHistoricList, IHistoric } from './HistoricList';
 export type { IHeaderDashboard } from './HeaderDashboard';
+export type { ILoading } from './Loading';

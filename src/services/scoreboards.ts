@@ -3,16 +3,35 @@ import auth from '@react-native-firebase/auth';
 
 import {
   IServiceScoreboardsGetResponse,
+  IServiceScoreboardsLastResponse,
   IServiceScoreboardsPostRequest,
 } from '@src/@types/services';
 
 const serviceScoreboards = {
-  get: async () => {
-    const response = await firestore()
-      .collection('scoreboards')
-      .where('userUid', '==', auth().currentUser?.uid)
-      .orderBy('createdAt', 'desc')
-      .get();
+  get: async (
+    start: IServiceScoreboardsLastResponse = undefined,
+    limit = 20,
+  ) => {
+    const response = start
+      ? await firestore()
+          .collection('scoreboards')
+          .where('userUid', '==', auth().currentUser?.uid)
+          .orderBy('createdAt', 'desc')
+          .startAfter(start)
+          .limit(limit)
+          .get()
+      : await firestore()
+          .collection('scoreboards')
+          .where('userUid', '==', auth().currentUser?.uid)
+          .orderBy('createdAt', 'desc')
+          .limit(limit)
+          .get();
+
+    const lastDoc = response.docs[response.docs.length - 1];
+
+    if (lastDoc.id === start?.id) {
+      throw Error('Has no more items to list.');
+    }
 
     const scoreboards = response.docs.map((doc) => {
       const scoreboard = doc.data();
@@ -25,7 +44,10 @@ const serviceScoreboards = {
       };
     }) as IServiceScoreboardsGetResponse[];
 
-    return scoreboards;
+    return {
+      data: scoreboards,
+      lastDoc: lastDoc,
+    };
   },
 
   post: async (data: IServiceScoreboardsPostRequest) => {
@@ -41,11 +63,28 @@ const serviceScoreboards = {
     return response;
   },
 
-  getAll: async () => {
-    const response = await firestore()
-      .collection('scoreboards')
-      .orderBy('createdAt', 'desc')
-      .get();
+  getAll: async (
+    start: IServiceScoreboardsLastResponse = undefined,
+    limit = 20,
+  ) => {
+    const response = start
+      ? await firestore()
+          .collection('scoreboards')
+          .orderBy('createdAt', 'desc')
+          .startAfter(start)
+          .limit(limit)
+          .get()
+      : await firestore()
+          .collection('scoreboards')
+          .orderBy('createdAt', 'desc')
+          .limit(limit)
+          .get();
+
+    const lastDoc = response.docs[response.docs.length - 1];
+
+    if (lastDoc.id === start?.id) {
+      throw Error('Has no more items to list.');
+    }
 
     const scoreboards = response.docs.map((doc) => {
       const scoreboard = doc.data();
@@ -58,7 +97,10 @@ const serviceScoreboards = {
       };
     }) as IServiceScoreboardsGetResponse[];
 
-    return scoreboards;
+    return {
+      data: scoreboards,
+      lastDoc: lastDoc,
+    };
   },
 };
 

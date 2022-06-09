@@ -7,7 +7,14 @@ import { Separator } from '@src/components/styles';
 import { NotFound, NotFoundAnimation, Title } from './styles';
 import { HistoricItem } from './Item';
 
-const HistoricList: React.FC<IHistoricList> = ({ status, items, title }) => {
+const HistoricList: React.FC<IHistoricList> = ({
+  status,
+  items,
+  title,
+  onEndReached,
+  ListFooterComponent,
+  ...rest
+}) => {
   if (status === 'loading') {
     return <Loading />;
   }
@@ -44,7 +51,7 @@ const HistoricList: React.FC<IHistoricList> = ({ status, items, title }) => {
             <></>
           )
         }
-        keyExtractor={(item) => item.id}
+        keyExtractor={(_, index) => String(index)}
         renderItem={({ item }) => (
           <HistoricItem
             id={item.id}
@@ -53,7 +60,10 @@ const HistoricList: React.FC<IHistoricList> = ({ status, items, title }) => {
             onPress={item.onPress}
           />
         )}
+        ListFooterComponent={ListFooterComponent}
         ItemSeparatorComponent={() => <Separator />}
+        {...rest}
+        onEndReached={onEndReached}
       />
     );
   }
