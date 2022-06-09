@@ -33,13 +33,13 @@ const Scoreboard: React.FC = () => {
     (value, length) => {
       switch (value) {
         case 0:
-          return language.pages.tournamentScore.finalRound;
+          return language.pages.scoreboard.finalRound;
 
         case 1:
-          return language.pages.tournamentScore.semifinalRound;
+          return language.pages.scoreboard.semifinalRound;
 
         default:
-          return `${length - value}ª ${language.pages.tournamentScore.round}`;
+          return `${length - value}ª ${language.pages.scoreboard.round}`;
       }
     },
     [language],
@@ -48,7 +48,7 @@ const Scoreboard: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.tournamentScore.headerTitle}
+        title={language.pages.scoreboard.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -85,7 +85,7 @@ const Scoreboard: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.tournamentScore.footerButton}
+        text={language.pages.scoreboard.footerButton}
         onPress={() => reset({ index: 0, routes: [{ name: 'dashboard' }] })}
       />
     </>

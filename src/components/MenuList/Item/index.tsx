@@ -2,38 +2,47 @@ import React, { useMemo } from 'react';
 
 import { shadow } from '@src/settings/styles';
 import { IMenuItem } from '@src/@types/components';
+import { useLanguage } from '@src/hooks';
 import { Container, Description, Icon, Message, Title } from './styles';
 
 const MenuItem: React.FC<IMenuItem> = ({ isMain, type, onPress }) => {
+  const { language } = useLanguage();
+
   const settings = useMemo(() => {
     switch (type) {
       case 'tournament':
         return {
           icon: 'ios-trophy',
-          title: 'Realizar torneio',
-          message:
-            'Inicie um torneio com 8 ninjas diferentes, o vencedor é o ninja que vencer as 3 fases do torneio.',
+          title: language.components.menuListItem.tournamentTitle,
+          message: language.components.menuListItem.tournamentMessage,
         };
 
       case 'battle':
         return {
           icon: 'ios-people',
-          title: 'Realizar duelo',
-          message:
-            'Inicie um duelo entre 2 ninjas diferentes, o vencedor é definido através do resultado da probabilidade.',
+          title: language.components.menuListItem.duelTitle,
+          message: language.components.menuListItem.duelMessage,
         };
 
       case 'historic':
         return {
           icon: 'ios-receipt',
-          title: 'Histórico global',
-          message: 'Visualize o histórico de torneios de outros usuários.',
+          title: language.components.menuListItem.historicTitle,
+          message: language.components.menuListItem.historicMessage,
         };
 
       default:
         return undefined;
     }
-  }, [type]);
+  }, [
+    language.components.menuListItem.duelMessage,
+    language.components.menuListItem.duelTitle,
+    language.components.menuListItem.historicMessage,
+    language.components.menuListItem.historicTitle,
+    language.components.menuListItem.tournamentMessage,
+    language.components.menuListItem.tournamentTitle,
+    type,
+  ]);
 
   return (
     <Container

@@ -97,9 +97,9 @@ const Competitors: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.home.headerTitle}
+        title={language.pages.competitors.headerTitle}
         isDescriptionError={selectedCompetitors.length !== params.length}
-        description={`${language.pages.home.headerDescription}: ${selectedCompetitors.length} ${language.pages.home.headerDescriptionOf} ${params.length}`}
+        description={`${language.pages.competitors.headerDescription}: ${selectedCompetitors.length} ${language.pages.competitors.headerDescriptionOf} ${params.length}`}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -154,7 +154,7 @@ const Competitors: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.home.footerButton}
+        text={language.pages.competitors.footerButton}
         disabled={selectedCompetitors.length !== params.length}
         onPress={() => navigate('selectedCompetitors', selectedCompetitors)}
       />

@@ -8,10 +8,13 @@ import { IRoutes } from '@src/@types/routes';
 import { IHistoric, IMenuItem } from '@src/@types/components';
 import { serviceScoreboards } from '@src/services';
 import { IServiceScoreboardsLastResponse } from '@src/@types/services';
+import { useLanguage } from '@src/hooks';
 
 const Dashboard: React.FC = () => {
   const { navigate } =
     useNavigation<NativeStackNavigationProp<IRoutes, 'dashboard'>>();
+
+  const { language } = useLanguage();
 
   const [historic, setHistoric] = useState<IHistoric[]>([]);
   const [status, setStatus] = useState<IStatusLoading>('loading');
@@ -72,8 +75,8 @@ const Dashboard: React.FC = () => {
   return (
     <>
       <HeaderDashboard
-        text1="Olá, seja bem-vindo(a) ao"
-        text2="TORNEIO NINJA"
+        text1={language.pages.dashboard.welcome}
+        text2={language.pages.dashboard.appName}
         menuItems={menuItems}
       />
 
@@ -81,7 +84,7 @@ const Dashboard: React.FC = () => {
         <HistoricList
           items={historic}
           status={status}
-          title="Meu histórico"
+          title={language.pages.dashboard.historicTitle}
           onEndReached={handleGetHistoric}
           ListFooterComponent={
             isLoadingHistoric ? <Loading margin={20} width={20} /> : <></>

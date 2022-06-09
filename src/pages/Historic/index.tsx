@@ -9,10 +9,13 @@ import { serviceScoreboards } from '@src/services';
 import { IHistoric } from '@src/@types/components';
 import { IStatusLoading } from '@src/@types';
 import { IServiceScoreboardsLastResponse } from '@src/@types/services';
+import { useLanguage } from '@src/hooks';
 
 const Historic: React.FC = () => {
   const { goBack, navigate } =
     useNavigation<NavigationProp<IRoutes, 'historic'>>();
+
+  const { language } = useLanguage();
 
   const [historic, setHistoric] = useState<IHistoric[]>([]);
   const [status, setStatus] = useState<IStatusLoading>('loading');
@@ -56,7 +59,7 @@ const Historic: React.FC = () => {
   return (
     <>
       <Header
-        title="Histórico global"
+        title={language.pages.historic.header}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />

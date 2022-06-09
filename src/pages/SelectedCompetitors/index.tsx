@@ -80,7 +80,7 @@ const SelectedCompetitors: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.tournament.headerTitle}
+        title={language.pages.selectedCompetitors.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -121,7 +121,7 @@ const SelectedCompetitors: React.FC = () => {
           </Body>
 
           <Footer
-            text={language.pages.tournament.footerButton}
+            text={language.pages.selectedCompetitors.footerButton}
             onPress={handleStartTournament}
           />
         </>
