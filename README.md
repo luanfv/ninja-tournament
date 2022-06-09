@@ -1,7 +1,7 @@
 <section align="center">
   <img src="./assets/icon.png" width="80" height="80" />
 
-  <h3 align="center">Torneio Shinobi</h3>
+  <h3 align="center">Ninja Tournament</h3>
   
   <div align="center">
     <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
@@ -33,9 +33,9 @@
 
 ## SOBRE O PROJETO
 
-Aplicativo criado com **React Native + TypeScript** para simular um torneio shinobi de Naruto Classico baseado nos tazos de 2009 da Elma. Para iniciar o torneio o usuário precisa selecionar 8 competidores e ordenar de forma que achar melhor, após fazer isso, haverá três rodadas diferentes para descobrir quem é o vencedor no final.
+Aplicativo criado com **React Native + TypeScript + Firebase** para simular um torneio ninja do universo de Naruto Classico com a pontuação dos ninjas baseado nos tazos de 2009 da Elma. Através do aplicativo é possível iniciar um torneio com 8 participantes onde irá acontecer três rodadas para descobrir o vencedor, mas além disso, é possível realizar duelos e visualizar o histórico global de torneios.
 
-Importante salientar que Torneio Shinobi não possui o cálculo de pontos baseado em quem tiver mais vence, mas sim em um sistema de porcentagem, onde quem tiver mais pontos possui mais chances de vitória, sendo assim, os torneios se tornam dinâmicos.
+Importante salientar que **Ninja Tournament** não possui o cálculo de pontos baseado em quem tiver mais vence, mas sim em um sistema de porcentagem, onde quem tiver mais pontos possui mais chances de vitória, sendo assim, os torneios se tornam dinâmicos.
 
 
 ## EXTENSÕES DO VSCODE
