@@ -63,7 +63,6 @@ const Dashboard: React.FC = () => {
       .catch((err) => {
         console.log('ERRO', err);
         setHasStopRequest(true);
-        setStatus('failure');
       })
       .finally(() => setIsLoadingHistoric(false));
   }, [hasStopRequest, lastResponse, navigate]);
