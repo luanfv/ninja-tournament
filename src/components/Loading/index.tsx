@@ -1,15 +1,15 @@
 import React from 'react';
-import { ActivityIndicator } from 'react-native';
 import { useTheme } from 'styled-components';
 
-import { Container } from './styles';
+import { ILoading } from '@src/@types/components';
+import { Container, Icon } from './styles';
 
-const Loading: React.FC = () => {
+const Loading: React.FC<ILoading> = ({ width, margin }) => {
   const { colors } = useTheme();
 
   return (
     <Container>
-      <ActivityIndicator color={colors.primary} size="large" />
+      <Icon width={width} margin={margin} color={colors.primary} size="large" />
     </Container>
   );
 };

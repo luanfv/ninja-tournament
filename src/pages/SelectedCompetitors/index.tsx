@@ -11,19 +11,19 @@ import DraggableFlatList, {
 } from 'react-native-draggable-flatlist';
 import Icon from 'react-native-vector-icons/Ionicons';
 import LottieView from 'lottie-react-native';
-import firestore from '@react-native-firebase/firestore';
 
-import { IBattle, INinja } from '@src/@types';
+import { IBattle, INinja, INinjaCompetitor } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
 import { useLanguage, useBattle } from '@src/hooks';
 import { Card, Footer, Header, Body } from '@src/components';
 import { randomArrayPosition } from '@src/helpers';
+import { serviceScoreboards } from '@src/services';
 
-const Tournament: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'tournament'>>();
+const SelectedCompetitors: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'selectedCompetitors'>>();
   const { onStartTournament } = useBattle();
   const { goBack, navigate } =
-    useNavigation<NavigationProp<IRoutes, 'tournament'>>();
+    useNavigation<NavigationProp<IRoutes, 'selectedCompetitors'>>();
 
   const [ninjas, setNinjas] = useState<INinja[]>(params as INinja[]);
   const [isInitTournament, setIsInitTournament] = useState(false);
@@ -39,8 +39,7 @@ const Tournament: React.FC = () => {
   }, []);
 
   const submitTournament = useCallback((tournament: IBattle[][]) => {
-    const competitors: INinja[] = [];
-
+    const competitors: INinjaCompetitor[] = [];
     competitors.push(tournament[0][0].winner);
 
     tournament.forEach((battles) => {
@@ -53,11 +52,11 @@ const Tournament: React.FC = () => {
       });
     });
 
-    firestore()
-      .collection('tournaments')
-      .add({
+    serviceScoreboards
+      .post({
         competitors,
-        createdAt: firestore.FieldValue.serverTimestamp(),
+        winner: tournament[0][0].winner,
+        battles: tournament,
       })
       .catch((err) => console.log(err));
   }, []);
@@ -70,7 +69,7 @@ const Tournament: React.FC = () => {
     submitTournament(tournamentResult);
 
     setTimeout(() => {
-      navigate('tournamentScore', tournamentResult);
+      navigate('scoreboard', tournamentResult);
     }, 1000 * 2);
 
     setTimeout(() => {
@@ -81,7 +80,7 @@ const Tournament: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.tournament.headerTitle}
+        title={language.pages.selectedCompetitors.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -122,7 +121,7 @@ const Tournament: React.FC = () => {
           </Body>
 
           <Footer
-            text={language.pages.tournament.footerButton}
+            text={language.pages.selectedCompetitors.footerButton}
             onPress={handleStartTournament}
           />
         </>
@@ -131,4 +130,4 @@ const Tournament: React.FC = () => {
   );
 };
 
-export { Tournament };
+export { SelectedCompetitors };

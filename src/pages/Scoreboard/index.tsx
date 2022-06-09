@@ -21,10 +21,10 @@ import {
 } from '@src/components';
 import { useLanguage } from '@src/hooks';
 
-const TournamentScore: React.FC = () => {
-  const { params } = useRoute<RouteProp<IRoutes, 'tournamentScore'>>();
+const Scoreboard: React.FC = () => {
+  const { params } = useRoute<RouteProp<IRoutes, 'scoreboard'>>();
   const { goBack, reset } =
-    useNavigation<NavigationProp<IRoutes, 'tournamentScore'>>();
+    useNavigation<NavigationProp<IRoutes, 'scoreboard'>>();
   const { spacing } = useTheme();
 
   const { language } = useLanguage();
@@ -33,13 +33,13 @@ const TournamentScore: React.FC = () => {
     (value, length) => {
       switch (value) {
         case 0:
-          return language.pages.tournamentScore.finalRound;
+          return language.pages.scoreboard.finalRound;
 
         case 1:
-          return language.pages.tournamentScore.semifinalRound;
+          return language.pages.scoreboard.semifinalRound;
 
         default:
-          return `${length - value}ª ${language.pages.tournamentScore.round}`;
+          return `${length - value}ª ${language.pages.scoreboard.round}`;
       }
     },
     [language],
@@ -48,7 +48,7 @@ const TournamentScore: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.tournamentScore.headerTitle}
+        title={language.pages.scoreboard.headerTitle}
         leftComponent={
           <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
             <Icon name="arrow-back" size={20} color="#fff" />
@@ -67,9 +67,13 @@ const TournamentScore: React.FC = () => {
           {params.map((round, index) => {
             return (
               <View key={String(index)}>
-                <Separator />
+                {params.length > 1 && (
+                  <>
+                    {index !== 0 && <Separator />}
 
-                <Title>{getTitleOfRound(index, params.length)}</Title>
+                    <Title>{getTitleOfRound(index, params.length)}</Title>
+                  </>
+                )}
 
                 {round.map((item, index2) => (
                   <CardBattle key={index2} competitor={item} />
@@ -81,11 +85,11 @@ const TournamentScore: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.tournamentScore.footerButton}
-        onPress={() => reset({ index: 1, routes: [{ name: 'home' }] })}
+        text={language.pages.scoreboard.footerButton}
+        onPress={() => reset({ index: 0, routes: [{ name: 'dashboard' }] })}
       />
     </>
   );
 };
 
-export { TournamentScore };
+export { Scoreboard };

@@ -84,7 +84,14 @@ const useBattle = (): IUseBattle => {
         const winners = data.map((item) => item.winner);
 
         result = [...result, data];
-        finalists = winners;
+        finalists = winners.map((winner) => ({
+          id: winner.id,
+          chakra: winner.chakra,
+          image: winner.image,
+          name: winner.name,
+          power: winner.power,
+          technique: winner.technique,
+        }));
         length = length + winners.length;
       } while (length % 2 === 0 && length !== 0);
 

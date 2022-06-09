@@ -1,8 +1,14 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { RefreshControl, View, FlatList } from 'react-native';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
+import { RefreshControl, FlatList } from 'react-native';
+import {
+  RouteProp,
+  useIsFocused,
+  useNavigation,
+  useRoute,
+} from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import firestore from '@react-native-firebase/firestore';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 import { INinja, IStatusLoading } from '@src/@types';
 import { IRoutes } from '@src/@types/routes';
@@ -16,11 +22,13 @@ import {
 } from '@src/components';
 import { Spacing } from '@src/components/styles';
 import { useLanguage } from '@src/hooks';
+import { serviceNinjas } from '@src/services';
 
-const Home: React.FC = () => {
+const Competitors: React.FC = () => {
   const isFocused = useIsFocused();
-  const { navigate } =
-    useNavigation<NativeStackNavigationProp<IRoutes, 'home'>>();
+  const { params } = useRoute<RouteProp<IRoutes, 'competitors'>>();
+  const { navigate, goBack } =
+    useNavigation<NativeStackNavigationProp<IRoutes, 'competitors'>>();
 
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [status, setStatus] = useState<IStatusLoading>('loading');
@@ -73,22 +81,14 @@ const Home: React.FC = () => {
   }, [isFocused, onResetNinjas]);
 
   useEffect(() => {
-    firestore()
-      .collection('ninjas')
-      .orderBy('id')
+    serviceNinjas
       .get()
       .then((response) => {
-        const data = response.docs.map((doc) => {
-          return {
-            ...doc.data(),
-          };
-        }) as INinja[];
-
-        if (data.length < 1) {
+        if (response.length < 1) {
           throw Error();
         }
 
-        setNinjas(data);
+        setNinjas(response);
         setStatus('success');
       })
       .catch(() => setStatus('failure'));
@@ -97,9 +97,14 @@ const Home: React.FC = () => {
   return (
     <>
       <Header
-        title={language.pages.home.headerTitle}
-        isDescriptionError={selectedCompetitors.length !== 8}
-        description={`${language.pages.home.headerDescription}: ${selectedCompetitors.length} ${language.pages.home.headerDescriptionOf} 8`}
+        title={language.pages.competitors.headerTitle}
+        isDescriptionError={selectedCompetitors.length !== params.length}
+        description={`${language.pages.competitors.headerDescription}: ${selectedCompetitors.length} ${language.pages.competitors.headerDescriptionOf} ${params.length}`}
+        leftComponent={
+          <TouchableOpacity onPress={goBack} activeOpacity={0.8}>
+            <Icon name="arrow-back" size={20} color="#fff" />
+          </TouchableOpacity>
+        }
       />
 
       <Body>
@@ -127,7 +132,7 @@ const Home: React.FC = () => {
                   </Spacing>
                 </>
               ) : (
-                <View />
+                <></>
               )
             }
             keyExtractor={(item) => String(item.id)}
@@ -149,12 +154,12 @@ const Home: React.FC = () => {
       </Body>
 
       <Footer
-        text={language.pages.home.footerButton}
-        disabled={selectedCompetitors.length !== 8}
-        onPress={() => navigate('tournament', selectedCompetitors)}
+        text={language.pages.competitors.footerButton}
+        disabled={selectedCompetitors.length !== params.length}
+        onPress={() => navigate('selectedCompetitors', selectedCompetitors)}
       />
     </>
   );
 };
 
-export { Home };
+export { Competitors };

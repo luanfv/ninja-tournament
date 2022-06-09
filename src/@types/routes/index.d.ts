@@ -1,9 +1,11 @@
 import { INinja, IBattle } from '@src/@types';
 
 type IRoutes = {
-  home: undefined;
-  tournament: INinja[];
-  tournamentScore: IBattle[][];
+  dashboard: undefined;
+  competitors: { length: 2 | 8 };
+  selectedCompetitors: INinja[];
+  scoreboard: IBattle[][];
+  historic: undefined;
 };
 
 export { IRoutes };

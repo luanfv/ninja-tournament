@@ -7,8 +7,8 @@ import { ThemeProvider } from 'styled-components';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import CodePush from 'react-native-code-push';
 
-import { theme } from './settings';
-import { Routes } from './routes';
+import { theme } from '@src/settings/styles';
+import { Routes } from '@src/routes';
 
 const App: React.FC = () => {
   useEffect(() => {
