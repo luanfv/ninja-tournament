@@ -27,6 +27,13 @@ const serviceScoreboards = {
           .limit(limit)
           .get();
 
+    if (start === undefined && response.docs.length === 0) {
+      return {
+        data: [],
+        lastDoc: undefined,
+      };
+    }
+
     const lastDoc = response.docs[response.docs.length - 1];
 
     if (lastDoc.id === start?.id) {
@@ -79,6 +86,13 @@ const serviceScoreboards = {
           .orderBy('createdAt', 'desc')
           .limit(limit)
           .get();
+
+    if (start === undefined && response.docs.length === 0) {
+      return {
+        data: [],
+        lastDoc: undefined,
+      };
+    }
 
     const lastDoc = response.docs[response.docs.length - 1];
 
