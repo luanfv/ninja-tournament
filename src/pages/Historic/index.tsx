@@ -30,7 +30,7 @@ const Historic: React.FC = () => {
     setIsLoadingHistoric(true);
 
     serviceScoreboards
-      .getAll(lastResponse, 7)
+      .getAll(lastResponse, 20)
       .then((response) => {
         const data = response.data.map((item) => ({
           ...item,
