@@ -2,29 +2,63 @@ import { ILanguage } from '@src/@types';
 
 const en_US: ILanguage = {
   type: 'en_US',
+
   pages: {
-    home: {
-      headerTitle: 'selection of competitors',
-      headerDescription: 'selected ninja',
+    dashboard: {
+      welcome: 'Hello, welcome to',
+      appName: 'Ninja Tournament',
+      historicTitle: 'My history',
+    },
+
+    competitors: {
+      headerTitle: 'Selection of competitors',
+      headerDescription: 'Selected ninja',
       headerDescriptionOf: 'of',
-      footerButton: 'next',
+      footerButton: 'Next',
     },
-    tournament: {
-      headerTitle: 'tournament',
-      footerButton: 'start tournament',
+
+    selectedCompetitors: {
+      headerTitle: 'List of competitors',
+      footerButton: 'Start battles',
     },
-    tournamentScore: {
-      headerTitle: 'result',
-      footerButton: 'back to home',
-      finalRound: 'final',
-      semifinalRound: 'semifinal',
-      round: 'round',
+
+    scoreboard: {
+      headerTitle: 'Scoreboard',
+      footerButton: 'Back to dashboard',
+      finalRound: 'Final round',
+      semifinalRound: 'Semifinal round',
+      round: 'Round',
+    },
+
+    historic: {
+      header: 'Global history',
     },
   },
   components: {
     cardBattle: {
-      winner: 'winner',
-      percentageToWin: 'chance of victory',
+      winner: 'Winner',
+      percentageToWin: 'Probability',
+    },
+
+    menuListItem: {
+      tournamentTitle: 'Tournament',
+      tournamentMessage:
+        'Start a tournament with 8 different ninjas, the winner is the ninja who wins the three rounds of the tournament.',
+
+      duelTitle: 'Duel',
+      duelMessage:
+        'Start a duel between two different ninjas, the winner is defined through the probability result.',
+
+      historicTitle: 'Global History',
+      historicMessage: 'View other users tournament history.',
+    },
+
+    historicListItem: {
+      tournamentTitle: 'Tournament',
+      tournamentMessage: 'is the tournament winner.',
+
+      duelTitle: 'Duel',
+      duelMessage: 'is the winner of the duel.',
     },
   },
 };

@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface IContainer {
   disabled: boolean;
@@ -15,7 +16,7 @@ const Container = styled.TouchableOpacity<IContainer>`
 `;
 
 const Text = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.large};
+  font-size: ${({ theme }) => RFValue(theme.fonts.large)}px;
   color: ${({ theme }) => theme.colors.white};
 `;
 

@@ -1,7 +1,7 @@
 <section align="center">
   <img src="./assets/icon.png" width="80" height="80" />
 
-  <h3 align="center">Torneio Shinobi</h3>
+  <h3 align="center">Ninja Tournament</h3>
   
   <div align="center">
     <img src="https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
@@ -33,9 +33,9 @@
 
 ## SOBRE O PROJETO
 
-Aplicativo criado com **React Native + TypeScript** para simular um torneio shinobi de Naruto Classico baseado nos tazos de 2009 da Elma. Para iniciar o torneio o usuário precisa selecionar 8 competidores e ordenar de forma que achar melhor, após fazer isso, haverá três rodadas diferentes para descobrir quem é o vencedor no final.
+Aplicativo criado com **React Native + TypeScript + Firebase** para simular um torneio ninja do universo de Naruto Classico com a pontuação dos ninjas baseado nos tazos de 2009 da Elma. Através do aplicativo é possível iniciar um torneio com 8 participantes onde irá acontecer três rodadas para descobrir o vencedor, mas além disso, é possível realizar duelos e visualizar o histórico global de torneios.
 
-Importante salientar que Torneio Shinobi não possui o cálculo de pontos baseado em quem tiver mais vence, mas sim em um sistema de porcentagem, onde quem tiver mais pontos possui mais chances de vitória, sendo assim, os torneios se tornam dinâmicos.
+Importante salientar que **Ninja Tournament** não possui o cálculo de pontos baseado em quem tiver mais vence, mas sim em um sistema de porcentagem, onde quem tiver mais pontos possui mais chances de vitória, sendo assim, os torneios se tornam dinâmicos.
 
 
 ## EXTENSÕES DO VSCODE
@@ -51,19 +51,47 @@ Para o desenvolvimento desse projeto é altamente recomendado que utilize o VSCo
 
 
 ## INICIANDO O PROJETO
-Para executar o projeto em sua maquina siga os passos abaixo.
+
+Para executar o projeto em sua maquina siga os passos abaixo. 
+Obs: Os passos de `Pré-requisitos` e `Configuração do firebase` só precisam ser executados na primeira vez que for rodar o projeto.
 
 ### Pré-requisitos
 
-Baixe as chaves necessarias para utilizar o firebase.
-
 Tenha instalado e configurado em sua máquina as seguintes ferramentas: 
+
 - [Node.js](https://nodejs.org/en/);
 - [Yarn](https://yarnpkg.com/);
 - [Android Studio](https://developer.android.com/studio) para utilizar o emulador do Android;
 - [XCode](https://developer.apple.com/xcode/) para utilizar o emulador do iOS;
+  
+Obs: Caso não tenha experiência com a configuração de ambiente do React Native, [siga esta documentação](https://react-native.rocketseat.dev/).
 
-Caso não tenha experiência com a configuração de ambiente do React Native, [siga esta documentação](https://react-native.rocketseat.dev/).
+### Configuração do firebase
+
+É necessário fazer a configuração para conseguir conectar o projeto com o firebase.
+Obs: Você pode fazer apenas a configuração da plataforma que irá utilizar.
+
+#### Android
+
+1. Entre na pasta `android/app` e crie um arquivo chamado `google-services.json` a partir do `google-services.example.json`.
+
+2. Configure o json com as informações do seu projeto no firebase. 
+Caso não tenha um projeto criado, crie a partir do [firebase](https://firebase.google.com/) e 
+adicione o `google-services.json` no `android/app` 
+conforme informa no [react-native-firebase](https://rnfirebase.io/#generating-android-credentials/).
+
+Obs: Só é necessário fazer a configuração que está em `Generating Android credentials`, o [react-native-firebase](https://rnfirebase.io/).
+
+#### iOS
+
+1. Entre na past `ios` e crie um arquivo chamado `GoogleService-Info.plist` a partir do `GoogleService-Info.example.plist`.
+
+2. Configure o json com as informações do seu projeto no firebase. 
+Caso não tenha um projeto criado, crie a partir do [firebase](https://firebase.google.com/) e 
+adicione o `GoogleService-Info.plist` no `ios` 
+conforme informa no [react-native-firebase](https://rnfirebase.io/#generating-ios-credentials).
+
+Obs: Só é necessário fazer a configuração que está em `Generating iOS credentials`, o [react-native-firebase](https://rnfirebase.io/).
 
 ### Comandos
 

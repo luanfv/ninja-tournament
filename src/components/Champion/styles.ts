@@ -1,6 +1,7 @@
 import ShimmerPlaceholder from 'react-native-shimmer-placeholder';
 import styled from 'styled-components/native';
 import LottieView from 'lottie-react-native';
+import { RFValue } from 'react-native-responsive-fontsize';
 
 interface IPlayerImage {
   isLoaded?: boolean;
@@ -32,10 +33,10 @@ const ImageLoading = styled(ShimmerPlaceholder)`
 `;
 
 const PlayerName = styled.Text`
-  font-size: ${({ theme }) => theme.fonts.large};
+  font-size: ${({ theme }) => RFValue(theme.fonts.large)}px;
   color: ${({ theme }) => theme.colors.secondary};
   font-weight: bold;
-  margin-top: ${({ theme }) => theme.spacing}px;
+  margin-top: ${({ theme }) => RFValue(theme.spacing)}px;
 `;
 
 const Grinalda = styled.View`

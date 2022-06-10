@@ -11,9 +11,9 @@ interface IStyleGuide {
     secondary: string;
   };
   fonts: {
-    large: string;
-    medium: string;
-    small: string;
+    large: number;
+    medium: number;
+    small: number;
   };
   spacing: number;
 }
